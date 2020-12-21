@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
+admin.site.site_header = 'Shouts Admin'
+admin.site.site_title = 'Shouts Admin Panel'
+admin.site.index_title = 'Welcome to Shouts Admin Panel'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/', include('frontend.urls')),
+    # path('comment_like_report/', include('comment_like_report.urls')),
 ]
