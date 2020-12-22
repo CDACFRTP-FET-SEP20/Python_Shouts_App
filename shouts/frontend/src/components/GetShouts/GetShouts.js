@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-
+import Cards from '../Card'
 import { Alert } from "@material-ui/lab";
 
 function GetShouts() {
+  const [shouts,setShouts]=useState([])
   fetch("/api/posts/")
     .then((response) => {
       if (response.status > 400) {
@@ -12,12 +13,20 @@ function GetShouts() {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
+      setShouts(data)
+      
     });
   
   
   return(
-    <h1>Getting shouts...</h1>
+    <div>
+      {
+        shouts.map((shout)=>(
+          <Cards key={shout.post_id} shouts={shout}/>
+        ))
+      }
+    </div>
+  
   )
 }
 

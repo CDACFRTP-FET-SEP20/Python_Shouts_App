@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'users',
     'posts',
     'rest_framework',
-    'api'
+    'api',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,9 @@ STATIC_URL = '/static/'
 # Path added to upload the shouts
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATICFILES_DIRS = (
+    #This lets Django's collectstatic store our bundles
+    os.path.join(BASE_DIR, 'assets'), 
+    os.path.join(BASE_DIR, 'resources'), 
+)
