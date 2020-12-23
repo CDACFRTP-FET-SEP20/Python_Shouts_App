@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 
 function RequestSent(props) {
   useEffect(() => {
     newfrienddata();
 
-    return () => console.log("***************FriendList Unmounted");
+    return () => console.log("***************sent request Unmounted");
   }, []);
 
   const newfrienddata = () => {
@@ -19,21 +20,43 @@ function RequestSent(props) {
       );
   };
 
-  console.log("***********", props);
+  console.log("***********", props.user);
 
   const sendRequest = (receiver) => {
-    console.log(receiver);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        sender: props.user,
-        receiver,
-      }),
+    console.log("Sender=====", props.user);
+    console.log("receiver=====", receiver);
+    // console.log("receiver=====", receiver);
+    //
+    // try {
+    //   fetch("/api/friendlist/", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({
+    //       sender: props.user,
+    //       receiver: receiver,
+    //       is_friend: false,
+    //     }),
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => console.log("then data", data))
+    //     .catch((e) => {
+    //       console.log("error msg catch", e);
+    //     });
+    // } catch (error) {
+    //   console.log("error msg for fetch", error);
+    // }
+    const data1 = {
+      sender: props.user,
+      receiver: receiver,
     };
-    fetch("/api/friendlist/", requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    // const data1 = {
+    //   bio: " gbfbf fjh oehf kjbfkj i",
+    //   username: "Subodh",
+    // };
+    axios
+      .post("/api/friendlist/", data1)
+      .then((res) => console.log("-----------", res))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -46,7 +69,7 @@ function RequestSent(props) {
               {data.username === props.user.username ? null : (
                 <p>
                   <span>{data.username}</span>
-                  <button type="button" onClick={()=>sendRequest(data)}>
+                  <button type="button" onClick={() => sendRequest(data)}>
                     send request
                   </button>
                 </p>

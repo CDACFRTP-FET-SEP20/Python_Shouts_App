@@ -11,7 +11,7 @@ class App extends Component {
       <div>
         <h1>Hi</h1>
         <Provider store={store}>
-          <BrowserRouter>
+          <BrowserRouter basename='/app'>
             <Friends></Friends>
           </BrowserRouter>
         </Provider>
