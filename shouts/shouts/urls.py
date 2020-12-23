@@ -23,5 +23,5 @@ admin.site.index_title = 'Welcome to Shouts Admin Panel'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/', include('frontend.urls')),
-    # path('comment_like_report/', include('comment_like_report.urls')),
+    path('comment_like_report/', include('comment_like_report.urls')),
 ]

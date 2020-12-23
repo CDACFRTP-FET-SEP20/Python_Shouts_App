@@ -1,3 +1,9 @@
 {
-    "python.pythonPath": "C:\\Users\\siddharthkam\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
+    "editor.renderWhitespace": "all",
+    "python.pythonPath": "project_venv\\Scripts\\python.exe",
+    "python.linting.pycodestyleEnabled": false,
+    "python.linting.pylintEnabled": false,
+    "[python]": {
+        "editor.tabSize": 4,
+    },
 }

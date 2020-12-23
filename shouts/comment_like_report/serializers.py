@@ -1,57 +1,104 @@
 from rest_framework import serializers
+from datetime import datetime
 
-from .models import User , HandsOn , Feedback
+from .models import UserProfile , Shout , ShoutComment , ShoutLike, ShoutReport
 
 class UserSerializer(serializers.ModelSerializer):
-
+    
     class Meta:
-        model = User
+        model = UserProfile
         fields = [
-            'user_id',
-            'emp_name',
-            'emp_type',
-            'emp_id',
-            'emp_email',
+            'id',
+            'username',
+            'user_email',
+            'password',
         ]
 
-class HandsOnSerializer(serializers.ModelSerializer):
 
-    trainee = serializers.SlugRelatedField(
-        queryset = User.objects.all(),
+class ShoutSerializer(serializers.ModelSerializer):
+
+    user_id = serializers.SlugRelatedField(
+        queryset = UserProfile.objects.all(),
         many = True,
-        slug_field = 'emp_name',
+        slug_field = 'id',
+    )
+
+    class Meta:
+        model = Shout
+        fields = [
+            'id',
+            'desc',
+            'type',
+            'title',
+            'media',
+            'user_id'
+        ]
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    # date= datetime.strftime(ShoutComment.date,"%Y-%m-%d")
+    shout_id = serializers.SlugRelatedField(
+        queryset = Shout.objects.all(),
+        many = True,
+        slug_field = 'id',
+    )
+
+    user_id = serializers.SlugRelatedField(
+        queryset = UserProfile.objects.all(),
+        many = True,
+        slug_field = 'id',
     )
     class Meta:
-        model = HandsOn
+        model = ShoutComment
 
         fields = [
-            'handson_id',
-            'languages',
-            'handson_type',
-            'handson_duration',
-            'handson_status',
-            'trainee'
+            'comment_id',
+            'shout_id',
+            'comment',
+            'date',
+            'updated_at'
+            'user_id',
         ]     
 
-class FeedbackSerializer(serializers.ModelSerializer):
+class LikeSerializer(serializers.ModelSerializer):
 
-    feedback_mentor = serializers.SlugRelatedField(
-        queryset = User.objects.all(),
-        slug_field = 'emp_name'
+    shout_id = serializers.SlugRelatedField(
+        queryset = Shout.objects.all(),
+        slug_field = 'id'
     )
 
-    feedback_trainee = serializers.SlugRelatedField(
-        queryset = User.objects.all(),
-        slug_field = 'emp_name'
+    user_id = serializers.SlugRelatedField(
+        queryset = UserProfile.objects.all(),
+        slug_field = 'id',
     )
 
     class Meta:
-        model = Feedback
+        model = ShoutLike
 
         fields = [
-            'feedback_id',
-            'feedback_content',
-            'feedback_mentor',
-            'feedback_trainee'
+            'id',
+            'shout_id',
+            'user_id'
+        ]
 
+
+class ReportSerializer(serializers.ModelSerializer):
+    
+    shout_id = serializers.SlugRelatedField(
+        queryset = Shout.objects.all(),
+        slug_field = 'id'
+    )
+
+    user_id = serializers.SlugRelatedField(
+        queryset = UserProfile.objects.all(),
+        slug_field = 'id',
+    )
+
+    class Meta:
+        model = ShoutReport
+
+        fields = [
+            'id',
+            'shout_id',
+            'user_id'
         ]

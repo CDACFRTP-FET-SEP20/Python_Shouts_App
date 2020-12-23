@@ -1,39 +1,73 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+import uuid
+from datetime import datetime
 
 # Create your models here.\
-class Shout(models.Model):
-    id = models.AutoField(primary_key=True)
-    desc = models.CharField(max_length=100)
-    type = models.CharField(max_length=20)
-    title = models.CharField(max_length=225)
-    dateStamp = models.DateTimeField(auto_now_add=True)
-    media = models.CharField(max_length=225)
-    u_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    c_id = models.CharField(max_length=3)
-    l_id = models.CharField(max_length=3)
-    r_id = models.CharField(max_length=3)
+# class Shout(models.Model):
+#     id = models.AutoField(primary_key=True)
+#     desc = models.CharField(max_length=100)
+#     type = models.CharField(max_length=20)
+#     title = models.CharField(max_length=225)
+#     dateStamp = models.DateTimeField(auto_now_add=True)
+#     media = models.CharField(max_length=225)
+#     u_id = models.ForeignKey(User, on_delete=models.CASCADE)
+#     c_id = models.CharField(max_length=3)
+#     l_id = models.CharField(max_length=3)
+#     r_id = models.CharField(max_length=3)
+
+#     def __str__(self):
+#         return self.title + ' posted on ' + self.dateStamp
+
+class UserProfile(models.Model):
+    
+    #type_list = [('AD','Trainer'),('TE','Trainee'),('MR','Mentor'),('HR','HR')]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    username = models.CharField(max_length=256, null=True) 
+    user_email = models.EmailField(max_length=256)
+    password = models.CharField(max_length=256, null=True)
+
 
     def __str__(self):
-        return self.title + ' posted on ' + self.dateStamp
+        return self.username
+
+class Shout(models.Model):
+    
+    type_list = [('TXT','Text'),('VDO','Video'),('ADO','Audio'),('IMG','Image')]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    desc = models.CharField(max_length=256, null=True) 
+    type = models.CharField(max_length=20,choices=type_list,default='TXT')
+    title = models.CharField(max_length=256, null=True) 
+    media = models.CharField(max_length=256, null=True) 
+    user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='Shout_User', default="",editable=False,null=True)
+    likes = models.ManyToManyField(UserProfile, related_name='Shout_Likes', default="",editable=False,null=True )
+
+
+    def __str__(self):
+        return self.type
 
 class ShoutComment(models.Model):
-    c_id = models.AutoField(primary_key=True)
-    comment = models.TextField()
-    u_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Shout, on_delete=models.CASCADE)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
-    dateStamp = models.DateTimeField(default=now)
-
-    def __str__(self):
-        return self.comment + ' posted on ' + self.dateStamp
+    
+    comment_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    shout_id = models.ForeignKey(Shout, on_delete=models.CASCADE, related_name='UserPost',default="", editable=False, null=True)
+    comment = models.CharField(max_length=256,null=True)
+    date = models.DateTimeField(default=datetime.now, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
+    user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='Comment_User', default="",editable=False,null=True)
 
 
 class ShoutLike(models.Model):
-    l_id = models.AutoField(primary_key=True)
-    u_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    p_id = models.ForeignKey(Shout, on_delete=models.CASCADE)
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    shout_id = models.ForeignKey(Shout, on_delete=models.CASCADE, related_name='LikedPost',default="", editable=False, null=True)
+    user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='Like_User', default="",editable=False,null=True)
 
-    def __str__(self):
-        return self.l_id
+
+class ShoutReport(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    shout_id = models.ForeignKey(Shout, on_delete=models.CASCADE, related_name='ReportedPost',default="", editable=False, null=True)
+    user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='Report_User', default="",editable=False,null=True)
