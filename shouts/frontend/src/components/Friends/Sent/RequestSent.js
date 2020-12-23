@@ -8,9 +8,9 @@ function RequestSent(props) {
 
     return () => console.log("***************sent request Unmounted");
   }, []);
-
+  const pk = props.user.id;
   const newfrienddata = () => {
-    fetch("/api/requestsent/")
+    fetch(`/api/requestsent/${pk}`)
       .then((res) => res.json())
       .then((data) =>
         props.dispatch({
@@ -46,15 +46,15 @@ function RequestSent(props) {
     //   console.log("error msg for fetch", error);
     // }
     const data1 = {
-      sender: props.user,
       receiver: receiver,
     };
     // const data1 = {
     //   bio: " gbfbf fjh oehf kjbfkj i",
     //   username: "Subodh",
     // };
+
     axios
-      .post("/api/friendlist/", data1)
+      .post(`/api/friendlist/${pk}`, data1)
       .then((res) => console.log("-----------", res))
       .catch((err) => console.log(err));
   };

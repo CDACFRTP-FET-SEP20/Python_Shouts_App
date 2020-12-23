@@ -25,7 +25,8 @@ function FriendList(props) {
     //     })
     //   );
 
-    axios.get("/api/friendlist/").then((res) =>
+    const pk = props.user.id
+    axios.get(`/api/friendlist/${pk}`).then((res) =>
       props.dispatch({
         type: "DisplayList",
         payload: res.data,

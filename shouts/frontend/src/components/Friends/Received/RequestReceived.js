@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 
 function RequestReceived(props) {
   useEffect(() => {
@@ -8,9 +9,9 @@ function RequestReceived(props) {
     return () =>
       console.log("***************FriendRequestsReceivedList Unmounted");
   }, []);
-
+  const pk = props.user.id;
   const friendlistreceived = () => {
-    fetch("/api/requestreceived/")
+    fetch(`/api/requestreceived/${pk}`)
       .then((res) => res.json())
       .then((data) =>
         props.dispatch({
@@ -20,17 +21,36 @@ function RequestReceived(props) {
       );
   };
 
-//   console.log("***********", props);
+  const acceptRequest = (data) => {
+    axios
+      .patch(`/api/friendlist/${data.id}`, data)
+      // .then((res) => res.json())
+      .then((res) => {
+        props.dispatch({
+          type: "DisplayRequestsReceived",
+          payload: res.data,
+        });
+      });
+  };
+
+  console.log("***********", props.requestReceived);
 
   return (
     <div>
       <div>
         {props.requestReceived.map((data, item) => {
           return (
-            <p key={item}>
+            <div key={item}>
               {/* Chnage the name=shubham dynamically using state */}
-              {data.sender === props.user.username ? null : data.sender}
-            </p>
+              {data.sender === props.user.username ? null : (
+                <p>
+                  <span>{data.sender}</span>
+                  <button type="button" onClick={() => acceptRequest(data)}>
+                    Accept
+                  </button>
+                </p>
+              )}
+            </div>
           );
         })}
       </div>
@@ -41,7 +61,7 @@ function RequestReceived(props) {
 const mapStoreToProps = (state) => {
   return {
     requestReceived: state.requestReceived.requestReceived,
-    user: state.friendList.user
+    user: state.friendList.user,
   };
 };
 

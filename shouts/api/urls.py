@@ -20,12 +20,12 @@ friendList = FriendsView.as_view(
 )
 
 
-friendRequestList = FriendRequestList.as_view({
-    'get': 'list',
-    # 'post': 'create',
-    'patch': 'partial_update',
-    'delete': 'destroy'
-})
+# friendRequestList = FriendRequestList.as_view({
+#     'get': 'list',
+#     # 'post': 'create',
+#     'patch': 'partial_update',
+#     'delete': 'destroy'
+# })
 
 profileList = ProfileView.as_view({
     'get': 'list',
@@ -34,20 +34,24 @@ profileList = ProfileView.as_view({
     'delete': 'destroy'
 })
 
-makefriendsList = MakeNewFriends.as_view({
-    'get': 'list',
-    # 'post': 'create',
-})
+# makefriendsList = MakeNewFriends.as_view({
+#     'get': 'list',
+#     # 'post': 'create',
+# })
 
 urlpatterns = [
     path('', include(router.urls)),
     # path('friendlist/', friendList, name='friendList'),
-    path('friendlist/', FriendsAppView.as_view(), name='FriendsAppView'),
-    path('friendlist/<str:pk>', friendList, name='friendList'),
+    # path('friendlist/', FriendsAppView.as_view(), name='FriendsAppView'),
+    # path('friendlist/', FriendsAppView, name='FriendsAppView'),
+    path('friendlist/<str:pk>', FriendsAppView, name='FriendsAppView'),
+    # path('friendlist/<str:pk>', friendList, name='friendList'),
     path('profile/', profileList, name='profileList'),
     path('profile/<str:pk>', profileList, name='profileList'),
-    path('requestreceived/', friendRequestList, name='friendRequestList'),
-    path('requestreceived/<str:pk>', friendRequestList, name='friendRequestList'),
-    path('requestsent/', makefriendsList, name='makefriendsList'),
-    path('requestsent/<str:pk>', makefriendsList, name='makefriendsList'),
+    # path('requestreceived/', friendRequestList, name='friendRequestList'),
+    # path('requestreceived/<str:pk>', friendRequestList, name='friendRequestList'),
+    path('requestreceived/<str:pk>', FriendRequestList, name='FriendRequestList'),
+    # path('requestsent/', makefriendsList, name='makefriendsList'),
+    # path('requestsent/<str:pk>', makefriendsList, name='makefriendsList'),
+    path('requestsent/<str:pk>', MakeNewFriends, name='MakeNewFriends'),
 ]
