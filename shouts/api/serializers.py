@@ -7,12 +7,12 @@ from django.db.models import Q
 
 class FriendsSerializer(serializers.ModelSerializer):
     sender = serializers.SlugRelatedField(
-        queryset=Profile.objects.filter(id=1),
+        queryset=Profile.objects.all(),
         slug_field='username'
 
     )
     receiver = serializers.SlugRelatedField(
-        queryset=Profile.objects.filter(~Q(id=1)),
+        queryset=Profile.objects.all(),
         slug_field='username'
 
     )
