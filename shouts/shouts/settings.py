@@ -134,3 +134,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'), 
     os.path.join(BASE_DIR, 'resources'), 
 )
+
+ALLOWED_HOSTS = ['*']

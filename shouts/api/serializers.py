@@ -18,6 +18,7 @@ class UsersSerializer(serializers.ModelSerializer):
 class PostsSerializer(serializers.ModelSerializer):
     class Meta:
         model=Posts
+       
         fields="__all__"
             
     

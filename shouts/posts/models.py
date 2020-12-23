@@ -4,6 +4,9 @@ from users.models import Users
 from django.utils import timezone
 # Create your models here.
 
+
+
+
 class Posts(models.Model):
     TEXT = 'T'
     IMAGE = 'I'
@@ -26,8 +29,8 @@ class Posts(models.Model):
     )
     title=models.CharField(max_length=500,default="",null=True)
     description=models.CharField(max_length=1000,default="",null=True,blank=True)
-    date_posted = models.DateTimeField(default=timezone.now)
-    username=models.ForeignKey(Users, on_delete=models.CASCADE)
+    date_posted = models.DateTimeField(auto_now_add=True, blank=True)
+    username=models.ForeignKey(Users, on_delete=models.CASCADE,related_name="author")
     media=models.FileField(upload_to='media/post',default="",null=True,blank=True)
     
 
