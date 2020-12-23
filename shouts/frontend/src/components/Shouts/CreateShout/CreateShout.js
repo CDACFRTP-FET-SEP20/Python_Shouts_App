@@ -2,85 +2,91 @@ import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 
 function CreateShout(props) {
   const [formData, setFormData] = useState({});
-  const [media,setMedia]=useState("")
-  const history=useHistory()
+  const [media, setMedia] = useState("");
+  const history = useHistory();
+
   //============================set the Form data on InputChange===================
   function handleInputChange({ target }) {
     const { name, value } = target;
     setFormData({ ...formData, [name]: value });
   }
-const csrftoken=Cookies.get('csrftoken')
-console.log(csrftoken);
-  const { description,type } = formData;
-  let _data = {
-    post_title: "foo",
-    description: "BAR",
-    post_type:"T",
-    date_posted: "2020-12-21T11:26:12.409584Z",
-    username: {
-      user_id: "21972bf4-f2c5-4658-b08a-6378034f8ee1",
-      username: "Amy Santiago",
-      password: "abc",
-      email: "amy@cybage.com",
-      
-      bio: "I am sergeant at NYPD.",
-    },
-    media:media,
-  };
+  const csrftoken = Cookies.get("csrftoken");
+  console.log(csrftoken);
+  const { title,post_type,description, date_posted } = formData;
+
   //===========================Form Submit Function============================
   function handleFormSubmit(e) {
     e.preventDefault();
-    fetch("/api/posts/", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        "X-CSRFToken":csrftoken,
-      },
-      body: JSON.stringify(_data),
-    })
-      .then((response) => response.json())
-      .then((data) => props.dispatch({
-        type: "createShouts",
-        payload: data,
-      }));
-    
-    
+    console.log(formData);
+    const uploadData = new FormData();
+    uploadData.append("title", formData.title);
+    uploadData.append("post_type", formData.post_type);
+    uploadData.append("description", formData.description);
+    uploadData.append("date_posted", formData.date_posted);
+    uploadData.append("username", "21972bf4-f2c5-4658-b08a-6378034f8ee1");
+    uploadData.append("media", media);
+    axios
+      .post("/api/posts/", uploadData)
+      .then((res) => props.dispatch({
+        type:"createShouts",
+        payload:res
+      }))
+      .catch((err) => console.log(err));
+      history.push('/shouts')
   }
 
-  
-
   return (
-    <div className="container-create">
-      <div className="create-new-blog">
+    <div>
+      <div>
         <h1>Create New Shout</h1>
       </div>
-      <form className="create-new" onSubmit={handleFormSubmit}>
-        <div className="control-wrapper">
+      <form onSubmit={handleFormSubmit}>
+        <div>
+          <label>Title: </label>
+          <input type="text" name="title" value={title} onChange={handleInputChange}/>
+        </div>
+        <div>
           <label>Content Type</label>
-          <select name="type" value={type} onChange={handleInputChange}>
-            <option value="image">Image</option>
-            <option value="audio">Audio</option>
-            <option value="video">Video</option>
-            <option value="text">Text</option>
+          <select name="post_type" value={post_type} onChange={handleInputChange}>
+            <option value="I">Image</option>
+            <option value="A" selected>Audio</option>
+            <option value="V">Video</option>
+            <option value="T">Text</option>
           </select>
         </div>
+        <div>
+          <label>description: </label>
+          <input type="text" name="description" value={description} onChange={handleInputChange}/>
+        </div>
+        <div>
+          <label>description: </label>
+          <input type="date" name="date_posted" value={date_posted} onChange={handleInputChange}/>
+        </div>
         {/*===============Render required component according to content type=============  */}
-        {type !== "text" ? (
-          <div className="file-field input-field">
-            <div className="btn  #42a5f5 blue darken-1">
+        {post_type !== "T" ? (
+          <div>
+            <div>
               <span>Upload Image</span>
-              <input type="file" onChange={(e) => setMedia(e.target.files[0])}/>
+              <input
+                type="file"
+                onChange={(e) => setMedia(e.target.files[0])}
+              />
             </div>
-            
           </div>
         ) : (
-          <div className="control-wrapper">
+          <div>
             <label>Blog Text</label>
-            <textarea name="content" value={description} required maxLength="200" onChange={handleInputChange} />
+            <textarea
+              name="content"
+              value={description}
+              required
+              maxLength="200"
+              onChange={handleInputChange}
+            />
           </div>
         )}
 
@@ -91,5 +97,6 @@ console.log(csrftoken);
 }
 const mapStateToProps = (state) => ({
   shouts: state.shouts,
+  user: state.user,
 });
 export default connect(mapStateToProps)(CreateShout);
