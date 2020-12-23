@@ -1,3 +1,4 @@
+
 function ShoutsReducer(state = [], action) {
     if (action.type === "setShouts") {
         console.log("setShouts",state);
@@ -5,7 +6,8 @@ function ShoutsReducer(state = [], action) {
     }
   
     if (action.type === "createShouts") {
-      return [action.payload, ...state];
+      console.log(action.payload.data);
+      return [action.payload.data,...state];
     }
   
     return state;
