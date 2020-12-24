@@ -31,7 +31,7 @@ class UserProfile(models.Model):
 
 
     def __str__(self):
-        return self.username
+        return str(self.id)
 
 class Shout(models.Model):
     
@@ -47,16 +47,19 @@ class Shout(models.Model):
 
 
     def __str__(self):
-        return self.type
+        return str(self.id)
 
 class ShoutComment(models.Model):
     
-    comment_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     shout_id = models.ForeignKey(Shout, on_delete=models.CASCADE, related_name='UserPost',default="", editable=False, null=True)
     comment = models.CharField(max_length=256,null=True)
     date = models.DateTimeField(default=datetime.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
     user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='Comment_User', default="",editable=False,null=True)
+
+    # def __str__(self):
+    #     return str(self.id)
 
 
 class ShoutLike(models.Model):

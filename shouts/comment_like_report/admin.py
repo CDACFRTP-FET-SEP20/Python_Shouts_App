@@ -16,8 +16,8 @@ class ShoutAdmin(admin.ModelAdmin):
 
 @admin.register(ShoutComment)
 class ShoutCommentAdmin(admin.ModelAdmin):
-    list_display = ["comment_id", "shout_id",  "comment","date", "updated_at","user_id"]
-    list_filter = ["date"]
+    list_display = ["id", "shout_id","comment","date","updated_at","user_id"]
+    # list_filter = ["date"]
     # autocomplete_fields = ["trainee"]
     
 

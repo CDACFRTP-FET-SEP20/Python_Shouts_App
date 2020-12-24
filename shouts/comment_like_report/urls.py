@@ -68,7 +68,7 @@ urlpatterns = [
     path('shout/', shout_list, name = 'shout'),
     path('shoutDetails/<str:pk>', shout_details, name = 'shout_details'),
     path('shoutcomment/', comment_list, name = 'shoutcomment'),
-    path('commentDetails/<str:pk>', comment_details, name = 'comment_details'),
+   # path('commentDetails/<str:pk>', comment_details, name = 'comment_details'),
     path('shoutlike/', like_list, name = 'shoutlike'),
-    path('shoutreport/', report_list, name = 'shoutreport')
+    path('shoutreport/', report_list, name = 'shoutreport'),
 ]

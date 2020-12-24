@@ -68,7 +68,7 @@ class LikeViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = ShoutComment.objects.all()
-    serializer_class = LikeSerializer 
+    serializer_class = CommentSerializer 
 
 
 class ReportViewSet(viewsets.ModelViewSet):

@@ -31,7 +31,8 @@ class ShoutSerializer(serializers.ModelSerializer):
             'type',
             'title',
             'media',
-            'user_id'
+            'user_id',
+            'likes'
         ]
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -52,13 +53,13 @@ class CommentSerializer(serializers.ModelSerializer):
         model = ShoutComment
 
         fields = [
-            'comment_id',
+            'id',
             'shout_id',
             'comment',
             'date',
-            'updated_at'
+            'updated_at',
             'user_id',
-        ]     
+        ]
 
 class LikeSerializer(serializers.ModelSerializer):
 
