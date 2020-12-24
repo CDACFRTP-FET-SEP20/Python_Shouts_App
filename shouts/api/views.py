@@ -14,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class=UsersSerializer
 
 class PostsViewSet(viewsets.ModelViewSet):
-    queryset=Posts.objects.all().order_by('-date_posted')
+    queryset=Posts.objects.all()
     serializer_class=PostsSerializer
 
     def get(self, request): 

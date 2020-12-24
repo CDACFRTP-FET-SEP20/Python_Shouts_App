@@ -44,9 +44,8 @@ INSTALLED_APPS = [
     'api',
     'django_extensions'
 ]
-REST_FRAMEWORK = {
-
-    'DATETIME_FORMAT': "%m/%d/%Y %H:%M",
+REST_FRAMEWORK={
+    'DATETIME_FORMAT': '%d/%m/%Y at %H:%M'
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import Cookies from "js-cookie";
+import dateFormat from 'dateformat';
 
 function CreateShout(props) {
   const [formData, setFormData] = useState({});
@@ -16,7 +17,16 @@ function CreateShout(props) {
   }
   const csrftoken = Cookies.get("csrftoken");
   console.log(csrftoken);
-  const { title,post_type,description, date_posted } = formData;
+  const { title,post_type,description} = formData;
+
+  var date = new Date();
+  console.log(dateFormat(date, "yyyy-mm-dd hh:mm")
+  )
+  var post_date=dateFormat(date, "yyyy-mm-dd hh:mm")
+  
+  
+  
+
 
   //===========================Form Submit Function============================
   function handleFormSubmit(e) {
@@ -26,7 +36,7 @@ function CreateShout(props) {
     uploadData.append("title", formData.title);
     uploadData.append("post_type", formData.post_type);
     uploadData.append("description", formData.description);
-    uploadData.append("date_posted", formData.date_posted);
+    uploadData.append("date_posted", post_date);
     uploadData.append("username", "21972bf4-f2c5-4658-b08a-6378034f8ee1");
     uploadData.append("media", media);
   
@@ -41,7 +51,7 @@ function CreateShout(props) {
         type:"createShouts",
           payload:res
       }))
-      history.push('/shouts')
+      // history.push('/shouts')
     }
   return (
     <div>
@@ -66,10 +76,7 @@ function CreateShout(props) {
           <label>description: </label>
           <input type="text" name="description" value={description} onChange={handleInputChange}/>
         </div>
-        <div>
-          <label>description: </label>
-          <input type="date" name="date_posted" value={date_posted} onChange={handleInputChange}/>
-        </div>
+       
         {/*===============Render required component according to content type=============  */}
         {post_type !== "T" ? (
           <div>
