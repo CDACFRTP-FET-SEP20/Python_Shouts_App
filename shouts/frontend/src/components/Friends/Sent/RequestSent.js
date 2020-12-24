@@ -1,8 +1,16 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
+import Box from "@material-ui/core/Box";
+import IconButton from "@material-ui/core/IconButton";
+import SendIcon from "@material-ui/icons/Send";
+import useStyles from "../UseStyle";
 
 function RequestSent(props) {
+  const classes = useStyles();
   useEffect(() => {
     newfrienddata();
 
@@ -37,24 +45,42 @@ function RequestSent(props) {
   };
 
   return (
-    <div>
-      <div>
+    <div className={classes.root}>
+      <Grid>
         {props.requestSent.map((data, item) => {
           return (
-            <div key={item}>
+            <Grid container spacing={3} key={item}>
               {/* Chnage the name=shubham dynamically using state */}
               {data.username === props.user.username ? null : (
-                <p>
-                  <span>{data.username}</span>
-                  <button type="button" onClick={() => sendRequest(data)}>
+                <Grid item xs={12}>
+                  <Paper className={classes.paper}>
+                    <div className={classes.cardFlex}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="https://picsum.photos/id/1000/200/300"
+                        className={classes.large}
+                      ></Avatar>
+                      <Box m="auto" ml="1rem">
+                        {data.username}
+                      </Box>
+                      <IconButton
+                        aria-label="accept"
+                        color="primary"
+                        onClick={() => sendRequest(data)}
+                      >
+                        <SendIcon />
+                      </IconButton>
+                      {/* <button type="button" onClick={() => sendRequest(data)}>
                     send request
-                  </button>
-                </p>
+                  </button> */}
+                    </div>
+                  </Paper>
+                </Grid>
               )}
-            </div>
+            </Grid>
           );
         })}
-      </div>
+      </Grid>
     </div>
   );
 }

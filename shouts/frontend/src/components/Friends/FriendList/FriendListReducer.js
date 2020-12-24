@@ -1,9 +1,9 @@
 const initialState = {
   friendList: [],
   user: {
-    id: 1,
+    id: 4,
     bio: "safd dfd asfad af",
-    username: "shubham",
+    username: "Shekhar",
   },
 };
 

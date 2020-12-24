@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import {Container} from '@material-ui/core'
 
 function BlockFriend() {
 //   useEffect(() => {
@@ -38,7 +39,7 @@ function BlockFriend() {
 
   return (
     <div>
-      <div>
+      <Container>
         {props.blockFriendList.map((data, item) => {
           return (
             <div key={item}>
@@ -57,7 +58,7 @@ function BlockFriend() {
             </div>
           );
         })}
-      </div>
+      </Container>
     </div>
   );
 }
