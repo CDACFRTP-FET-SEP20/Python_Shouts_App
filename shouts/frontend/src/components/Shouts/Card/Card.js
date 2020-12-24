@@ -49,7 +49,7 @@ function Cards({ shouts }) {
     setExpanded(!expanded);
   };
 
-  const avatar="J"
+  const avatar=shouts.username.charAt(0)
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -92,7 +92,7 @@ function Cards({ shouts }) {
       ) : null}
       {/* ====================Audio========================== */}
       {shouts.post_type === "A" ? (
-        <ReactAudioPlayer src={shouts.media} autoPlay controls />
+        <ReactAudioPlayer src={shouts.media}  controls />
       ) : null}
       {/* ====================Text========================== */}
       <CardContent>

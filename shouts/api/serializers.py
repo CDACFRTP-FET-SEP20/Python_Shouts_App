@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers,fields
 from users.models import Users
 from posts.models import Posts,Likes,Comments
 
@@ -18,8 +18,9 @@ class UsersSerializer(serializers.ModelSerializer):
 class PostsSerializer(serializers.ModelSerializer):
     class Meta:
         model=Posts
+        
        
-        fields="__all__"
+        fields=("post_type","title","description","date_posted","media","username")
             
     
     def to_representation(self, instance):

@@ -29,16 +29,20 @@ function CreateShout(props) {
     uploadData.append("date_posted", formData.date_posted);
     uploadData.append("username", "21972bf4-f2c5-4658-b08a-6378034f8ee1");
     uploadData.append("media", media);
-    axios
-      .post("/api/posts/", uploadData)
-      .then((res) => props.dispatch({
+  
+  axios({
+        method:"post",
+        url:"/api/posts/",
+        data:uploadData,
+        headers:{
+          "X-CSRFToken":csrftoken
+        }
+      }).then((res)=>props.dispatch({
         type:"createShouts",
-        payload:res
+          payload:res
       }))
-      .catch((err) => console.log(err));
       history.push('/shouts')
-  }
-
+    }
   return (
     <div>
       <div>
@@ -100,3 +104,4 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 export default connect(mapStateToProps)(CreateShout);
+

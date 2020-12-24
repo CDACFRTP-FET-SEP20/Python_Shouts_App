@@ -4,6 +4,9 @@ from .serializers import UsersSerializer,PostsSerializer
 from users.models import Users
 from posts.models import Posts
 from django.http import HttpResponse
+
+
+
 # Create your views here.
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -11,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class=UsersSerializer
 
 class PostsViewSet(viewsets.ModelViewSet):
-    queryset=Posts.objects.all()
+    queryset=Posts.objects.all().order_by('-date_posted')
     serializer_class=PostsSerializer
 
     def get(self, request): 
@@ -19,6 +22,7 @@ class PostsViewSet(viewsets.ModelViewSet):
         for detail in Posts.objects.all()] 
         return Response(detail)
 
+    
     def post(self,request,*args,**kwargs):
         post_type=request.data['post_type']
         title=request.data['title']
