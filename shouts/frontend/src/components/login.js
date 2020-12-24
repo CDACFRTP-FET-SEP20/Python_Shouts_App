@@ -19,7 +19,7 @@ function login(props) {
 
     console.log(formData);
 
-    fetch("http://localhost:8000/profile/login/", {
+    fetch("/profile/login/", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {
