@@ -37,8 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'django_extensions',
     'frontend',
-    'users'
+    'users',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +74,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'shouts.wsgi.application'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        
+    ]
+}
+
+AUTH_USER_MODEL = 'accounts.Profile'
+
 
 
 # Database
