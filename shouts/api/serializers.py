@@ -23,7 +23,8 @@ class FriendsSerializer(serializers.ModelSerializer):
             'id',
             'sender',
             'receiver',
-            'is_friend'
+            'is_friend',
+            # 'is_blocked'
         ]
 
 

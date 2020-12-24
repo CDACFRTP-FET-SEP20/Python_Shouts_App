@@ -1,15 +1,13 @@
 const initialState = {
-    requestReceived : []    
+  requestReceived: [],
+};
+
+function ReceiverReducer(state = initialState, action) {
+  if (action.type === "DisplayRequestsReceived") {
+    return { ...state, requestReceived: action.payload };
+  }
+
+  return state;
 }
 
-function ReceiverReducer(state= initialState, action){
-    if(action.type === "DisplayRequestsReceived"){
-        return {...state, requestReceived:action.payload}
-    }
-   
-    return state
-}
-
-
-
-export default ReceiverReducer
+export default ReceiverReducer;

@@ -25,37 +25,14 @@ function RequestSent(props) {
   const sendRequest = (receiver) => {
     console.log("Sender=====", props.user);
     console.log("receiver=====", receiver);
-    // console.log("receiver=====", receiver);
-    //
-    // try {
-    //   fetch("/api/friendlist/", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       sender: props.user,
-    //       receiver: receiver,
-    //       is_friend: false,
-    //     }),
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => console.log("then data", data))
-    //     .catch((e) => {
-    //       console.log("error msg catch", e);
-    //     });
-    // } catch (error) {
-    //   console.log("error msg for fetch", error);
-    // }
+
     const data1 = {
       receiver: receiver,
     };
-    // const data1 = {
-    //   bio: " gbfbf fjh oehf kjbfkj i",
-    //   username: "Subodh",
-    // };
 
     axios
       .post(`/api/friendlist/${pk}`, data1)
-      .then((res) => console.log("-----------", res))
+      .then((res) => newfrienddata())
       .catch((err) => console.log(err));
   };
 

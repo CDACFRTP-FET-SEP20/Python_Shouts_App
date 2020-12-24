@@ -4,7 +4,8 @@ from .serializers import (
     ProfileSerializer,
     # FriendRequestSendSerializer
 )
-from rest_framework import viewsets, permissions
+
+from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
@@ -42,29 +43,53 @@ def FriendsAppView(request, pk):
 
     if request.method == 'POST':
         list_data = request.data
-        print("list_data--", list_data['receiver']['id'])
+        # print(request.data)
+        # print("list_data--", list_data['receiver']['id'])
         sender = Profile.objects.get(id=pk)
         receiver = Profile.objects.get(id=list_data['receiver']['id'])
-        print("sender--", sender)
-        print("receiver--", receiver)
-        friends = Friends.objects.create(sender=sender, receiver=receiver)
-        serializer = FriendsSerializer(data=friends, many=True)
+        # print("sender--", sender)
+        # print("receiver--", receiver)
+        friends = {
+            'sender': sender,
+            'receiver': receiver
+        }
+        # friends = Friends.objects.create(sender=sender, receiver=receiver)
+        serializer = FriendsSerializer(data=friends)
         if serializer.is_valid():
+            # print("Post serializer")
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # print("POST serializer is not valid")
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'PATCH':
         accept_data = request.data
-        print("accept_data", accept_data['id'])
-        friends = Friends.objects.filter(
-            id=accept_data['id']).update(is_friend=True)
-        serializer = FriendsSerializer(data=friends, many=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+        print("accept_data", accept_data['is_friend'])
+        if accept_data['is_friend'] == False:
+            # friends = Friends.objects.filter(
+            #     id=accept_data['id']).update(is_friend=True)
+            change = {
+                'is_friend': True
+            }
+            friends = Friends.objects.get(id=accept_data['id'])
+            serializer = FriendsSerializer(friends, data=change, partial=True)
+            if serializer.is_valid():
+                print("False Patch serializer")
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            print("Not Valid False Patch serializer")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+        if accept_data['is_friend'] == True:
+            print("--------true")
+            friends = Friends.objects.get(id=accept_data['id'])
+            friends.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+    if request.method == 'DELETE':
+        friends = Friends.objects.get(id=pk)
+        friends.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 # class FriendsAppView(APIView):
 

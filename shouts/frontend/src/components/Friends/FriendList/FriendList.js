@@ -10,22 +10,7 @@ function FriendList(props) {
   }, []);
 
   const friendlistdata = () => {
-    // fetch("/api/friendlist/", {
-    //   method: "GET",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     sender: "shekhar",
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) =>
-    //     props.dispatch({
-    //       type: "DisplayList",
-    //       payload: data,
-    //     })
-    //   );
-
-    const pk = props.user.id
+    const pk = props.user.id;
     axios.get(`/api/friendlist/${pk}`).then((res) =>
       props.dispatch({
         type: "DisplayList",
@@ -34,6 +19,15 @@ function FriendList(props) {
     );
   };
 
+  const unfriendRequest = (data) =>{
+    
+    axios
+      .patch(`/api/friendlist/${data.id}`, data)
+      .then((res)=>friendlistdata())
+      .catch((error) => console.log(error))
+
+  }
+
   // console.log("***********", props);
 
   return (
@@ -41,12 +35,24 @@ function FriendList(props) {
       <div>
         {props.friendList.map((data, item) => {
           return (
-            <p key={item}>
+            <div key={item}>
               {/* Chnage the name=shubham dynamically using state */}
-              {data.receiver === props.user.username
-                ? data.sender
-                : data.receiver}
-            </p>
+              {data.receiver === props.user.username ? (
+                <p>
+                  <span>{data.sender}</span>
+                  <button type="button" onClick={() => unfriendRequest(data)}>
+                    Unfriend
+                  </button>
+                </p>
+              ) : (
+                <p>
+                  <span>{data.receiver}</span>
+                  <button type="button" onClick={() => unfriendRequest(data)}>
+                    Unfriend
+                  </button>
+                </p>
+              )}
+            </div>
           );
         })}
       </div>

@@ -24,14 +24,17 @@ function RequestReceived(props) {
   const acceptRequest = (data) => {
     axios
       .patch(`/api/friendlist/${data.id}`, data)
-      // .then((res) => res.json())
-      .then((res) => {
-        props.dispatch({
-          type: "DisplayRequestsReceived",
-          payload: res.data,
-        });
-      });
+      .then((res)=>friendlistreceived())
+      .catch((error) => console.log(error))
+
   };
+
+  const rejectRequest =(data)=>{
+    axios
+      .delete(`/api/friendlist/${data.id}`, data)
+      .then((res)=>friendlistreceived())
+      .catch((error) => console.log(error))
+  }
 
   console.log("***********", props.requestReceived);
 
@@ -47,6 +50,9 @@ function RequestReceived(props) {
                   <span>{data.sender}</span>
                   <button type="button" onClick={() => acceptRequest(data)}>
                     Accept
+                  </button>
+                  <button type="button" onClick={() => rejectRequest(data)}>
+                    Reject
                   </button>
                 </p>
               )}
