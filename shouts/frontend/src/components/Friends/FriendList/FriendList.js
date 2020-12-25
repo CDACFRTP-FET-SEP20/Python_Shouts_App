@@ -7,7 +7,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import useStyles from "../UseStyle";
+import useStyles from "../UseStyles";
 
 function FriendList(props) {
   const classes = useStyles();
@@ -53,7 +53,7 @@ function FriendList(props) {
                         className={classes.large}
                       ></Avatar>
                       <Box m="auto" ml="1rem">
-                        {data.sender}
+                        {data.sender.toUpperCase()}
                       </Box>
                       <IconButton
                         aria-label="delete"
@@ -75,7 +75,7 @@ function FriendList(props) {
                         className={classes.large}
                       ></Avatar>
                       <Box m="auto" ml="1rem">
-                        {data.receiver}
+                        {data.receiver.toUpperCase()}
                       </Box>
                       <IconButton
                         aria-label="delete"

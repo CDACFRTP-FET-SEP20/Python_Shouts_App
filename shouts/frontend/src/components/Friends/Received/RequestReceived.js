@@ -8,7 +8,7 @@ import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import useStyles from "../UseStyle";
+import useStyles from "../UseStyles";
 
 function RequestReceived(props) {
   const classes = useStyles();
@@ -60,17 +60,15 @@ function RequestReceived(props) {
                       <Avatar
                         alt="Remy Sharp"
                         src="https://picsum.photos/id/1000/200/300"
-                        className={classes.large}
+                        className={classes.large.toUpperCase()}
                       ></Avatar>
                       <Box m="auto" ml="1rem">
                         {data.sender}
                       </Box>
-                      {/* <button type="button" onClick={() => acceptRequest(data)}>
-                        Accept
-                      </button> */}
                       <IconButton
                         aria-label="accept"
-                        color="primary"
+                        // color="primary"
+                        style={{ color: "green" }}
                         onClick={() => acceptRequest(data)}
                       >
                         <CheckCircleIcon />
@@ -78,7 +76,7 @@ function RequestReceived(props) {
                       <IconButton
                         aria-label="delete"
                         color="secondary"
-                        onClick={() => unfriendRequest(data)}
+                        onClick={() => rejectRequest(data)}
                       >
                         <DeleteIcon />
                       </IconButton>

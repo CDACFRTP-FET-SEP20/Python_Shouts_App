@@ -6,8 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
-import SendIcon from "@material-ui/icons/Send";
-import useStyles from "../UseStyle";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import useStyles from "../UseStyles";
 
 function RequestSent(props) {
   const classes = useStyles();
@@ -61,18 +61,15 @@ function RequestSent(props) {
                         className={classes.large}
                       ></Avatar>
                       <Box m="auto" ml="1rem">
-                        {data.username}
+                        {data.username.toUpperCase()}
                       </Box>
                       <IconButton
                         aria-label="accept"
                         color="primary"
                         onClick={() => sendRequest(data)}
                       >
-                        <SendIcon />
+                        <AddCircleIcon />
                       </IconButton>
-                      {/* <button type="button" onClick={() => sendRequest(data)}>
-                    send request
-                  </button> */}
                     </div>
                   </Paper>
                 </Grid>

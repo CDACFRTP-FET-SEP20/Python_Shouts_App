@@ -2,8 +2,8 @@ const initialState = {
   friendList: [],
   user: {
     id: 4,
-    bio: "safd dfd asfad af",
-    username: "Shekhar",
+    bio: "safd dfd fdf fdf adjfndksj bkjbdk jbdaj fbjkdb;kj bkadbgi kablh nd gajga bjfkab; afba asfad af",
+    username: "shekhar",
   },
 };
 

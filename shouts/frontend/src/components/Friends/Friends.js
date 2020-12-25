@@ -1,28 +1,70 @@
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import FriendList from "./FriendList/FriendList";
 import RequestSent from "./Sent/RequestSent";
 import RequestReceived from "./Received/RequestReceived";
+import Dashboard from "./Dashboard/Dashboard";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import useStyles from "./UseStyles";
+import { makeStyles } from "@material-ui/core/styles";
+
+const dashStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height: "100vh",
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.primary,
+    paddingTop: "2rem",
+    paddingBottom: "2rem",
+    // backgroundColor: '#e8eaf6'
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
+  cardFlex: {
+    display: "flex",
+    fontSize: 24,
+  },
+}));
 
 const Friends = () => {
+  const classes = useStyles();
+  const dashstyle = dashStyles();
   return (
     <div>
       <h1>Welcome to Friend Page</h1>
-      <Link to="/app/friendlist">My Friend List</Link>&nbsp;&nbsp;&nbsp;&nbsp;
-      <Link to="/app/requestsent">Make New Friends</Link>
-      &nbsp;&nbsp;&nbsp;&nbsp;
-      <Link to="/app/requestreceived">New Friend Requests Received</Link>
-      <Switch>
-        <Route path="/app/friendlist">
-          <FriendList />
-        </Route>
-        <Route path="/app/requestsent">
-          <RequestSent />
-        </Route>
-        <Route path="/app/requestreceived">
-          <RequestReceived />
-        </Route>
-      </Switch>
+      <div className={classes.root}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={4}>
+            <Paper
+              className={dashstyle.paper}
+              style={{ backgroundColor: "#ff1744" }}
+            >
+              <Dashboard />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            <Paper className={dashstyle.paper}>
+              <Switch>
+                <Route path="/friendlist">
+                  <FriendList />
+                </Route>
+                <Route path="/requestsent">
+                  <RequestSent />
+                </Route>
+                <Route path="/requestreceived">
+                  <RequestReceived />
+                </Route>
+              </Switch>
+            </Paper>
+          </Grid>
+        </Grid>
+      </div>
     </div>
   );
 };
