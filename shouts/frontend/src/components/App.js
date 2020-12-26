@@ -5,28 +5,53 @@ import GetShouts from "./Shouts/GetShouts";
 import store from "./RootReducer/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <BrowserRouter basename="/app">
-        <Link to="/shouts">Get Shouts</Link><br/>
-        <Link to="/create-shouts">Create Shouts</Link>
-          <Switch>
-            <Route path="/shouts">
-              <GetShouts />
-            </Route>
-          </Switch>
-          <Switch>
-            <Route path="/create-shouts">
-              <CreateShout />
-            </Route>
-          </Switch>
-        </BrowserRouter>
-        <h1>Hi</h1>
-      </Provider>
-    );
-  }
+import MyShouts from "./Shouts/MyShouts";
+import UserCard from "./userCard";
+import Header from "./Header/Header";
+import SideBar from "./SideBar/SideBar";
+import { makeStyles } from "@material-ui/core";
+import Feed from "./Feed/Feed";
+const useStyles = makeStyles({
+  App: {
+    backgroundColor: "#f1f2f5",
+  },
+  app__body: {
+    display: "flex",
+  },
+});
+function App() {
+  const classes = useStyles();
+
+  return (
+    <Provider store={store}>
+      <BrowserRouter basename="/app">
+        <div className={classes.App}>
+          <Header />
+
+          <div className={classes.app__body}>
+            <SideBar />
+            <Feed />
+          </div>
+        </div>
+        <Switch>
+          <Route path="/user">
+            <UserCard />
+          </Route>
+          <Route path="/shouts">
+            <GetShouts />
+          </Route>
+          <Route path="/mypost">
+            <MyShouts />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/create-shouts">
+            <CreateShout />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </Provider>
+  );
 }
 
 export default App;
