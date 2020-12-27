@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import { connect } from "react-redux";
+import ReactPlayer from "react-player";
+import ReactAudioPlayer from "react-audio-player";
 const useStyles = makeStyles({
   shout: {
     width: "100%",
@@ -65,36 +67,50 @@ const useStyles = makeStyles({
     },
   },
 });
-function Shout({ profilePic, image, username, timestamp, message }) {
+function Shout({ shouts }) {
   const classes = useStyles();
-  // useEffect(() => {
-  //   if (props.shouts.length === 0) {
-  //     fetch("/api/posts/")
-  //       .then((resp) => resp.json())
-  //       .then((data) =>
-  //         props.dispatch({
-  //           type: "setShouts",
-  //           payload: data,
-  //         })
-  //       );
-  //   }
-  // }, []);
+
   return (
     <div className={classes.shout}>
       <div className={classes.shout_top}>
-        <Avatar className={classes.shout__avatar} src={profilePic} />
+        <Avatar className={classes.shout__avatar} src="" />
         <div className={classes.shout__topInfo}>
-          <h3>{username}</h3>
-          <p>Time...</p>
+          <h3>{shouts.username}</h3>
+          <p>{shouts.date_posted}</p>
         </div>
       </div>
 
       <div className={classes.shout__bottom}>
-        <p>{message}</p>
+        <p>{shouts.title}</p>
+        <p>{shouts.description}</p>
       </div>
-      <div className={classes.shout__media}>
-        <img src={image} alt="" />
-      </div>
+      {/* ====================Video========================== */}
+      {shouts.post_type === "V" ? (
+        <div>
+          <ReactPlayer
+            width="100%"
+            height="100%"
+            url={shouts.media}
+            playing={true}
+            controls={true}
+            light={false}
+            loop={true}
+            volume={0}
+            muted={false}
+          />
+        </div>
+      ) : null}
+      {/* ====================Audio========================== */}
+      {shouts.post_type === "A" ? (
+        <ReactAudioPlayer src={shouts.media} controls />
+      ) : null}
+      {/* ====================Image========================== */}
+      {shouts.post_type === "I" ? (
+        <div className={classes.shout__media}>
+          <img src={shouts.media} alt="" />
+        </div>
+      ) : null}
+
       <div className={classes.shout__options}>
         <div className={classes.shout__option}>
           <ThumbUpIcon />
@@ -108,7 +124,5 @@ function Shout({ profilePic, image, username, timestamp, message }) {
     </div>
   );
 }
-const mapStateToProps = (state) => ({
-  shouts: state.shouts,
-});
-export default connect(mapStateToProps)(Shout);
+
+export default Shout;

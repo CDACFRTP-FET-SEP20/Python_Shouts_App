@@ -87,10 +87,7 @@ function Header() {
       </div>
       <div className={classes.header__center}>
         <div className={classes.header__option}>
-          <Link
-            to="/shouts"
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
+          <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
             <HomeIcon fontSize="large" />
           </Link>
         </div>

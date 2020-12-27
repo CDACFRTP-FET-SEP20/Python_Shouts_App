@@ -30,25 +30,18 @@ function App() {
 
           <div className={classes.app__body}>
             <SideBar />
-            <Feed />
+            <Switch>
+              <Route exact path="/">
+                <Feed />
+              </Route>
+            </Switch>
+            <Switch>
+              <Route path="/mypost">
+                <MyShouts />
+              </Route>
+            </Switch>
           </div>
         </div>
-        <Switch>
-          <Route path="/user">
-            <UserCard />
-          </Route>
-          <Route path="/shouts">
-            <GetShouts />
-          </Route>
-          <Route path="/mypost">
-            <MyShouts />
-          </Route>
-        </Switch>
-        <Switch>
-          <Route path="/create-shouts">
-            <CreateShout />
-          </Route>
-        </Switch>
       </BrowserRouter>
     </Provider>
   );

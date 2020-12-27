@@ -2,6 +2,8 @@ import { makeStyles } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import CreateShout from "./CreateShout";
 import Shout from "./Shout";
+import Text from "./Text";
+import { connect } from "react-redux";
 const useStyles = makeStyles({
   feed: {
     flex: 1,
@@ -11,29 +13,32 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
 });
-function Feed() {
+function Feed(props) {
   const classes = useStyles();
   const [shouts, setShouts] = useState([]);
+  useEffect(() => {
+    if (props.shouts.length === 0) {
+      fetch("/api/posts/")
+        .then((resp) => resp.json())
+        .then((data) =>
+          props.dispatch({
+            type: "setShouts",
+            payload: data,
+          })
+        );
+    }
+  }, []);
 
   return (
     <div className={classes.feed}>
       <CreateShout />
-      <Shout
-        key={1}
-        profilePic="https://images.unsplash.com/photo-1563306406-e66174fa3787?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NXx8Z2lybHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60"
-        message="This works"
-        username="Amy Santiago"
-        image="https://images.unsplash.com/photo-1608968037230-ff03de9aa22a?ixid=MXwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60"
-      />
-      <Shout
-        key={2}
-        profilePic="https://imag
-        es.unsplash.com/photo-1563306406-e66174fa3787?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NXx8Z2lybHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60"
-        message="This is text"
-        username="Amy Santiago"
-      />
+      {props.shouts.map((shout) => (
+        <Shout key={shout.post_id} shouts={shout} />
+      ))}
     </div>
   );
 }
-
-export default Feed;
+const mapStateToProps = (state) => ({
+  shouts: state.shouts,
+});
+export default connect(mapStateToProps)(Feed);
