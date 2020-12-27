@@ -5,6 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import VideocamIcon from "@material-ui/icons/Videocam";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import AudiotrackIcon from "@material-ui/icons/Audiotrack";
+import TextField from "@material-ui/core/TextField";
 import Modal from "@material-ui/core/Modal";
 import Cookies from "js-cookie";
 import dateFormat from "dateformat";
@@ -182,6 +183,9 @@ function CreateShout(props) {
       })
     );
     setOpenText(false);
+    setOpenAudio(false);
+    setOpenVideo(false);
+    setOpenImage(false);
   };
   return (
     <div className={classes.create__card}>
@@ -194,29 +198,46 @@ function CreateShout(props) {
               <h2>Create post</h2>
             </div>
             {/* ==============Title================== */}
-            <div className={classes.create__top}>
+            <div>
               <Avatar />
+
+              <span>
+                <p>Amy Santiago</p>
+              </span>
+
               <form onSubmit={handleSubmit}>
-                <input
-                  className={classes.create__input}
-                  name="title"
+                <TextField
+                  required
+                  label="Title"
+                  type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  type="text"
-                  placeholder="Title"
+                  name="title"
+                  fullWidth={true}
                 />
                 {/* ==========Content=============== */}
-                <textarea
-                  className={classes.textmodaltextArea}
+                <TextField
+                  required
                   name="description"
+                  label="description"
+                  multiline={true}
+                  rowsMax="4"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  type="text"
-                  placeholder="What's on your mind,Amy?"
-                ></textarea>
+                  margin="normal"
+                  fullWidth={true}
+                />
+
                 {/* ==================Post Button========== */}
                 <div className={classes.postButton}>
-                  <Button type="submit">Post</Button>
+                  <Button
+                    type="submit"
+                    onClick={() => {
+                      setMedia("");
+                    }}
+                  >
+                    Post
+                  </Button>
                 </div>
               </form>
             </div>
@@ -235,19 +256,23 @@ function CreateShout(props) {
             <div className={classes.create__top}>
               <Avatar />
               <form onSubmit={handleSubmit}>
-                <input
+                <TextField
+                  required
                   className={classes.create__input}
-                  name="title"
+                  label="Title"
+                  type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  type="text"
-                  placeholder="Title"
+                  name="title"
+                  fullWidth={true}
                 />
                 {/* ==========Upload Video=============== */}
                 <div>
                   <span>Upload Video</span>
                   <input
+                    accept="video/*"
                     type="file"
+                    required
                     onChange={(e) => setMedia(e.target.files[0])}
                   />
                 </div>
@@ -257,6 +282,7 @@ function CreateShout(props) {
                     type="submit"
                     onClick={() => {
                       setPostType("V");
+                      setDescription("");
                     }}
                   >
                     Post
@@ -279,18 +305,22 @@ function CreateShout(props) {
             <div className={classes.create__top}>
               <Avatar />
               <form onSubmit={handleSubmit}>
-                <input
+                <TextField
+                  required
                   className={classes.create__input}
-                  name="title"
+                  label="Title"
+                  type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  type="text"
-                  placeholder="Title"
+                  name="title"
+                  fullWidth={true}
                 />
-                {/* ==========Upload Video=============== */}
+                {/* ==========Upload Audio=============== */}
                 <div>
                   <span>Upload Audio</span>
                   <input
+                    required
+                    accept="audio/*"
                     type="file"
                     onChange={(e) => setMedia(e.target.files[0])}
                   />
@@ -301,6 +331,7 @@ function CreateShout(props) {
                     type="submit"
                     onClick={() => {
                       setPostType("A");
+                      setDescription("");
                     }}
                   >
                     Post
@@ -323,18 +354,23 @@ function CreateShout(props) {
             <div className={classes.create__top}>
               <Avatar />
               <form onSubmit={handleSubmit}>
-                <input
+                <TextField
+                  required
                   className={classes.create__input}
-                  name="title"
+                  label="Title"
+                  type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  type="text"
-                  placeholder="Title"
+                  name="title"
+                  fullWidth={true}
                 />
-                {/* ==========Upload Video=============== */}
+
+                {/* ==========Upload Image=============== */}
                 <div>
-                  <span>Upload Audio</span>
+                  <span>Upload Image</span>
                   <input
+                    required
+                    accept="image/*"
                     type="file"
                     onChange={(e) => setMedia(e.target.files[0])}
                   />
@@ -345,6 +381,7 @@ function CreateShout(props) {
                     type="submit"
                     onClick={() => {
                       setPostType("I");
+                      setDescription("");
                     }}
                   >
                     Post
@@ -367,13 +404,14 @@ function CreateShout(props) {
           />
         </form>
       </div>
+      {/* ========================Audio/Video/Image Section=================== */}
       <div className={classes.create__bottom}>
         <div className={classes.create__option} onClick={handleOpenVideo}>
           <VideocamIcon style={{ color: "red" }} />
           <h3>Video</h3>
         </div>
-        <div className={classes.create__option}>
-          <AddAPhotoIcon style={{ color: "green" }} onClick={handleOpenImage} />
+        <div className={classes.create__option} onClick={handleOpenImage}>
+          <AddAPhotoIcon style={{ color: "green" }} />
           <h3>Photo</h3>
         </div>
         <div className={classes.create__option} onClick={handleOpenAudio}>

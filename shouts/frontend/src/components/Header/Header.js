@@ -4,6 +4,7 @@ import { Avatar, IconButton, makeStyles } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import AddIcon from "@material-ui/icons/Add";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
+import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 const useStyles = makeStyles({
   header: {
@@ -96,10 +97,10 @@ function Header() {
         </div>
         <div className={classes.header__option}>
           <Link
-            to="/create-shouts"
+            to="/logout"
             style={{ color: "inherit", textDecoration: "none" }}
           >
-            <AddIcon fontSize="large" />
+            <PowerSettingsNewIcon fontSize="large" />
           </Link>
         </div>
       </div>

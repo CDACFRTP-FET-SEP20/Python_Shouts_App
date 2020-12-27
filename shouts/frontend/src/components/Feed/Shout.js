@@ -1,10 +1,15 @@
 import { Avatar, makeStyles } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import { connect } from "react-redux";
 import ReactPlayer from "react-player";
 import ReactAudioPlayer from "react-audio-player";
+import Fab from "@material-ui/core/Fab";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
+import DeleteModal from "./DeleteModal";
+import EditModal from "./EditModal";
 const useStyles = makeStyles({
   shout: {
     width: "100%",
@@ -66,18 +71,72 @@ const useStyles = makeStyles({
       borderRadius: "10px",
     },
   },
+  editButtons: {
+    position: "absolute",
+    right: "50px",
+  },
+  deleteButtons: {
+    position: "absolute",
+    right: "10px",
+  },
 });
 function Shout({ shouts }) {
   const classes = useStyles();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [postTitle, setPostTitle] = useState("");
+  const [postId, setPostId] = useState("");
+  const [postContent, setPostContent] = useState("");
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setEditModalOpen(false);
+  };
+  const onDeletePost = (postTitle, postId) => {
+    console.log("delete");
+    setModalOpen(true);
+    setPostTitle(postTitle);
+    setPostId(postId);
+  };
+  const onEditePost = (postContent, postTitle, postId) => {
+    setEditModalOpen(true);
+    setPostContent(postContent);
+    setPostTitle(postTitle);
+    setPostId(postId);
+  };
+  console.log(shouts.username);
 
   return (
     <div className={classes.shout}>
       <div className={classes.shout_top}>
         <Avatar className={classes.shout__avatar} src="" />
+
         <div className={classes.shout__topInfo}>
           <h3>{shouts.username}</h3>
           <p>{shouts.date_posted}</p>
         </div>
+        {shouts.username === "Amy Santiago" ? (
+          <div>
+            <Fab
+              style={{ marginRight: 5 }}
+              className={classes.editButtons}
+              color="primary"
+              size="small"
+              aria-label="edit"
+              onClick={(e) => onEditePost(postContent, postTitle, postId)}
+            >
+              <EditIcon />
+            </Fab>
+            <Fab
+              color="secondary"
+              size="small"
+              aria-label="delete"
+              className={classes.deleteButtons}
+              onClick={(e) => onDeletePost(postTitle, postId)}
+            >
+              <DeleteIcon />
+            </Fab>
+          </div>
+        ) : null}
       </div>
 
       <div className={classes.shout__bottom}>
@@ -121,6 +180,19 @@ function Shout({ shouts }) {
           <p>Comment</p>
         </div>
       </div>
+      <DeleteModal
+        open={modalOpen}
+        handleClose={handleModalClose}
+        postTitle={shouts.title}
+        postId={shouts.post_id}
+      />
+      <EditModal
+        open={editModalOpen}
+        handleClose={handleModalClose}
+        postTitle={shouts.title}
+        postContent={shouts.description}
+        postId={shouts.post_id}
+      />
     </div>
   );
 }

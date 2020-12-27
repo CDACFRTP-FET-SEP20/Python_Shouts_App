@@ -36,7 +36,7 @@ class Posts(models.Model):
     
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 
 class Likes(models.Model):

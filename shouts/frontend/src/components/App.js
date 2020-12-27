@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { render } from "react-dom";
 import CreateShout from "./Shouts/CreateShout";
 import GetShouts from "./Shouts/GetShouts";
@@ -11,6 +11,9 @@ import Header from "./Header/Header";
 import SideBar from "./SideBar/SideBar";
 import { makeStyles } from "@material-ui/core";
 import Feed from "./Feed/Feed";
+import AddModal from "./Feed/addModal";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 const useStyles = makeStyles({
   App: {
     backgroundColor: "#f1f2f5",
@@ -21,7 +24,13 @@ const useStyles = makeStyles({
 });
 function App() {
   const classes = useStyles();
-
+  const [open, setOpen] = useState(false);
+  const handleModal = () => {
+    setOpen(false);
+  };
+  const onOpenModal = () => {
+    setOpen(true);
+  };
   return (
     <Provider store={store}>
       <BrowserRouter basename="/app">
