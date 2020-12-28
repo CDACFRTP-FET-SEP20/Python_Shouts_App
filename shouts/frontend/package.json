@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production ./src/index.js --output-path ./static/frontend",
-    "dev": "webpack --mode development ./src/index.js --output-path ./static/frontend",
+    "dev": "webpack --mode development ./src/index.js --output-path ./static/frontend --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

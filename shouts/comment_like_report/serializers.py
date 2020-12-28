@@ -40,13 +40,13 @@ class CommentSerializer(serializers.ModelSerializer):
     # date= datetime.strftime(ShoutComment.date,"%Y-%m-%d")
     shout_id = serializers.SlugRelatedField(
         queryset = Shout.objects.all(),
-        many = True,
+        # many = True,
         slug_field = 'id',
     )
 
     user_id = serializers.SlugRelatedField(
         queryset = UserProfile.objects.all(),
-        many = True,
+        # many = True,
         slug_field = 'id',
     )
     class Meta:
