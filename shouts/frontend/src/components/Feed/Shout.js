@@ -103,7 +103,7 @@ function Shout({ shouts }) {
     setPostTitle(postTitle);
     setPostId(postId);
   };
- 
+
 
   return (
     <div className={classes.shout}>

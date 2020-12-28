@@ -8,16 +8,20 @@ import Icon from "@material-ui/core/Icon";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 import Cookies from "js-cookie";
+
 import { updatePost } from "../../actions/PostActions";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     top: "calc(50% - 9rem)",
     left: "calc(50% - 13rem)",
     width: "80vmin",
+
     borderRadius: "15px",
     backgroundColor: "white",
     outline: 0,
+
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     color: "#ccc",
@@ -43,11 +47,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function EditModal(props) {
   const classes = useStyles();
   const [values, setValues] = useState({
     title: props.postTitle,
     description: props.postContent,
+
     username: "21972bf4-f2c5-4658-b08a-6378034f8ee1",
   });
 
@@ -57,11 +63,13 @@ function EditModal(props) {
   // change the state each time the component rerender
   useEffect(() => {
     setValues({
+
       title: props.postTitle,
       description: props.postContent,
       username: "21972bf4-f2c5-4658-b08a-6378034f8ee1",
     });
   }, [props.postTitle, props.postContent]);
+
 
   const onInputChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -69,6 +77,7 @@ function EditModal(props) {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
+
 
     setValues({ ...values, [e.target.name]: e.target.value });
     updatePost(props, values);
@@ -81,6 +90,7 @@ function EditModal(props) {
     setValues({
       title: props.postTitle,
       description: props.postContent,
+
       username: "21972bf4-f2c5-4658-b08a-6378034f8ee1",
     });
   };
@@ -90,8 +100,10 @@ function EditModal(props) {
       <Modal
         aria-labelledby="title"
         aria-describedby="description"
+
         open={props.open}
         onClose={props.onCloseModal}
+
       >
         <div className={classes.paper}>
           <h2 className={classes.h2} id="title">
@@ -109,11 +121,14 @@ function EditModal(props) {
             />
             <TextField
               required
+
               name="description"
               label="description"
               multiline={true}
               rowsMax="4"
               value={values.description}
+
+
               onChange={onInputChange}
               margin="normal"
               fullWidth={true}
