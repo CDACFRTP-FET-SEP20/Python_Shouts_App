@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
@@ -6,6 +6,10 @@ import Grid from "@material-ui/core/Grid";
 import useStyle from "../UseStyles";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
+import {
+  friendlistreceived,
+  friendlistdata,
+} from "../../Services/FriendService";
 
 function Dashboard(props) {
   const classes = useStyle();
@@ -14,6 +18,13 @@ function Dashboard(props) {
     marginBottom: "1rem",
     textDecoration: "none",
   };
+
+  useEffect(() => {
+    friendlistreceived(props);
+    friendlistdata(props);
+
+    return () => console.log("*****Dashboard*********");
+  }, []);
 
   return (
     <div className={classes.cardDashboard}>
@@ -30,7 +41,9 @@ function Dashboard(props) {
       </Box>
 
       <Link to="/friendlist" style={links}>
-        <Paper className={classes.paper}>Friends</Paper>
+        <Paper className={classes.paper}>
+          Friends({props.friendList.length})
+        </Paper>
       </Link>
 
       <Link to="/requestsent" style={links}>
@@ -38,7 +51,9 @@ function Dashboard(props) {
       </Link>
 
       <Link to="/requestreceived" style={links}>
-        <Paper className={classes.paper}>Friend Requests</Paper>
+        <Paper className={classes.paper}>
+          Friend Requests({props.requestReceived.length})
+        </Paper>
       </Link>
     </div>
   );

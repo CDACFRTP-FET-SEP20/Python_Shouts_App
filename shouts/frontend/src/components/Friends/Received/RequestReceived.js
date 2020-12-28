@@ -9,38 +9,39 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import useStyles from "../UseStyles";
+import { friendlistreceived } from "../../Services/FriendService";
 
 function RequestReceived(props) {
   const classes = useStyles();
-  useEffect(() => {
-    friendlistreceived();
+  // useEffect(() => {
+  //   friendlistreceived(props);
 
-    return () =>
-      console.log("***************FriendRequestsReceivedList Unmounted");
-  }, []);
-  const pk = props.user.id;
-  const friendlistreceived = () => {
-    fetch(`/api/requestreceived/${pk}`)
-      .then((res) => res.json())
-      .then((data) =>
-        props.dispatch({
-          type: "DisplayRequestsReceived",
-          payload: data,
-        })
-      );
-  };
+  //   return () =>
+  //     console.log("***************FriendRequestsReceivedList Unmounted");
+  // }, []);
+  // const pk = props.user.id;
+  // const friendlistreceived = () => {
+  //   fetch(`/api/requestreceived/${pk}`)
+  //     .then((res) => res.json())
+  //     .then((data) =>
+  //       props.dispatch({
+  //         type: "DisplayRequestsReceived",
+  //         payload: data,
+  //       })
+  //     );
+  // };
 
   const acceptRequest = (data) => {
     axios
       .patch(`/api/friendlist/${data.id}`, data)
-      .then((res) => friendlistreceived())
+      .then((res) => friendlistreceived(props))
       .catch((error) => console.log(error));
   };
 
   const rejectRequest = (data) => {
     axios
       .delete(`/api/friendlist/${data.id}`, data)
-      .then((res) => friendlistreceived())
+      .then((res) => friendlistreceived(props))
       .catch((error) => console.log(error));
   };
 
@@ -54,16 +55,16 @@ function RequestReceived(props) {
             <Grid container spacing={3} key={item}>
               {/* Chnage the name=shubham dynamically using state */}
               {data.sender === props.user.username ? null : (
-                <Grid item xs={12}>
+                <Grid item xs={12} className="media-500">
                   <Paper className={classes.paper}>
                     <div className={classes.cardFlex}>
                       <Avatar
                         alt="Remy Sharp"
                         src="https://picsum.photos/id/1000/200/300"
-                        className={classes.large.toUpperCase()}
+                        className={classes.large}
                       ></Avatar>
                       <Box m="auto" ml="1rem">
-                        {data.sender}
+                        {data.sender.toUpperCase()}
                       </Box>
                       <IconButton
                         aria-label="accept"

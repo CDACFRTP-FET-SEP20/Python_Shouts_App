@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=D:\Cybage\Shout\Python_Shouts_App\venv"
+set "VIRTUAL_ENV=D:\Shouts\Shouts new1\Python_Shouts_App\venv"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

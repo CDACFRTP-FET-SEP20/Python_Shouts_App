@@ -6,31 +6,32 @@ import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
+import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import useStyles from "../UseStyles";
+import { friendlistdata } from "../../Services/FriendService";
 
 function FriendList(props) {
   const classes = useStyles();
-  useEffect(() => {
-    friendlistdata();
+  // useEffect(() => {
+  //   friendlistdata(props);
 
-    return () => console.log("***************FriendList Unmounted");
-  }, []);
+  //   return () => console.log("***************FriendList Unmounted");
+  // }, []);
 
-  const friendlistdata = () => {
-    const pk = props.user.id;
-    axios.get(`/api/friendlist/${pk}`).then((res) =>
-      props.dispatch({
-        type: "DisplayList",
-        payload: res.data,
-      })
-    );
-  };
+  // const friendlistdata = () => {
+  //   const pk = props.user.id;
+  //   axios.get(`/api/friendlist/${pk}`).then((res) =>
+  //     props.dispatch({
+  //       type: "DisplayList",
+  //       payload: res.data,
+  //     })
+  //   );
+  // };
 
   const unfriendRequest = (data) => {
     axios
       .patch(`/api/friendlist/${data.id}`, data)
-      .then((res) => friendlistdata())
+      .then((res) => friendlistdata(props))
       .catch((error) => console.log(error));
   };
 
@@ -60,7 +61,7 @@ function FriendList(props) {
                         color="secondary"
                         onClick={() => unfriendRequest(data)}
                       >
-                        <DeleteIcon />
+                        <RemoveCircleIcon />
                       </IconButton>
                     </div>
                   </Paper>
@@ -82,7 +83,7 @@ function FriendList(props) {
                         color="secondary"
                         onClick={() => unfriendRequest(data)}
                       >
-                        <DeleteIcon />
+                        <RemoveCircleIcon />
                       </IconButton>
                     </div>
                   </Paper>

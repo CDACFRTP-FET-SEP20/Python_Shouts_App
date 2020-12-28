@@ -52,7 +52,7 @@ function RequestSent(props) {
             <Grid container spacing={3} key={item}>
               {/* Chnage the name=shubham dynamically using state */}
               {data.username === props.user.username ? null : (
-                <Grid item xs={12}>
+                <Grid item xs={12} className="media-500">
                   <Paper className={classes.paper}>
                     <div className={classes.cardFlex}>
                       <Avatar

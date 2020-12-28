@@ -9,9 +9,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Hi</h1>
         <Provider store={store}>
-          <BrowserRouter basename='/app'>
+          <BrowserRouter basename="/app">
             <Friends></Friends>
           </BrowserRouter>
         </Provider>

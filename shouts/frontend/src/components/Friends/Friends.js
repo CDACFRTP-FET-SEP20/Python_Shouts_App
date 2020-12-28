@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import useStyles from "./UseStyles";
 import { makeStyles } from "@material-ui/core/styles";
 
+
 const dashStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -30,6 +31,7 @@ const dashStyles = makeStyles((theme) => ({
     display: "flex",
     fontSize: 24,
   },
+  
 }));
 
 const Friends = () => {
@@ -37,7 +39,6 @@ const Friends = () => {
   const dashstyle = dashStyles();
   return (
     <div>
-      <h1>Welcome to Friend Page</h1>
       <div className={classes.root}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
