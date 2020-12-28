@@ -23,3 +23,7 @@ export const friendlistreceived = (props) => {
       })
     );
 };
+
+export const searchField = (value) => {
+  console.log(value);
+};

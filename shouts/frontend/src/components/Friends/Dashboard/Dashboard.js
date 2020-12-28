@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
@@ -9,15 +9,34 @@ import Box from "@material-ui/core/Box";
 import {
   friendlistreceived,
   friendlistdata,
+  searchField,
 } from "../../Services/FriendService";
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 function Dashboard(props) {
   const classes = useStyle();
+
+  const [searchState, setsearchState] = useState("friend");
+
+  const changeSearchState = (e) => {
+    console.log(searchState);
+    setsearchState(e);
+  };
+
   const links = {
     color: "A500",
     marginBottom: "1rem",
     textDecoration: "none",
   };
+
+  const stringArray = props.friendList.map((item) =>
+    props.user.username != item.receiver ? item.receiver : item.sender
+  );
+
+  console.log(props.friendList);
+
+  console.log("---------", stringArray);
 
   useEffect(() => {
     friendlistreceived(props);
@@ -40,17 +59,47 @@ function Dashboard(props) {
         {props.user.bio}
       </Box>
 
-      <Link to="/friendlist" style={links}>
+      <Autocomplete
+        freeSolo
+        id="free-solo-2-demo"
+        disableClearable
+        options={stringArray.map((option) => option)}
+        onChange={(event, value) => searchField(value)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Search input"
+            margin="normal"
+            variant="outlined"
+            InputProps={{ ...params.InputProps, type: "search" }}
+            color="secondary"
+          />
+        )}
+      />
+
+      <Link
+        to="/friendlist"
+        style={links}
+        onClick={() => changeSearchState("friend")}
+      >
         <Paper className={classes.paper}>
           Friends({props.friendList.length})
         </Paper>
       </Link>
 
-      <Link to="/requestsent" style={links}>
+      <Link
+        to="/requestsent"
+        style={links}
+        onClick={() => changeSearchState("requestsent")}
+      >
         <Paper className={classes.paper}>Search Friends</Paper>
       </Link>
 
-      <Link to="/requestreceived" style={links}>
+      <Link
+        to="/requestreceived"
+        style={links}
+        onClick={() => changeSearchState("requestreceived")}
+      >
         <Paper className={classes.paper}>
           Friend Requests({props.requestReceived.length})
         </Paper>

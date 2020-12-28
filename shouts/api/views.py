@@ -132,12 +132,16 @@ class ProfileView(viewsets.ModelViewSet):
 @api_view(['GET'])
 def FriendRequestList(request, pk):
     filter_obj = Profile.objects.get(id=pk)
+    # friends = Friends.objects.filter(
+    #     sender=filter_obj, is_friend=False
+    # ).union(
+    #     Friends.objects.filter(
+    #         receiver=filter_obj, is_friend=False
+    #     ))
     friends = Friends.objects.filter(
-        sender=filter_obj, is_friend=False
-    ).union(
-        Friends.objects.filter(
-            receiver=filter_obj, is_friend=False
-        ))
+            receiver=filter_obj,
+            is_friend=False
+            )
     serializer = FriendsSerializer(friends, many=True)
     return Response(serializer.data)
 

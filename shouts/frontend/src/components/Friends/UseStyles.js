@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     fontSize: 18,
   },
+  autoComplete:{
+    color: 'white'
+  },
 }));
 
 export default useStyles;
