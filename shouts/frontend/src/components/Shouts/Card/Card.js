@@ -49,9 +49,9 @@ function Cards({ shouts }) {
     setExpanded(!expanded);
   };
 
-  const avatar=shouts.username.charAt(0)
+  const avatar = shouts.username.charAt(0);
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} key={shouts.post_id}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
@@ -66,6 +66,7 @@ function Cards({ shouts }) {
         title={shouts.username}
         subheader={shouts.date_posted}
       />
+
       {/* ====================Image========================== */}
       {shouts.post_type === "I" ? (
         <CardMedia
@@ -85,14 +86,14 @@ function Cards({ shouts }) {
             controls={true}
             light={false}
             loop={true}
-            volume={1}
+            volume={0}
             muted={false}
           />
         </div>
       ) : null}
       {/* ====================Audio========================== */}
       {shouts.post_type === "A" ? (
-        <ReactAudioPlayer src={shouts.media}  controls />
+        <ReactAudioPlayer src={shouts.media} controls />
       ) : null}
       {/* ====================Text========================== */}
       <CardContent>

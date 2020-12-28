@@ -20,7 +20,7 @@ function GetShouts(props) {
   return (
     <div>
       {props.shouts.map((shout) => (
-        <Cards key={shout.post_id} shouts={shout} />
+        <Cards key={shout.post_id} shouts={shout} delete={false}/>
       ))}
     </div>
   );

@@ -20,7 +20,7 @@ class PostsSerializer(serializers.ModelSerializer):
         model=Posts
         
        
-        fields=("post_type","title","description","date_posted","media","username")
+        fields="__all__"
             
     
     def to_representation(self, instance):

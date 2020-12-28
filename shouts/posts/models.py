@@ -29,14 +29,14 @@ class Posts(models.Model):
         default=TEXT,
     )
     title=models.CharField(max_length=500,default="",null=True)
-    description=models.CharField(max_length=1000,default="",null=True,blank=True)
+    description=models.CharField(max_length=1000,default="",null=True)
     date_posted = models.DateTimeField(blank=True,null=True,default=timezone.now)
     username=models.ForeignKey(Users, on_delete=models.CASCADE,related_name="author")
     media=models.FileField(upload_to='media/post',default="",null=True,blank=True)
     
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 
 class Likes(models.Model):

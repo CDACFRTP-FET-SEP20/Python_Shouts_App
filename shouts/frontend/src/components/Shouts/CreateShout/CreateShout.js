@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import Cookies from "js-cookie";
-import dateFormat from 'dateformat';
+import dateFormat from "dateformat";
 
 function CreateShout(props) {
   const [formData, setFormData] = useState({});
@@ -16,17 +16,12 @@ function CreateShout(props) {
     setFormData({ ...formData, [name]: value });
   }
   const csrftoken = Cookies.get("csrftoken");
-  console.log(csrftoken);
-  const { title,post_type,description} = formData;
+
+  const { title, post_type, description } = formData;
 
   var date = new Date();
-  console.log(dateFormat(date, "yyyy-mm-dd hh:mm")
-  )
-  var post_date=dateFormat(date, "yyyy-mm-dd hh:mm")
-  
-  
-  
 
+  var post_date = dateFormat(date, "yyyy-mm-dd hh:mm");
 
   //===========================Form Submit Function============================
   function handleFormSubmit(e) {
@@ -39,20 +34,22 @@ function CreateShout(props) {
     uploadData.append("date_posted", post_date);
     uploadData.append("username", "21972bf4-f2c5-4658-b08a-6378034f8ee1");
     uploadData.append("media", media);
-  
-  axios({
-        method:"post",
-        url:"/api/posts/",
-        data:uploadData,
-        headers:{
-          "X-CSRFToken":csrftoken
-        }
-      }).then((res)=>props.dispatch({
-        type:"createShouts",
-          payload:res
-      }))
-      // history.push('/shouts')
-    }
+
+    axios({
+      method: "post",
+      url: "/api/posts/",
+      data: uploadData,
+      headers: {
+        "X-CSRFToken": csrftoken,
+      },
+    }).then((res) =>
+      props.dispatch({
+        type: "createShouts",
+        payload: res,
+      })
+    );
+    history.push('/shouts')
+  }
   return (
     <div>
       <div>
@@ -61,22 +58,38 @@ function CreateShout(props) {
       <form onSubmit={handleFormSubmit}>
         <div>
           <label>Title: </label>
-          <input type="text" name="title" value={title} onChange={handleInputChange}/>
+          <input
+            type="text"
+            name="title"
+            value={title}
+            onChange={handleInputChange}
+          />
         </div>
         <div>
           <label>Content Type</label>
-          <select name="post_type" value={post_type} onChange={handleInputChange}>
+          <select
+            name="post_type"
+            value={post_type}
+            onChange={handleInputChange}
+          >
             <option value="I">Image</option>
-            <option value="A" selected>Audio</option>
+            <option value="A" selected>
+              Audio
+            </option>
             <option value="V">Video</option>
             <option value="T">Text</option>
           </select>
         </div>
         <div>
           <label>description: </label>
-          <input type="text" name="description" value={description} onChange={handleInputChange}/>
+          <input
+            type="text"
+            name="description"
+            value={description}
+            onChange={handleInputChange}
+          />
         </div>
-       
+
         {/*===============Render required component according to content type=============  */}
         {post_type !== "T" ? (
           <div>
@@ -111,4 +124,3 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 export default connect(mapStateToProps)(CreateShout);
-
