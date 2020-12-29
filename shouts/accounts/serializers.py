@@ -46,3 +46,4 @@ class LoginSerializer(serializers.Serializer):
             raise exceptions.ValidationError(msg)
 
         return data
+

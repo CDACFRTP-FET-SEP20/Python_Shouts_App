@@ -1,5 +1,15 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { Grid, Paper, Avatar, TextField } from "@material-ui/core";
+import LockRoundedIcon from "@material-ui/icons/LockRounded";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  avatarTheme: {
+    color: "blue",
+    background: "linear-gradient(to right, #00d2ff, #3a7bd5)",
+  },
+});
 
 function login(props) {
   const [formData, setFormData] = useState({
@@ -27,51 +37,95 @@ function login(props) {
       },
     })
       .then((respone) => respone.json())
-      .then((data) =>
-        props.dispatch({
-          type: "AddToken",
-          payload: data.token,
-        })
+      .then(
+        (data) =>
+          props.dispatch({
+            type: "AddToken",
+            payload: data,
+          })
+        // console.log(data)
       );
   };
 
-  console.log("Token", props.token);
+  const paperStyle = {
+    padding: 20,
+    height: "70vh",
+    width: 350,
+    margin: "50px auto",
+  };
+
+  const classes = useStyles();
 
   return (
-    <div>
-      <h1>Login Page</h1>
+    <>
+      {/* <div>
+        <h1>Login Page</h1>
 
-      <form>
-        <div>
-          <label>Email</label>
-          <input
-            type="text"
-            value={formData.email}
-            onChange={handleChange}
-            name="email"
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            name="password"
-          />
-        </div>
+        <form>
+          <div>
+            <label>Email</label>
+            <input
+              type="text"
+              value={formData.email}
+              onChange={handleChange}
+              name="email"
+            />
+          </div>
+          <div>
+            <label>Password</label>
+            <input
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              name="password"
+            />
+          </div>
 
-        <button type="submit" onClick={handleSubmit}>
-          Login
-        </button>
-      </form>
-    </div>
+          <button type="submit" onClick={handleSubmit}>
+            Login
+          </button>
+        </form>
+
+        <h2>User Image</h2>
+        <img src={`data:image/png;base64,${props.user.user_image}`} />
+      </div> */}
+
+      <div>
+        <Grid>
+          <Paper elevation={10} style={paperStyle}>
+            <Grid align="center">
+              <Avatar className={classes.avatarTheme}>
+                <LockRoundedIcon />
+              </Avatar>
+              <h2>Sign In</h2>
+            </Grid>
+
+            <TextField label="Email" placeholder="email" fullWidth required />
+            <TextField
+              label="Password"
+              placeholder="password"
+              type="password"
+              fullWidth
+              required
+            />
+
+            <TextField
+              label="Confirm Password"
+              placeholder="Confirm"
+              type="password"
+              fullWidth
+              required
+            />
+          </Paper>
+        </Grid>
+      </div>
+    </>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    token: state.login,
+    user: state.login,
   };
 };
 
