@@ -15,7 +15,8 @@ from rest_framework import routers
 
 
 router = routers.DefaultRouter()
-router.register('shout', ShoutViewSet)
+router.register(r'shout', ShoutViewSet)
+router.register(r'user',UserViewSet)
 
 user_list = UserViewSet.as_view({
     "get" : "list",
@@ -55,6 +56,12 @@ like_list = LikeViewSet.as_view({
     "post" : "create"
 })
 
+like_details = LikeViewSet.as_view({
+    "get" : "retrieve",
+    "patch" : "partial_update",
+    "delete" : "destroy"
+})
+
 report_list = ReportViewSet.as_view({
     "get" : "list",
     "post" : "create"
@@ -64,11 +71,12 @@ report_list = ReportViewSet.as_view({
 urlpatterns = [
     path('' ,include(router.urls)),
     path('user/', user_list, name = 'user_list'),
-    path('userDetails/<str:pk>', user_details, name = 'user'),
-    path('shout/', shout_list, name = 'shout'),
-    path('shoutDetails/<str:pk>', shout_details, name = 'shout_details'),
+    path('user/<str:pk>', user_details, name = 'user_details'),
+    path('shout/', shout_list, name = 'shout_list'),
+    path('shout/<str:pk>', shout_details, name = 'shout_details'),
     path('shoutcomment/', comment_list, name = 'shoutcomment'),
-   # path('commentDetails/<str:pk>', comment_details, name = 'comment_details'),
+    # path('commentDetails/<str:pk>', comment_details, name = 'comment_details'),
     path('shoutlike/', like_list, name = 'shoutlike'),
+    path('likeDelete/<str:pk>', like_details, name = 'like_Delete'),
     path('shoutreport/', report_list, name = 'shoutreport'),
 ]

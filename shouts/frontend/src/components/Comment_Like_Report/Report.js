@@ -4,9 +4,7 @@ import axios from "axios";
 import Cookies from 'js-cookie'
 
 
-function Like(props) {
-
-  const [isLiked, setIsLiked] = useState(true)
+function Report(props) {
 
     const csrftoken = Cookies.get("csrftoken")
     console.log(csrftoken)
@@ -16,13 +14,13 @@ function Like(props) {
         shout_id: "91b38b17-75d3-4ef5-ab1d-ad31e6e20fac",
       });
 
-      console.log("props of Likes", props);
+      console.log("props of Report", props);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("formdata", formData);
     
-        fetch("http://localhost:8000/comment_like_report/shoutlike/", {
+        fetch("http://localhost:8000/comment_like_report/shoutreport/", {
           method: "POST",
           body: JSON.stringify(formData),
           headers: {
@@ -38,33 +36,13 @@ function Like(props) {
           // }),
           console.log(data+"data")
           );
-
-          setIsLiked(false)
-
-      //   axios
-      // .patch(`http://localhost:8000/comment_like_report/shoutlike/`, data)
-      // .then((res) => friendlistreceived(props))
-      // .catch((error) => console.log(error));
-      // console.log(data + "data")
       };
-
-      const handleUnlike=(e)=>{
-        e.preventDefault();
-        setIsLiked(true)
-      }
 
     return (
         <div>
             <form action="" >
-                <p>This is like</p>
-                {isLiked ?
-                (
-                  <button type="submit" name="like_button" value="like" onClick={handleSubmit}>Like</button>
-                ) : (
-                  <button type="submit" name="like_button" value="like" onClick={handleUnlike}>UnLike</button>
-                )}
-                  
-                  
+                <p>This is Report</p>
+                  <button type="submit" name="like_button" value="like" onClick={handleSubmit}>Report</button>
             </form>
         </div>
     )
@@ -72,8 +50,8 @@ function Like(props) {
 
 const mapStateToProps = (state) => {
     return {
-      like: state.like,
+      report: state.report,
     };
   };
   
-  export default connect(mapStateToProps)(Like);
+  export default connect(mapStateToProps)(Report);

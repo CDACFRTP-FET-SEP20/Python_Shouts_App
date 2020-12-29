@@ -23,6 +23,12 @@ class ShoutSerializer(serializers.ModelSerializer):
         slug_field = 'id',
     )
 
+    # liked = serializers.SlugRelatedField(
+    #     queryset = UserProfile.objects.all(),
+    #     many = True,
+    #     slug_field = 'id',
+    # )
+
     class Meta:
         model = Shout
         fields = [
@@ -32,7 +38,7 @@ class ShoutSerializer(serializers.ModelSerializer):
             'title',
             'media',
             'user_id',
-            'likes'
+            'liked',
         ]
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -79,7 +85,7 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'shout_id',
-            'user_id'
+            'user_id',
         ]
 
 
