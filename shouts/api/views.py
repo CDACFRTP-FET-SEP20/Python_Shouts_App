@@ -17,7 +17,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class MyPostsViewSet(viewsets.ModelViewSet):
     print("mypost")
-    queryset=Posts.objects.filter(username="21972bf4-f2c5-4658-b08a-6378034f8ee1")
+    queryset=Posts.objects.filter(username="21972bf4-f2c5-4658-b08a-6378034f8ee1").order_by('-date_posted')
     serializer_class=PostsSerializer
 
 class PostsViewSet(viewsets.ModelViewSet):

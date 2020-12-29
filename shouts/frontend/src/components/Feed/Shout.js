@@ -10,13 +10,18 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DeleteModal from "./DeleteModal";
 import EditModal from "./EditModal";
-const useStyles = makeStyles({
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+const useStyles = makeStyles((theme)=>({
   shout: {
     width: "100%",
     marginTop: "15px",
     borderRadius: "15px",
     backgroundColor: "white",
     boxShadow: "0px 5px 7px -7px rgba(0,0,0,0.75)",
+    "@media (max-width: 900px)":{
+      width: "70%",
+  }
   },
   shout_top: {
     display: "flex",
@@ -79,7 +84,13 @@ const useStyles = makeStyles({
     position: "absolute",
     right: "10px",
   },
-});
+  paper_grid: {
+    padding: theme.spacing(2),
+    textAlign: "left",
+    color: theme.palette.text.secondary,
+    borderRadius: "15px",
+  },
+}));
 function Shout({ shouts }) {
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);

@@ -5,7 +5,7 @@ import store from "./RootReducer/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import MyShouts from "./Feed/MyShouts";
-
+import Header1 from './Header/Header1'
 import Header from "./Header/Header";
 import SideBar from "./SideBar/SideBar";
 import { makeStyles } from "@material-ui/core";
@@ -17,25 +17,20 @@ const useStyles = makeStyles({
   },
   app__body: {
     display: "flex",
+    backgroundColor: "#f1f2f5",
   },
 });
 function App() {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const handleModal = () => {
-    setOpen(false);
-  };
-  const onOpenModal = () => {
-    setOpen(true);
-  };
+ 
   return (
     <Provider store={store}>
       <BrowserRouter basename="/app">
         <div className={classes.App}>
-          <Header />
-
+          {/* <Header /> */}
+      <Header1/>
           <div className={classes.app__body}>
-            <SideBar />
+            {/* <SideBar /> */}
             <Switch>
               <Route exact path="/">
                 <Feed />

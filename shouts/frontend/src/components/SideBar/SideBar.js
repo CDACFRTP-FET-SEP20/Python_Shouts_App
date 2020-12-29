@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SideBarRow from "./SideBarRow";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import CreateIcon from "@material-ui/icons/Create";
 import { makeStyles } from "@material-ui/core";
+import {getPosts} from "../../actions/PostActions"
+import { connect } from "react-redux";
 const useStyles=makeStyles({
   sidebar:{
     padding:"25px 10px",
@@ -11,6 +13,7 @@ const useStyles=makeStyles({
 })
 function SideBar() {
   const classes=useStyles();
+  
   return (
     <div className={classes.sidebar}>
       <SideBarRow
