@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import CreateShout from "./CreateShout";
 import Shout from "./Shout";
-import Text from "./Text";
+
 import { connect } from "react-redux";
 import {getPosts} from '../../actions/PostActions'
 const useStyles = makeStyles({

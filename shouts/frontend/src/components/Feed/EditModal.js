@@ -53,7 +53,7 @@ function EditModal(props) {
   const [description, setDescription] = useState(props.description);
   const [media, setMedia] = useState(props.media);
   const [post_type, setPostType] = useState(props.post_type);
-
+  var imageInputRef = React.useRef();
   const csrftoken = Cookies.get("csrftoken");
   const uploadData = new FormData();
   // change the state each time the component rerender
@@ -61,6 +61,7 @@ function EditModal(props) {
     setTitle(props.postTitle);
     setDescription(props.postContent);
     setMedia(props.media);
+   
     setPostType(props.post_type);
   }, [props.postTitle, props.postContent, props.post_type, props.media]);
   var mediaType = "";
@@ -70,7 +71,8 @@ function EditModal(props) {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-
+    
+    
     uploadData.append("title", title);
     {
       props.post_type === "T"
@@ -97,7 +99,7 @@ function EditModal(props) {
       >
         <div className={classes.paper}>
           <h2 className={classes.h2} id="title">
-            Add A New Post
+            Update Post
           </h2>
           <form id="description" onSubmit={onFormSubmit}>
             <TextField
@@ -133,6 +135,7 @@ function EditModal(props) {
                   required
                   accept={mediaType}
                   type="file"
+                 
                   onChange={(e) => setMedia(e.target.files[0])}
                 />
               </div>
