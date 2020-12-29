@@ -47,52 +47,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 function EditModal(props) {
   const classes = useStyles();
-  const [values, setValues] = useState({
-    title: props.postTitle,
-    description: props.postContent,
+  const [title, setTitle] = useState(props.title);
+  const [description, setDescription] = useState(props.description);
+  const [media, setMedia] = useState(props.media);
+  const [post_type, setPostType] = useState(props.post_type);
 
-    username: "21972bf4-f2c5-4658-b08a-6378034f8ee1",
-  });
-
-  // state to control the progress waiting component
-  const [progress, setProgress] = useState(false);
   const csrftoken = Cookies.get("csrftoken");
+  const uploadData = new FormData();
   // change the state each time the component rerender
   useEffect(() => {
-    setValues({
-
-      title: props.postTitle,
-      description: props.postContent,
-      username: "21972bf4-f2c5-4658-b08a-6378034f8ee1",
-    });
-  }, [props.postTitle, props.postContent]);
-
-
-  const onInputChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
+    setTitle(props.postTitle);
+    setDescription(props.postContent);
+    setMedia(props.media);
+    setPostType(props.post_type);
+  }, [props.postTitle, props.postContent, props.post_type, props.media]);
+  var mediaType = "";
+  if (props.post_type === "A") mediaType = "audio/*";
+  else if (props.post_type === "V") mediaType = "video/*";
+  else mediaType = "image/*";
 
   const onFormSubmit = (e) => {
     e.preventDefault();
 
+    uploadData.append("title", title);
+    {
+      props.post_type === "T"
+        ? uploadData.append("description", description)
+        : uploadData.append("media", media);
+    }
 
-    setValues({ ...values, [e.target.name]: e.target.value });
-    updatePost(props, values);
+    updatePost(props, uploadData);
 
     props.handleClose();
   };
 
   const onCloseModal = () => {
     props.handleClose();
-    setValues({
-      title: props.postTitle,
-      description: props.postContent,
-
-      username: "21972bf4-f2c5-4658-b08a-6378034f8ee1",
-    });
   };
 
   return (
@@ -100,10 +92,8 @@ function EditModal(props) {
       <Modal
         aria-labelledby="title"
         aria-describedby="description"
-
         open={props.open}
         onClose={props.onCloseModal}
-
       >
         <div className={classes.paper}>
           <h2 className={classes.h2} id="title">
@@ -114,25 +104,40 @@ function EditModal(props) {
               required
               label="Title"
               type="text"
-              value={values.title}
-              onChange={onInputChange}
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
               name="title"
               fullWidth={true}
             />
-            <TextField
-              required
 
-              name="description"
-              label="description"
-              multiline={true}
-              rowsMax="4"
-              value={values.description}
+            {props.post_type === "T" ? (
+              <TextField
+                required
+                name="description"
+                label="description"
+                multiline={true}
+                rowsMax="4"
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                margin="normal"
+                fullWidth={true}
+              />
+            ) : (
+              <div>
+                <span>Upload Image</span>
+                <input
+                  required
+                  accept={mediaType}
+                  type="file"
+                  onChange={(e) => setMedia(e.target.files[0])}
+                />
+              </div>
+            )}
 
-
-              onChange={onInputChange}
-              margin="normal"
-              fullWidth={true}
-            />
             <div className={classes.btnDiv}>
               <Button
                 className={classes.cancel}

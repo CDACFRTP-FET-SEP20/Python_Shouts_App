@@ -1,4 +1,4 @@
-import ShoutsReducer from "../Shouts/ShoutsReducer/ShoutsReducer";
+import ShoutsReducer from "../ShoutsReducer/ShoutsReducer";
 
 import { combineReducers } from "redux";
 const reducer = combineReducers({

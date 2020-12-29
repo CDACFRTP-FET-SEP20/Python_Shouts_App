@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TextDialog from "./TextDialog";
+import TextDialog from "./TextModal";
 function Text() {
   const [openPopup, setOpenPopup] = useState(false);
   return (

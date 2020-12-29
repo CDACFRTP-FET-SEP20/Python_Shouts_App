@@ -1,19 +1,16 @@
 import React, { Component, useState } from "react";
 import { render } from "react-dom";
-import CreateShout from "./Shouts/CreateShout";
-import GetShouts from "./Shouts/GetShouts";
+
 import store from "./RootReducer/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import MyShouts from "./Shouts/MyShouts";
-import UserCard from "./userCard";
+import MyShouts from "./Feed/MyShouts";
+
 import Header from "./Header/Header";
 import SideBar from "./SideBar/SideBar";
 import { makeStyles } from "@material-ui/core";
 import Feed from "./Feed/Feed";
-import AddModal from "./Feed/addModal";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
+
 const useStyles = makeStyles({
   App: {
     backgroundColor: "#f1f2f5",

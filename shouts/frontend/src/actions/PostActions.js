@@ -1,20 +1,20 @@
-import axios from 'axios'
+import axios from "axios";
 import Cookies from "js-cookie";
 
 const csrftoken = Cookies.get("csrftoken");
 // ===============================GetPosts================================
-export const getPosts=(props)=>{
+export const getPosts = (props) => {
   fetch("/api/posts/")
-  .then((resp) => resp.json())
-  .then((data) =>
-    props.dispatch({
-      type: "setShouts",
-      payload: data,
-    })
-  );
-}
+    .then((resp) => resp.json())
+    .then((data) =>
+      props.dispatch({
+        type: "setShouts",
+        payload: data,
+      })
+    );
+};
 // ===============================CreatePosts================================
-export const createPost=(props,uploadData)=>{
+export const createPost = (props, uploadData) => {
   axios({
     method: "post",
     url: "/api/posts/",
@@ -28,32 +28,44 @@ export const createPost=(props,uploadData)=>{
       payload: res,
     })
   );
-}
+};
 // ===============================DeletePosts================================
-export const deletePost=(props)=>{
-axios({
-  method: "delete",
-  url: `/api/posts/${props.postId}/`,
-
-  headers: {
-    "X-CSRFToken": csrftoken,
-  },
-}).then((res)=>getPosts(props))
-.catch((error)=>console.log(error))
-}
-
-// ===============================UpdatePosts================================
-export const updatePost=(props,values)=>{
-  
-    
-  console.log(values);
+export const deletePost = (props) => {
   axios({
-    method: "put",
+    method: "delete",
     url: `/api/posts/${props.postId}/`,
-    data:values,
+
     headers: {
       "X-CSRFToken": csrftoken,
     },
-  }).then((res)=>getPosts(props))
-  .catch((error)=>console.log(error))
-  }
+  })
+    .then((res) => getPosts(props))
+    .catch((error) => console.log(error));
+};
+
+// ===============================UpdatePosts================================
+export const updatePost = (props, values) => {
+  console.log(values);
+  axios({
+    method: "patch",
+    url: `/api/posts/${props.postId}/`,
+    data: values,
+    headers: {
+      "X-CSRFToken": csrftoken,
+    },
+  })
+    .then((res) => getPosts(props))
+    .catch((error) => console.log(error));
+};
+// ===============================GetMyPost================================
+export const getMyPost = (props, user_id) => {
+  fetch("/api/mypostlist/" + user_id + "/")
+    .then((resp) => resp.json())
+    .then((data) =>
+      // console.log(data)
+      props.dispatch({
+        type: "setMyShouts",
+        payload: data,
+      })
+    );
+};

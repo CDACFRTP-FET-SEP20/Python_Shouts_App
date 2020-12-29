@@ -195,6 +195,7 @@ function Shout({ shouts }) {
         postContent={shouts.description}
         postId={shouts.post_id}
         media={shouts.media}
+        post_type={shouts.post_type}
       />
     </div>
   );
