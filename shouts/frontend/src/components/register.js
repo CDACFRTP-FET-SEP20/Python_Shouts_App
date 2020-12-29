@@ -1,31 +1,42 @@
 import React, { useState } from "../../node_modules/react";
 
 export default function register() {
-
-  const imagedata = new FormData()
-
   const [formData, setFormData] = useState({
     email: "",
     username: "",
     password: "",
     bio: "",
+    is_active: true,
   });
+
+  const [imageData, setImageData] = useState(null);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleFileChange = (e) => {
+    setImageData(e.target.files[0]);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("formdata", formData);
+
+    const post_data = new FormData();
+
+    for (let key in formData) {
+      post_data.append(key, formData[key]);
+    }
+
+    post_data.append("user_image", imageData, imageData.name);
+    // post_data.append("is_active", true);
+
+    console.log("formdata", post_data);
 
     fetch("http://localhost:8000/profile/register/", {
       method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: post_data,
     })
       .then((respone) => respone.json())
       .then((data) => console.log(data));
@@ -77,7 +88,7 @@ export default function register() {
 
         <div>
           <label>Profile Image</label>
-          <input type="file" id="img" name="img" accept="image/*"></input>
+          <input type="file" onChange={handleFileChange} />
         </div>
 
         <button type="submit" onClick={handleSubmit}>

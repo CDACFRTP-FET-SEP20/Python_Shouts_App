@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import Login from "./login";
 import Register from "./register";
+import UpdateProfile from "./updateProfile";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import store from "./../../store/store";
+import store from "../store/store";
 import { Provider } from "react-redux";
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
               <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
+                <Route path="/updateProfile" component={UpdateProfile} />
               </Switch>
             </div>
           </BrowserRouter>

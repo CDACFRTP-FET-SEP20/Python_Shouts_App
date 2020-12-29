@@ -22,7 +22,9 @@ class ProfileManager(BaseUserManager):
         user = self.model(
             email = self.normalize_email(email),
             username = username,
-        )            
+        )      
+
+        user.is_active = True      
 
         user.set_password(password)
         user.save(using=self._db)
@@ -61,7 +63,7 @@ class Profile(AbstractBaseUser):
     is_staff    =  models.BooleanField(default=False)
     is_superuser=  models.BooleanField(default=False)
 
-    friends     =  models.ManyToManyField("self", blank=True, related_name="friends")
+    
 
     objects = ProfileManager()
 

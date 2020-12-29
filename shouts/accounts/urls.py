@@ -32,4 +32,6 @@ urlpatterns = [
     path('register/' , profile_register, name="profile-register"),
     # path('myprofile/<str:pk>' , profile_single, name="profile-single"),
     path('login/' , LoginViewSets.as_view() , name="login-user"),
+    path('getProfile/<str:pk>', profile_single,name="get-user"),
+    path('updateProfile/<str:pk>', profile_single ,name="update-user")
 ]
