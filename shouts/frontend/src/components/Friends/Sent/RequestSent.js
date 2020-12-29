@@ -8,27 +8,30 @@ import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import useStyles from "../UseStyles";
+import Search from "../Dashboard/Search";
+import { newfrienddata } from "../../Services/FriendService";
 
 function RequestSent(props) {
   const classes = useStyles();
-  useEffect(() => {
-    newfrienddata();
-
-    return () => console.log("***************sent request Unmounted");
-  }, []);
   const pk = props.user.id;
-  const newfrienddata = () => {
-    fetch(`/api/requestsent/${pk}`)
-      .then((res) => res.json())
-      .then((data) =>
-        props.dispatch({
-          type: "DisplayRequestsSent",
-          payload: data,
-        })
-      );
-  };
+  // useEffect(() => {
+  //   newfrienddata();
 
-  console.log("***********", props.user);
+  //   return () => console.log("***************sent request Unmounted");
+  // }, []);
+  // const pk = props.user.id;
+  // const newfrienddata = () => {
+  //   fetch(`/api/requestsent/${pk}`)
+  //     .then((res) => res.json())
+  //     .then((data) =>
+  //       props.dispatch({
+  //         type: "DisplayRequestsSent",
+  //         payload: data,
+  //       })
+  //     );
+  // };
+
+  console.log("***********", props.searchType);
 
   const sendRequest = (receiver) => {
     console.log("Sender=====", props.user);
@@ -40,19 +43,25 @@ function RequestSent(props) {
 
     axios
       .post(`/api/friendlist/${pk}`, data1)
-      .then((res) => newfrienddata())
+      .then((res) => newfrienddata(props))
       .catch((err) => console.log(err));
   };
 
+  const searchedArray = props.requestSent.filter((item) =>
+    item.username.toLowerCase().includes(props.search.toLowerCase())
+  );
+
+  console.log("sent searched data", props.requestSent);
   return (
     <div className={classes.root}>
+      <Search />
       <Grid>
-        {props.requestSent.map((data, item) => {
+        {searchedArray.map((data, item) => {
           return (
             <Grid container spacing={3} key={item}>
               {/* Chnage the name=shubham dynamically using state */}
               {data.username === props.user.username ? null : (
-                <Grid item xs={12} className="media-500">
+                <Grid item xs={12}>
                   <Paper className={classes.paper}>
                     <div className={classes.cardFlex}>
                       <Avatar
@@ -86,6 +95,7 @@ const mapStoreToProps = (state) => {
   return {
     requestSent: state.requestSent.requestSent,
     user: state.friendList.user,
+    search: state.search.search,
   };
 };
 

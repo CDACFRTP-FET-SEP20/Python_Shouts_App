@@ -9,7 +9,12 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import useStyles from "../UseStyles";
-import { friendlistreceived } from "../../Services/FriendService";
+import {
+  friendlistreceived,
+  friendlistdata,
+  newfrienddata,
+} from "../../Services/FriendService";
+import Search from "../Dashboard/Search";
 
 function RequestReceived(props) {
   const classes = useStyles();
@@ -34,23 +39,37 @@ function RequestReceived(props) {
   const acceptRequest = (data) => {
     axios
       .patch(`/api/friendlist/${data.id}`, data)
-      .then((res) => friendlistreceived(props))
+      .then((res) => {
+        friendlistreceived(props);
+        friendlistdata(props);
+      })
       .catch((error) => console.log(error));
   };
 
   const rejectRequest = (data) => {
     axios
       .delete(`/api/friendlist/${data.id}`, data)
-      .then((res) => friendlistreceived(props))
+      .then((res) => {
+        friendlistreceived(props);
+        newfrienddata(props);
+      })
       .catch((error) => console.log(error));
   };
 
-  console.log("***********", props.requestReceived);
+  console.log("***********", props.searchType);
+
+  const searchedArray = props.requestReceived.filter((item) => {
+    if (props.user.username === item.receiver) {
+      return item.sender.toLowerCase().includes(props.search.toLowerCase());
+    } else
+      return item.receiver.toLowerCase().includes(props.search.toLowerCase());
+  });
 
   return (
     <div className={classes.root}>
+      <Search />
       <Grid>
-        {props.requestReceived.map((data, item) => {
+        {searchedArray.map((data, item) => {
           return (
             <Grid container spacing={3} key={item}>
               {/* Chnage the name=shubham dynamically using state */}
@@ -99,6 +118,7 @@ const mapStoreToProps = (state) => {
   return {
     requestReceived: state.requestReceived.requestReceived,
     user: state.friendList.user,
+    search: state.search.search,
   };
 };
 

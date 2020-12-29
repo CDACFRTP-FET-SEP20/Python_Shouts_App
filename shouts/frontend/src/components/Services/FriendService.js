@@ -24,6 +24,17 @@ export const friendlistreceived = (props) => {
     );
 };
 
-export const searchField = (value) => {
-  console.log(value);
+export const newfrienddata = (props) => {
+  const pk = props.user.id;
+  console.log("service called", pk);
+
+  fetch(`/api/requestsent/${pk}`)
+    .then((res) => res.json())
+    .then((data) =>
+      props.dispatch({
+        type: "DisplayRequestsSent",
+        payload: data,
+      })
+    )
+    .catch((error) => console.log("errrorrrr==", error));
 };

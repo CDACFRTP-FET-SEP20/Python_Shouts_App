@@ -8,7 +8,8 @@ import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import useStyles from "../UseStyles";
-import { friendlistdata } from "../../Services/FriendService";
+import { friendlistdata, newfrienddata } from "../../Services/FriendService";
+import Search from "../Dashboard/Search";
 
 function FriendList(props) {
   const classes = useStyles();
@@ -31,19 +32,30 @@ function FriendList(props) {
   const unfriendRequest = (data) => {
     axios
       .patch(`/api/friendlist/${data.id}`, data)
-      .then((res) => friendlistdata(props))
+      .then((res) => {
+        friendlistdata(props);
+        newfrienddata(props);
+      })
       .catch((error) => console.log(error));
   };
 
-  // console.log("***********", props);
+  const searchedArray = props.friendList.filter((item) => {
+    if (props.user.username === item.receiver) {
+      return item.sender.toLowerCase().includes(props.search.toLowerCase());
+    } else
+      return item.receiver.toLowerCase().includes(props.search.toLowerCase());
+  });
+
+  console.log("modified array", searchedArray);
+  console.log(props.friendList);
 
   return (
     <div className={classes.root}>
+      <Search />
       <Grid>
-        {props.friendList.map((data, item) => {
+        {searchedArray.map((data, item) => {
           return (
             <Grid container spacing={3} key={item}>
-              {/* Chnage the name=shubham dynamically using state */}
               {data.receiver === props.user.username ? (
                 <Grid item xs={12}>
                   <Paper className={classes.paper}>
@@ -65,6 +77,7 @@ function FriendList(props) {
                       </IconButton>
                     </div>
                   </Paper>
+                  <hr />
                 </Grid>
               ) : (
                 <Grid item xs={12}>
@@ -87,6 +100,7 @@ function FriendList(props) {
                       </IconButton>
                     </div>
                   </Paper>
+                  <hr />
                 </Grid>
               )}
             </Grid>
@@ -101,6 +115,8 @@ const mapStoreToProps = (state) => {
   return {
     friendList: state.friendList.friendList,
     user: state.friendList.user,
+    searchType: state.search.searchType,
+    search: state.search.search,
   };
 };
 

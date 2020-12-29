@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
@@ -9,19 +9,17 @@ import Box from "@material-ui/core/Box";
 import {
   friendlistreceived,
   friendlistdata,
-  searchField,
+  newfrienddata
 } from "../../Services/FriendService";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 
 function Dashboard(props) {
   const classes = useStyle();
 
-  const [searchState, setsearchState] = useState("friend");
-
-  const changeSearchState = (e) => {
-    console.log(searchState);
-    setsearchState(e);
+  const changeSearchState = (value) => {
+    props.dispatch({
+      type: "SearchType",
+      payload: value,
+    });
   };
 
   const links = {
@@ -30,17 +28,12 @@ function Dashboard(props) {
     textDecoration: "none",
   };
 
-  const stringArray = props.friendList.map((item) =>
-    props.user.username != item.receiver ? item.receiver : item.sender
-  );
-
-  console.log(props.friendList);
-
-  console.log("---------", stringArray);
+  // console.log(props.friendList);
 
   useEffect(() => {
     friendlistreceived(props);
     friendlistdata(props);
+    newfrienddata(props)
 
     return () => console.log("*****Dashboard*********");
   }, []);
@@ -58,24 +51,6 @@ function Dashboard(props) {
       <Box style={{ color: "#f3e5f5" }} fontSize={16} mb={5}>
         {props.user.bio}
       </Box>
-
-      <Autocomplete
-        freeSolo
-        id="free-solo-2-demo"
-        disableClearable
-        options={stringArray.map((option) => option)}
-        onChange={(event, value) => searchField(value)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Search input"
-            margin="normal"
-            variant="outlined"
-            InputProps={{ ...params.InputProps, type: "search" }}
-            color="secondary"
-          />
-        )}
-      />
 
       <Link
         to="/friendlist"
