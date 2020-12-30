@@ -6,18 +6,35 @@ import Cookies from 'js-cookie'
 
 function Report(props) {
 
+    const [isReported, setIsReported] = useState(true)
+
     const csrftoken = Cookies.get("csrftoken")
     console.log(csrftoken)
 
     const [formData, setFormData] = useState({
-        user_id: "a7601206-bf52-4641-afb9-42ed62e2fd70",
-        shout_id: "91b38b17-75d3-4ef5-ab1d-ad31e6e20fac",
+        user_id: "35213582-5d83-4ee0-b71c-6da160198cf9",
+        shout_id: "b954d35a-de0d-42b4-a021-7f9c61ec0673",
+        report_id: "0d3e2105-8b77-40c3-a079-f31bda857ae9"
       });
 
-      console.log("props of Report", props);
+    console.log("props of Report", props);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const deleteReport = (props) => {
+      axios({
+        method: "delete",
+        url: `http://localhost:8000/comment_like_report/shoutreport/${formData.report_id}/`,
+    
+        headers: {
+          "X-CSRFToken": csrftoken,
+        },
+      })
+        // .then((res) => getLike(props))
+        .then((response) =>console.log(response))
+        .catch((error) => console.log(error));
+    };
+
+    const handleReport = () => {
+        //e.preventDefault();
         console.log("formdata", formData);
     
         fetch("http://localhost:8000/comment_like_report/shoutreport/", {
@@ -29,20 +46,30 @@ function Report(props) {
           },
         })
           .then((response) => response.json())
-          .then((data) =>
-          // props.dispatch({
-          //   type: "AddLike",
-          //   // payload: data.formData,
-          // }),
-          console.log(data+"data")
-          );
+          .then((data) => console.log(data+"data"));
+
+          setIsReported(false)
+      };
+
+      const handleRemoveReport = (props) => {
+        //e.preventDefault();
+        setIsReported(true);
+        console.log(formData);
+        deleteReport();
       };
 
     return (
         <div>
             <form action="" >
                 <p>This is Report</p>
-                  <button type="submit" name="like_button" value="like" onClick={handleSubmit}>Report</button>
+                  
+                  {isReported ?
+                (
+                  <button type="button" name="Report_button" value="like" onClick={handleReport}>Report</button>
+                ) : (
+                  <button type="button" name="unlike_button" value="like" onClick={handleRemoveReport}>Remove Report</button>
+                )
+                }
             </form>
         </div>
     )

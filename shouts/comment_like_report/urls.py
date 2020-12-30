@@ -59,12 +59,18 @@ like_list = LikeViewSet.as_view({
 like_details = LikeViewSet.as_view({
     "get" : "retrieve",
     "patch" : "partial_update",
-    "delete" : "destroy"
+    'delete':'destroy'
 })
 
 report_list = ReportViewSet.as_view({
     "get" : "list",
     "post" : "create"
+})
+
+report_details = ReportViewSet.as_view({
+    "get" : "retrieve",
+    "patch" : "partial_update",
+    'delete':'destroy'
 })
 
 
@@ -77,6 +83,7 @@ urlpatterns = [
     path('shoutcomment/', comment_list, name = 'shoutcomment'),
     # path('commentDetails/<str:pk>', comment_details, name = 'comment_details'),
     path('shoutlike/', like_list, name = 'shoutlike'),
-    path('likeDelete/<str:pk>', like_details, name = 'like_Delete'),
+    path('shoutlike/<str:pk>/',like_details, name = 'like_Delete'),
     path('shoutreport/', report_list, name = 'shoutreport'),
+    path('shoutreport/<str:pk>/',report_details, name = 'report_Delete'),
 ]

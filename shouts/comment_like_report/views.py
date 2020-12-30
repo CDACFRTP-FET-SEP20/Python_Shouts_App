@@ -70,6 +70,8 @@ class LikeViewSet(viewsets.ModelViewSet):
 
     def get(self, request): 
         likes = ShoutLike.objects.all().count() 
+        # count_like = ShoutLike.objects.raw('select count(*) from comment_like_report_shoutlike')
+        # print(count_like)
         return HttpResponse(likes)
 
     def delete(self,request, pk):
