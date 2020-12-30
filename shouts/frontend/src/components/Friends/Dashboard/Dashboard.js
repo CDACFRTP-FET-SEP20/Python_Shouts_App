@@ -12,6 +12,7 @@ import {
   newfrienddata,
   profiledata,
 } from "../../Services/FriendService";
+// import { Link } from "react-router-dom";
 
 function Dashboard(props) {
   const classes = useStyle();
@@ -42,11 +43,13 @@ function Dashboard(props) {
 
   return (
     <div className={classes.cardDashboard}>
+      {/* <Link to="/dashboard"> */}
       <Avatar
         alt="Remy Sharp"
         src={props.user.user_image}
         className={classes.extraLarge}
       />
+      {/* </Link> */}
       <Box style={{ color: "white" }} fontSize={24} mt={2} mb={1}>
         {props.user.username.toUpperCase()}
       </Box>
@@ -89,7 +92,7 @@ const mapStoreToProps = (state) => {
   return {
     friendList: state.friendList.friendList,
     requestSent: state.requestSent.requestSent,
-    user: state.user,
+    user: state.login,
     requestReceived: state.requestReceived.requestReceived,
   };
 };

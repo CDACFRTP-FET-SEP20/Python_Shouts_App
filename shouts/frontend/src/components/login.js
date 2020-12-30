@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import { Grid, Paper, Avatar, TextField } from "@material-ui/core";
 import LockRoundedIcon from "@material-ui/icons/LockRounded";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-
- 
 const useStyles = makeStyles({
   avatarTheme: {
     color: "blue",
@@ -14,6 +14,7 @@ const useStyles = makeStyles({
 });
 
 function login(props) {
+  const history = useHistory();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -45,6 +46,8 @@ function login(props) {
             type: "AddToken",
             payload: data,
           })
+
+        // history.push(`/dashboard`)
         // console.log(data)
       );
   };
@@ -89,9 +92,9 @@ function login(props) {
         </form>
 
         <h2>User Image</h2>
+        <Link to="/dashboard">Dashboard</Link>
         <img src={`data:image/png;base64,${props.user.user_image}`} />
       </div>
-
 
       {/* <div>
         <Grid>

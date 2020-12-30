@@ -14,6 +14,7 @@ import { newfrienddata } from "../../Services/FriendService";
 function RequestSent(props) {
   const classes = useStyles();
   const pk = props.user.user_id;
+  const authToken = props.user.token;
 
   console.log("***********", props.searchType);
 
@@ -26,7 +27,10 @@ function RequestSent(props) {
     };
 
     axios
-      .post(`/api/friendlist/${pk}`, data1)
+      .post(`/api/friendlist/${pk}`, data1,{headers: {
+        Authorization: `Token ${authToken}`,
+      },
+    })
       .then((res) => newfrienddata(props))
       .catch((err) => console.log(err));
   };

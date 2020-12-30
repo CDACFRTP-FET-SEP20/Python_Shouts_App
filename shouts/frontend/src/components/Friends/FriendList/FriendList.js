@@ -13,10 +13,19 @@ import Search from "../Dashboard/Search";
 
 function FriendList(props) {
   const classes = useStyles();
+  const authToken = props.user.token;
 
   const unfriendRequest = (data) => {
     axios
-      .patch(`/api/friendlist/${data.user_id}`, data)
+      .patch(
+        `/api/friendlist/${data.user_id}`,
+        data ,
+        {
+          headers: {
+            Authorization: `Token ${authToken}`,
+          },
+        }
+      )
       .then((res) => {
         friendlistdata(props);
         newfrienddata(props);
