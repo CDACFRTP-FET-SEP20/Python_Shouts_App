@@ -6,6 +6,7 @@ import UpdateProfile from "./updateProfile";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import store from "../store/store";
 import { Provider } from "react-redux";
+import Friends from "./Friends/Friends";
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
               <Switch>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
+                <Route path="/dashboard" component={Friends} />
                 <Route path="/updateProfile" component={UpdateProfile} />
               </Switch>
             </div>

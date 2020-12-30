@@ -4,6 +4,8 @@ import { Grid, Paper, Avatar, TextField } from "@material-ui/core";
 import LockRoundedIcon from "@material-ui/icons/LockRounded";
 import { makeStyles } from "@material-ui/core/styles";
 
+
+ 
 const useStyles = makeStyles({
   avatarTheme: {
     color: "blue",
@@ -17,7 +19,7 @@ function login(props) {
     password: "",
   });
 
-  console.log("props", props);
+  console.log("props-user", props.user);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -58,7 +60,7 @@ function login(props) {
 
   return (
     <>
-      {/* <div>
+      <div>
         <h1>Login Page</h1>
 
         <form>
@@ -88,9 +90,10 @@ function login(props) {
 
         <h2>User Image</h2>
         <img src={`data:image/png;base64,${props.user.user_image}`} />
-      </div> */}
+      </div>
 
-      <div>
+
+      {/* <div>
         <Grid>
           <Paper elevation={10} style={paperStyle}>
             <Grid align="center">
@@ -118,7 +121,7 @@ function login(props) {
             />
           </Paper>
         </Grid>
-      </div>
+      </div> */}
     </>
   );
 }
