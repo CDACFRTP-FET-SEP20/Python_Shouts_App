@@ -64,7 +64,7 @@ def FriendsAppView(request, pk):
 
     if request.method == 'PATCH':
         accept_data = request.data
-        print("accept_data", accept_data['is_friend'])
+        print("accept_data", accept_data['id'])
         if accept_data['is_friend'] == False:
             # friends = Friends.objects.filter(
             #     id=accept_data['id']).update(is_friend=True)
