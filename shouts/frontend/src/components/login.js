@@ -11,6 +11,7 @@ import {
 import LockRoundedIcon from "@material-ui/icons/LockRounded";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   avatarTheme: {
@@ -26,12 +27,13 @@ const useStyles = makeStyles({
 });
 
 function login(props) {
+  const history = useHistory();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  console.log("props", props);
+  console.log("props-user", props.user);
 
   const handleChange = ({ target }) => {
     console.log(target);
@@ -70,76 +72,116 @@ function login(props) {
               payload: data,
             })
           );
-
         props.dispatch({
           type: "AddToken",
           payload: data,
         });
+        // console.log(data)
+        history.push(`/`);
       });
 
-    
-  };
+    const paperStyle = {
+      padding: 20,
+      height: "70vh",
+      width: 350,
+      margin: "50px auto",
+    };
 
-  const classes = useStyles();
+    const classes = useStyles();
 
-  return (
-    <>
-      <div>
-        <Grid>
-          <Paper elevation={10} className={classes.paperStyle}>
-            <Grid align="center">
-              <Avatar className={classes.avatarTheme}>
-                <LockRoundedIcon />
-              </Avatar>
-              <h2>Sign In</h2>
-            </Grid>
+    return (
+      <>
+        {/* <div>
 
-            <TextField
-              label="Email"
-              placeholder="email"
-              name="email"
+         <h1>Login Page</h1>
+
+         <form>
+          <div>
+           <label>Email</label>
+             <input
+              type="text"
               value={formData.email}
               onChange={handleChange}
-              fullWidth
-              required
+              name="email"
             />
-            <TextField
-              label="Password"
-              placeholder="password"
+          </div>
+          <div>
+            <label>Password</label>
+            <input
               type="password"
-              name="password"
               value={formData.password}
               onChange={handleChange}
-              fullWidth
-              required
+              name="password"
             />
+          </div>
 
-            <br />
-            <br />
-            <br />
+          <button type="submit" onClick={handleSubmit}>
+            Login
+          </button>
+        </form>
 
-            <Button
-              type="submit"
-              color="primary"
-              variant="contained"
-              onClick={handleSubmit}
-              fullWidth
-            >
-              Sign In
-            </Button>
-            <br />
-            <br />
-            <br />
+        <h2>User Image</h2>
+        <Link to="/dashboard">Dashboard</Link>
+        <img src={`data:image/png;base64,${props.user.user_image}`} />
+      </div> */}
 
-            <Typography>
-              Don't have an account yet?
-              <Link to="/register">Sign Up</Link>
-            </Typography>
-          </Paper>
-        </Grid>
-      </div>
-    </>
-  );
+        <div>
+          <Grid>
+            <Paper elevation={10} className={classes.paperStyle}>
+              <Grid align="center">
+                <Avatar className={classes.avatarTheme}>
+                  <LockRoundedIcon />
+                </Avatar>
+                <h2>Sign In</h2>
+              </Grid>
+
+              <TextField
+                label="Email"
+                placeholder="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+              <TextField
+                label="Password"
+                placeholder="password"
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+
+              <br />
+              <br />
+              <br />
+
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                onClick={handleSubmit}
+                fullWidth
+              >
+                Sign In
+              </Button>
+              <br />
+              <br />
+              <br />
+
+              <Typography>
+                Don't have an account yet?
+                <Link to="/register">Sign Up</Link>
+              </Typography>
+            </Paper>
+          </Grid>
+        </div>
+      </>
+    );
+  };
 }
 
 const mapStateToProps = (state) => {

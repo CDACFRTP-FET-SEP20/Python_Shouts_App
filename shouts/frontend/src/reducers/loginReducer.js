@@ -5,8 +5,6 @@ function reducer(state = initialState, action) {
     state = action.payload;
   }
 
-
-
   return state;
 }
 

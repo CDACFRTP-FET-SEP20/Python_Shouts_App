@@ -79,6 +79,7 @@ export default function register() {
     } else {
       alert("Password and Confirm Password should be same");
     }
+    console.log("formdata", post_data);
   };
 
   const classes = useStyles();
