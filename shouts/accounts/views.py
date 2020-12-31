@@ -47,7 +47,8 @@ class LoginViewSets(views.APIView):
 
         
 
-        return Response({"token" : token.key, "user_id" : user.user_id , "username":user.username,"email":user.email,"user_image":image_data,"bio":user.bio}, status=200)
+        # return Response({"token" : token.key, "user_id" : user.user_id , "username":user.username,"email":user.email,"user_image":image_data,"bio":user.bio}, status=200)
+        return Response({"token" : token.key, "user_id" : user.user_id }, status=200)
 
 
 

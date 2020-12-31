@@ -1,13 +1,27 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Grid, Paper, Avatar, TextField } from "@material-ui/core";
+import {
+  Grid,
+  Paper,
+  Avatar,
+  TextField,
+  Button,
+  Typography,
+} from "@material-ui/core";
 import LockRoundedIcon from "@material-ui/icons/LockRounded";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   avatarTheme: {
-    color: "blue",
-    background: "linear-gradient(to right, #00d2ff, #3a7bd5)",
+    background: "#4d4dff",
+  },
+
+  paperStyle: {
+    padding: 20,
+    height: "70vh",
+    width: 350,
+    margin: "50px auto",
   },
 });
 
@@ -20,7 +34,12 @@ function login(props) {
   console.log("props", props);
 
   const handleChange = ({ target }) => {
+    console.log(target);
+
     const { name, value } = target;
+    console.log("name", name);
+    console.log("value", value);
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -37,62 +56,37 @@ function login(props) {
       },
     })
       .then((respone) => respone.json())
-      .then(
-        (data) =>
-          props.dispatch({
-            type: "AddToken",
-            payload: data,
-          })
-        // console.log(data)
-      );
-  };
+      .then((data) => {
+        fetch(`http://localhost:8000/profile/getProfile/${data.user_id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) =>
+            props.dispatch({
+              type: "AddUser",
+              payload: data,
+            })
+          );
 
-  const paperStyle = {
-    padding: 20,
-    height: "70vh",
-    width: 350,
-    margin: "50px auto",
+        props.dispatch({
+          type: "AddToken",
+          payload: data,
+        });
+      });
+
+    
   };
 
   const classes = useStyles();
 
   return (
     <>
-      {/* <div>
-        <h1>Login Page</h1>
-
-        <form>
-          <div>
-            <label>Email</label>
-            <input
-              type="text"
-              value={formData.email}
-              onChange={handleChange}
-              name="email"
-            />
-          </div>
-          <div>
-            <label>Password</label>
-            <input
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              name="password"
-            />
-          </div>
-
-          <button type="submit" onClick={handleSubmit}>
-            Login
-          </button>
-        </form>
-
-        <h2>User Image</h2>
-        <img src={`data:image/png;base64,${props.user.user_image}`} />
-      </div> */}
-
       <div>
         <Grid>
-          <Paper elevation={10} style={paperStyle}>
+          <Paper elevation={10} className={classes.paperStyle}>
             <Grid align="center">
               <Avatar className={classes.avatarTheme}>
                 <LockRoundedIcon />
@@ -100,22 +94,47 @@ function login(props) {
               <h2>Sign In</h2>
             </Grid>
 
-            <TextField label="Email" placeholder="email" fullWidth required />
+            <TextField
+              label="Email"
+              placeholder="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              fullWidth
+              required
+            />
             <TextField
               label="Password"
               placeholder="password"
               type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               fullWidth
               required
             />
 
-            <TextField
-              label="Confirm Password"
-              placeholder="Confirm"
-              type="password"
+            <br />
+            <br />
+            <br />
+
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              onClick={handleSubmit}
               fullWidth
-              required
-            />
+            >
+              Sign In
+            </Button>
+            <br />
+            <br />
+            <br />
+
+            <Typography>
+              Don't have an account yet?
+              <Link to="/register">Sign Up</Link>
+            </Typography>
           </Paper>
         </Grid>
       </div>
@@ -126,6 +145,7 @@ function login(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.login,
+    userdata: state.user,
   };
 };
 
