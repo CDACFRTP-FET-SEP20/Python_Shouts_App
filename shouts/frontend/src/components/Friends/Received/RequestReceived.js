@@ -17,6 +17,7 @@ import {
 import Search from "../Dashboard/Search";
 
 function RequestReceived(props) {
+  
   const classes = useStyles();
   const authToken = props.user.token;
 
@@ -35,6 +36,7 @@ function RequestReceived(props) {
 
   const rejectRequest = (data) => {
     console.log("data--------", data);
+    console.log("req",props.user);
     axios
       .delete(`/api/friendlist/${data.id}`, data,{headers: {
         Authorization: `Token ${authToken}`,

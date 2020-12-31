@@ -47,9 +47,10 @@ function login(props) {
             payload: data,
           })
 
-        // history.push(`/dashboard`)
+         
         // console.log(data)
       );
+      history.push(`/`)
   };
 
   const paperStyle = {

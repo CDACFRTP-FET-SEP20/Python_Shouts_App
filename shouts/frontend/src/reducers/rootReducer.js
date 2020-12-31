@@ -6,7 +6,7 @@ import ReceiverReducer from "../components/Friends/Received/ReceiverReducer";
 import SenderReducer from "../components/Friends/Sent/SenderReducer";
 import BlockFriendReducer from "../components/Friends/BlockFriend/BlockFriendReducer";
 import SearchReducer from "../components/Friends/Dashboard/SearchReducer";
-
+import ShoutsReducer from "./ShoutsReducer"
 const rootReducer = combineReducers({
   login: loginReducer,
   register: registerReducer,
@@ -15,6 +15,7 @@ const rootReducer = combineReducers({
   friendList: FriendListReducer,
   blockFriendList: BlockFriendReducer,
   search: SearchReducer,
+  shouts: ShoutsReducer,
 });
 
 export default rootReducer;

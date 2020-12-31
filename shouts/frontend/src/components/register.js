@@ -34,7 +34,7 @@ export default function register() {
 
     console.log("formdata", post_data);
 
-    fetch("http://localhost:8000/profile/register/", {
+    fetch("/profile/register/", {
       method: "POST",
       body: post_data,
     })
