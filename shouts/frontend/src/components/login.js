@@ -45,6 +45,32 @@ function login(props) {
     setFormData({ ...formData, [name]: value });
   };
 
+  const pushfunction = () => {
+    history.push(`/`);
+  };
+
+  const userdatafunction = (data) => {
+    fetch(`http://localhost:8000/profile/getProfile/${data.user_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        props.dispatch({
+          type: "AddUser",
+          payload: data,
+        });
+      });
+  };
+  const tokenfunction = (data) => {
+    props.dispatch({
+      type: "AddToken",
+      payload: data,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -59,129 +85,84 @@ function login(props) {
     })
       .then((respone) => respone.json())
       .then((data) => {
-        fetch(`http://localhost:8000/profile/getProfile/${data.user_id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => response.json())
-          .then((data) =>
-            props.dispatch({
-              type: "AddUser",
-              payload: data,
-            })
-          );
+        // userdatafunction(data);
         props.dispatch({
           type: "AddToken",
           payload: data,
         });
-        // console.log(data)
-        history.push(`/`);
       });
 
-    const paperStyle = {
-      padding: 20,
-      height: "70vh",
-      width: 350,
-      margin: "50px auto",
-    };
+    // pushfunction();
+  };
+  const paperStyle = {
+    padding: 20,
+    height: "70vh",
+    width: 350,
+    margin: "50px auto",
+  };
 
-    const classes = useStyles();
+  console.log("state data", props.userdata);
 
-    return (
-      <>
-        {/* <div>
+  const classes = useStyles();
 
-         <h1>Login Page</h1>
+  return (
+    <>
+      <div>
+        <Grid>
+          <Paper elevation={10} className={classes.paperStyle}>
+            <Grid align="center">
+              <Avatar className={classes.avatarTheme}>
+                <LockRoundedIcon />
+              </Avatar>
+              <h2>Sign In</h2>
+            </Grid>
 
-         <form>
-          <div>
-           <label>Email</label>
-             <input
-              type="text"
+            <TextField
+              label="Email"
+              placeholder="email"
+              name="email"
               value={formData.email}
               onChange={handleChange}
-              name="email"
+              fullWidth
+              required
             />
-          </div>
-          <div>
-            <label>Password</label>
-            <input
+            <TextField
+              label="Password"
+              placeholder="password"
               type="password"
+              name="password"
               value={formData.password}
               onChange={handleChange}
-              name="password"
+              fullWidth
+              required
             />
-          </div>
 
-          <button type="submit" onClick={handleSubmit}>
-            Login
-          </button>
-        </form>
+            <br />
+            <br />
+            <br />
 
-        <h2>User Image</h2>
-        <Link to="/dashboard">Dashboard</Link>
-        <img src={`data:image/png;base64,${props.user.user_image}`} />
-      </div> */}
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              onClick={handleSubmit}
+              fullWidth
+            >
+              Sign In
+            </Button>
+            <br />
+            <br />
+            <br />
 
-        <div>
-          <Grid>
-            <Paper elevation={10} className={classes.paperStyle}>
-              <Grid align="center">
-                <Avatar className={classes.avatarTheme}>
-                  <LockRoundedIcon />
-                </Avatar>
-                <h2>Sign In</h2>
-              </Grid>
-
-              <TextField
-                label="Email"
-                placeholder="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-              <TextField
-                label="Password"
-                placeholder="password"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                fullWidth
-                required
-              />
-
-              <br />
-              <br />
-              <br />
-
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                onClick={handleSubmit}
-                fullWidth
-              >
-                Sign In
-              </Button>
-              <br />
-              <br />
-              <br />
-
-              <Typography>
-                Don't have an account yet?
-                <Link to="/register">Sign Up</Link>
-              </Typography>
-            </Paper>
-          </Grid>
-        </div>
-      </>
-    );
-  };
+            <Typography>
+              Don't have an account yet?
+              <Link to="/register">Sign Up</Link>
+            </Typography>
+          </Paper>
+        </Grid>
+      </div>
+    </>
+  );
 }
 
 const mapStateToProps = (state) => {

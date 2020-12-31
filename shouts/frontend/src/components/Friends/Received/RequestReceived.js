@@ -17,16 +17,16 @@ import {
 import Search from "../Dashboard/Search";
 
 function RequestReceived(props) {
-  
   const classes = useStyles();
   const authToken = props.user.token;
 
   const acceptRequest = (data) => {
     axios
-      .patch(`/api/friendlist/${data.user_id}`, data,{headers: {
-        Authorization: `Token ${authToken}`,
-      },
-    })
+      .patch(`/api/friendlist/${data.user_id}`, data, {
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      })
       .then((res) => {
         friendlistreceived(props);
         friendlistdata(props);
@@ -36,12 +36,13 @@ function RequestReceived(props) {
 
   const rejectRequest = (data) => {
     console.log("data--------", data);
-    console.log("req",props.user);
+    console.log("req", props.user);
     axios
-      .delete(`/api/friendlist/${data.id}`, data,{headers: {
-        Authorization: `Token ${authToken}`,
-      },
-    })
+      .delete(`/api/friendlist/${data.id}`, {
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      })
       .then((res) => {
         friendlistreceived(props);
         newfrienddata(props);
