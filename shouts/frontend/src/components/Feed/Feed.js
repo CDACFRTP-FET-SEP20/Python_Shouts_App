@@ -5,6 +5,7 @@ import Shout from "./Shout";
 import CreateShouts from "./CreateShouts";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/PostActions";
+import { profiledata } from "../Services/FriendService";
 const useStyles = makeStyles({
   // feed: {
   //   flex: 1,
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
   //   alignItems: "center",
   //   backgroundColor: "#f1f2f5",
   //   "@media (max-width: 900px)": {
-      
+
   //     padding: "10px 50px",
   //   },
   // },
@@ -31,9 +32,12 @@ function Feed(props) {
   const classes = useStyles();
 
   useEffect(() => {
+    profiledata(props);
     // ==============Get Shouts======================
     getPosts(props);
   }, []);
+
+  console.log("*****feed*********", props.profiles);
 
   return (
     <div className={classes.feed}>
@@ -48,5 +52,7 @@ function Feed(props) {
 }
 const mapStateToProps = (state) => ({
   shouts: state.shouts,
+  user: state.login,
+  profiles: state.friendList.profiles,
 });
 export default connect(mapStateToProps)(Feed);

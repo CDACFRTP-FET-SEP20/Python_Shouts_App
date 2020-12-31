@@ -61,6 +61,14 @@ function RequestReceived(props) {
       return item?.receiver.toLowerCase().includes(props.search.toLowerCase());
   });
 
+  const profilepic = (data) => {
+    for (let item1 of props.profiles) {
+      if (item1.username === data.sender) {
+        console.log(item1.user_image.slice(21));
+        return item1.user_image.slice(21);
+      }
+    }
+  };
   return (
     <div className={classes.root}>
       <Search />
@@ -76,11 +84,7 @@ function RequestReceived(props) {
                     <div className={classes.cardFlex}>
                       <Avatar
                         alt="Remy Sharp"
-                        src={props.profiles.forEach((item1) =>
-                          item1.username === data.sender
-                            ? console.log(item1.user_image)
-                            : null
-                        )}
+                        src={profilepic(data)}
                         className={classes.large}
                       ></Avatar>
 

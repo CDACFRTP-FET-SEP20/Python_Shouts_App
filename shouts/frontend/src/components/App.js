@@ -24,6 +24,7 @@ const useStyles = makeStyles({
 function App () {
   const classes = useStyles();
   
+  
     return (
       <div>
         <Provider store={store}>

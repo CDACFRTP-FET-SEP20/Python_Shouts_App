@@ -36,17 +36,26 @@ function Dashboard(props) {
     friendlistreceived(props);
     friendlistdata(props);
     newfrienddata(props);
-    profiledata(props);
+    // profiledata(props);
 
-    return () => console.log("*****Dashboard*********");
+    return () => console.log("*****Dashboard*********", props.profiles);
   }, []);
+
+  const userprofilepic = () => {
+    for (let item1 of props.profiles) {
+      if (item1.username === props.user.username) {
+        console.log(item1.user_image.slice(21));
+        return item1.user_image.slice(21);
+      }
+    }
+  };
 
   return (
     <div className={classes.cardDashboard}>
       {/* <Link to="/dashboard"> */}
       <Avatar
         alt="Remy Sharp"
-        src={props.user.user_image}
+        src={userprofilepic()}
         className={classes.extraLarge}
       />
       {/* </Link> */}
@@ -94,6 +103,7 @@ const mapStoreToProps = (state) => {
     requestSent: state.requestSent.requestSent,
     user: state.login,
     requestReceived: state.requestReceived.requestReceived,
+    profiles: state.friendList.profiles,
   };
 };
 

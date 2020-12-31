@@ -17,15 +17,11 @@ function FriendList(props) {
 
   const unfriendRequest = (data) => {
     axios
-      .patch(
-        `/api/friendlist/${data.user_id}`,
-        data ,
-        {
-          headers: {
-            Authorization: `Token ${authToken}`,
-          },
-        }
-      )
+      .patch(`/api/friendlist/${data.user_id}`, data, {
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      })
       .then((res) => {
         friendlistdata(props);
         newfrienddata(props);
@@ -43,6 +39,23 @@ function FriendList(props) {
   console.log("modified array", searchedArray);
   console.log("user-main", props.user);
 
+  const senderprofilepic = (data) => {
+    for (let item1 of props.profiles) {
+      if (item1.username === data.sender) {
+        console.log(item1.user_image.slice(21));
+        return item1.user_image.slice(21);
+      }
+    }
+  };
+  const receiverprofilepic = (data) => {
+    for (let item1 of props.profiles) {
+      if (item1.username === data.receiver) {
+        console.log(item1.user_image.slice(21));
+        return item1.user_image.slice(21);
+      }
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Search />
@@ -56,7 +69,7 @@ function FriendList(props) {
                     <div className={classes.cardFlex}>
                       <Avatar
                         alt="Remy Sharp"
-                        src={data.sender.user_image}
+                        src={senderprofilepic(data)}
                         className={classes.large}
                       ></Avatar>
                       <Box m="auto" ml="1rem">
@@ -78,7 +91,7 @@ function FriendList(props) {
                     <div className={classes.cardFlex}>
                       <Avatar
                         alt="Remy Sharp"
-                        src={data.receiver.user_image}
+                        src={receiverprofilepic(data)}
                         className={classes.large}
                       ></Avatar>
                       <Box m="auto" ml="1rem">
@@ -109,6 +122,7 @@ const mapStoreToProps = (state) => {
     user: state.login,
     searchType: state.search.searchType,
     search: state.search.search,
+    profiles: state.friendList.profiles,
   };
 };
 

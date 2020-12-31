@@ -45,6 +45,8 @@ function RequestSent(props) {
       <Search />
       <Grid>
         {searchedArray.map((data, item) => {
+          console.log(data.user_image);
+          
           return (
             <Grid container spacing={3} key={item}>
               {/* Chnage the name=shubham dynamically using state */}
