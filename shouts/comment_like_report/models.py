@@ -49,8 +49,8 @@ class Shout(models.Model):
     def __str__(self):
         return str(self.id)
 
-    def num_likes(self):
-        return self.liked.all().count()
+    # def num_likes(self):
+    #     return self.liked.all().count()
 
 class ShoutComment(models.Model):
     

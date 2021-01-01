@@ -1,4 +1,4 @@
-import { ADD_COMMENT } from "../../actions/action_types"  
+import { ADD_COMMENT } from "../actions/action_types"  
 export const addComment = comment =>  
  (  
      {   
@@ -6,3 +6,4 @@ export const addComment = comment =>
          payload: comment   
      }  
 ); 
+

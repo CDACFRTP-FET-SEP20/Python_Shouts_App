@@ -1,12 +1,16 @@
-const initialState = {};
+const initialState = {
+  like : []
+};
 
 function reducer(state = initialState, action) {
   if (action.type === "AddLike") {
-    state = action.payload;
+    console.log("add", action.payload);
+    return {...state, like : action.payload};
   }
   if (action.type === "setLike") {
     // console.log("setShouts", state);
-    return action.payload;
+    state = action.payload;
+    return state
   }
   if (action.type === "delete_like") {
     console.log("delete",state);

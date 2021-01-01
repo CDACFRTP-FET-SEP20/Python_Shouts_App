@@ -69,7 +69,7 @@ class LikeViewSet(viewsets.ModelViewSet):
     serializer_class = LikeSerializer
 
     def get(self, request): 
-        likes = ShoutLike.objects.all().count() 
+        likes = ShoutLike.objects.all() 
         # count_like = ShoutLike.objects.raw('select count(*) from comment_like_report_shoutlike')
         # print(count_like)
         return HttpResponse(likes)

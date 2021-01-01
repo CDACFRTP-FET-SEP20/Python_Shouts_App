@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import ReportIcon from '@material-ui/icons/Report';
+import ReportOffIcon from '@material-ui/icons/ReportOff';
 
 
 function Report(props) {
@@ -65,9 +67,9 @@ function Report(props) {
                   
                   {isReported ?
                 (
-                  <button type="button" name="Report_button" value="like" onClick={handleReport}>Report</button>
+                  <button type="button" name="Report_button" value="like" onClick={handleReport}><ReportIcon/> Report</button>
                 ) : (
-                  <button type="button" name="unlike_button" value="like" onClick={handleRemoveReport}>Remove Report</button>
+                  <button type="button" name="unlike_button" value="like" onClick={handleRemoveReport}><ReportOffIcon /> Remove Report</button>
                 )
                 }
             </form>

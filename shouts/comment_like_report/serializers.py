@@ -37,8 +37,7 @@ class ShoutSerializer(serializers.ModelSerializer):
             'type',
             'title',
             'media',
-            'user_id',
-            'liked',
+            'user_id'
         ]
 
 class CommentSerializer(serializers.ModelSerializer):
