@@ -13,6 +13,7 @@ import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
+import { connect } from "react-redux";
 const useStyles = makeStyles({
   header: {
     display: "flex",
@@ -66,9 +67,9 @@ const useStyles = makeStyles({
       padding: "0 30px",
       borderBottom: "none",
     },
-    "&.active":{
+    "&.active": {
       color: "#80ced6",
-    }
+    },
   },
   header__info: {
     display: "flex",
@@ -78,18 +79,17 @@ const useStyles = makeStyles({
     },
   },
   header__right: {
-    
-    "@media (max-width: 900px)":{
-        display: "flex",
-    }
+    "@media (max-width: 900px)": {
+      display: "flex",
+    },
   },
-  drawer:{
-      width:'calc(100% - 64px)',
-      height: 'calc(100% - 64px)',
+  drawer: {
+    width: "calc(100% - 64px)",
+    height: "calc(100% - 64px)",
   },
-  user:{
-      width:"100%"
-  }
+  user: {
+    width: "100%",
+  },
 });
 function Header() {
   const classes = useStyles();
@@ -104,7 +104,7 @@ function Header() {
     return (
       <>
         <div className={classes.header__left}>
-        <Link to="/dashboard">Dashboard</Link>
+          <Link to="/dashboard">Dashboard</Link>
           <img
             src="https://st2.depositphotos.com/3867453/5745/v/950/depositphotos_57451519-stock-illustration-letter-s-logo-icon-design.jpg"
             alt="logo"
@@ -170,42 +170,42 @@ function Header() {
           <MenuIcon />
         </IconButton>
         <Drawer
-        className={classes.drawer}
+          className={classes.drawer}
           {...{
             anchor: "left",
             open: drawerOpen,
             onClose: handleDrawerClose,
           }}
         >
-            <div className={classes.user}>
-          <div className={classes.header__right}>
-            <Link
-              to="/mypost"
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              <div className={classes.header__info}>
-                <Avatar src="https://images.unsplash.com/photo-1563306406-e66174fa3787?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NXx8Z2lybHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60" />
-                <h4>Amy Santiago</h4>
-              </div>
-            </Link>
-          </div>
+          <div className={classes.user}>
+            <div className={classes.header__right}>
+              <Link
+                to="/mypost"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                <div className={classes.header__info}>
+                  <Avatar src="" />
+                  <h4>Amy Santiago</h4>
+                </div>
+              </Link>
+            </div>
           </div>
           <div>
-              <hr/>
+            <hr />
             <div className={classes.header__option}>
               <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
                 <HomeIcon fontSize="large" />
                 <div>Home</div>
               </Link>
             </div>
-            <hr/>
+            <hr />
             <div className={classes.header__option}>
               <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
                 <SupervisedUserCircleIcon fontSize="large" />
                 <div>Friends</div>
               </Link>
             </div>
-            <hr/>
+            <hr />
             <div className={classes.header__option}>
               <Link
                 to="/logout"
@@ -215,7 +215,7 @@ function Header() {
                 <div>Logout</div>
               </Link>
             </div>
-            <hr/>
+            <hr />
           </div>
         </Drawer>
         <div>
@@ -246,5 +246,9 @@ function Header() {
     </div>
   );
 }
-
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    user: state.login,
+  };
+};
+export default connect(mapStateToProps)(Header);

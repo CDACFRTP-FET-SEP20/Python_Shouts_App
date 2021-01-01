@@ -7,7 +7,8 @@ const initialState = {
 function reducer(state = initialState, action) {
   if (action.type === "AddToken") {
     sessionStorage.setItem("token", action.payload.token);
-
+    sessionStorage.setItem("user", action.payload.username);
+    console.log("Reducer====", action.payload.username);
     state = action.payload;
     return {
       ...state,

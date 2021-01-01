@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import LockRoundedIcon from "@material-ui/icons/LockRounded";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -103,6 +103,9 @@ function login(props) {
   console.log("state data", props.userdata);
 
   const classes = useStyles();
+  if (props.user.isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <>
