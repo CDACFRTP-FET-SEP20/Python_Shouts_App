@@ -74,7 +74,7 @@ function login(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    console.log("Login Submit===", formData);
 
     fetch("/profile/login/", {
       method: "POST",
@@ -85,7 +85,6 @@ function login(props) {
     })
       .then((respone) => respone.json())
       .then((data) => {
-        // userdatafunction(data);
         props.dispatch({
           type: "AddToken",
           payload: data,
@@ -168,7 +167,6 @@ function login(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.login,
-    userdata: state.user,
   };
 };
 

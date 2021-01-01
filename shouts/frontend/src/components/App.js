@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import Friends from "./Friends/Friends";
 import { makeStyles } from "@material-ui/core";
 import Feed from "./Feed/Feed";
+import PrivateRoute from './PrivateRoute'
 
 const useStyles = makeStyles({
   App: {
@@ -36,15 +37,17 @@ function App () {
           <div className={classes.app__body}>
             {/* <SideBar /> */}
             <Switch>
-              <Route exact path="/">
+            <PrivateRoute exact path="/" component={Feed} />
+            <PrivateRoute exact path="/mypost" component={MyShouts} />
+              {/* <Route exact path="/">
                 <Feed />
-              </Route>
+              </Route> */}
             </Switch>
-            <Switch>
+            {/* <Switch>
               <Route path="/mypost">
                 <MyShouts />
               </Route>
-            </Switch>
+            </Switch> */}
           </div>
         </div>
             <div>
