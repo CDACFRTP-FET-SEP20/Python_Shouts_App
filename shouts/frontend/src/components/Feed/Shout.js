@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "15px",
     backgroundColor: "white",
     boxShadow: "0px 5px 7px -7px rgba(0,0,0,0.75)",
-    width:"76%",
+    width: "76%",
     "@media (max-width: 900px)": {
       width: "78%",
     },
@@ -100,13 +100,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     color: theme.palette.text.secondary,
     borderRadius: "15px",
-    
   },
-  "reactAudioPlayer" :{
-    width:"100%",
-  }
+  reactAudioPlayer: {
+    width: "100%",
+  },
 }));
-function Shout({ shouts }) {
+function Shout({ shouts }, props) {
+  const username = sessionStorage.getItem("user");
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -114,7 +114,7 @@ function Shout({ shouts }) {
   const [postId, setPostId] = useState("");
   const [postContent, setPostContent] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
-// ===========================Menu================================
+  // ===========================Menu================================
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -133,7 +133,7 @@ function Shout({ shouts }) {
     setPostTitle(postTitle);
     setPostId(postId);
   };
-    // ===========================Edit================================
+  // ===========================Edit================================
   const onEditePost = (postContent, postTitle, postId) => {
     setEditModalOpen(true);
     setPostContent(postContent);
@@ -150,7 +150,7 @@ function Shout({ shouts }) {
           <h3>{shouts.username}</h3>
           <p>{shouts.date_posted}</p>
         </div>
-        {shouts.username === "Amy Santiago" ? (
+        {shouts.username === username ? (
           <div>
             <div className={classes.shout_top}>
               <Button
@@ -186,7 +186,6 @@ function Shout({ shouts }) {
                 </MenuItem>
               </Menu>
             </div>
-            
           </div>
         ) : null}
       </div>
@@ -214,7 +213,11 @@ function Shout({ shouts }) {
       {/* ====================Audio========================== */}
       {shouts.post_type === "A" ? (
         <div className={classes.audio}>
-          <ReactAudioPlayer src={shouts.media} controls style={{width:"100%"}} />
+          <ReactAudioPlayer
+            src={shouts.media}
+            controls
+            style={{ width: "100%" }}
+          />
         </div>
       ) : null}
       {/* ====================Image========================== */}
@@ -252,5 +255,9 @@ function Shout({ shouts }) {
     </div>
   );
 }
-
-export default Shout;
+const mapStateToProps = (state) => {
+  return {
+    user: state.login,
+  };
+};
+export default connect(mapStateToProps)(Shout);
