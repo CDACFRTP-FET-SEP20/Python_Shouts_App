@@ -73,7 +73,12 @@ export const updatePost = (props, values) => {
 };
 // ===============================GetMyPost================================
 export const getMyPost = (props, user_id) => {
-  fetch("/api/mypostlist/" + user_id + "/")
+  const authToken = props.user.token;
+  fetch("/api/mypostlist/" + user_id + "/", {
+    headers: {
+      Authorization: `Token ${authToken}`,
+    },
+  })
     .then((resp) => resp.json())
     .then((data) =>
       // console.log(data)

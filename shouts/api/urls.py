@@ -45,4 +45,7 @@ urlpatterns = [
     path('requestreceived/<str:pk>', FriendRequestList, name='FriendRequestList'),
     path('requestsent/<str:pk>', MakeNewFriends, name='MakeNewFriends'),
     path('mypostlist/<str:pk>/', MyPostsViewSet, name='my_post_list'),
+
+
 ]
+
