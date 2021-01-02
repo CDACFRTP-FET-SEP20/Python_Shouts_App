@@ -97,7 +97,6 @@ const useStyles = makeStyles((theme) => ({
   },
   linksMobile: {
     color: "blue",
-
     cursor: "pointer",
     textDecoration: "none",
     "&:hover": {

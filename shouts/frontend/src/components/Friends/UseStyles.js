@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: "1rem",
     flexGrow: 1,
   },
   paper: {
@@ -13,11 +14,11 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(7),
     height: theme.spacing(7),
   },
-  extraLarge:{
+  extraLarge: {
     width: theme.spacing(14),
     height: theme.spacing(14),
-    marginLeft: 'auto',
-    marginRight:'auto',
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   cardFlex: {
     display: "flex",
@@ -25,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
   cardDashboard: {
     display: "flex",
-    flexDirection: 'column',
+    flexDirection: "column",
     fontSize: 18,
   },
-  autoComplete:{
-    color: 'white'
+  autoComplete: {
+    color: "white",
   },
 }));
 
