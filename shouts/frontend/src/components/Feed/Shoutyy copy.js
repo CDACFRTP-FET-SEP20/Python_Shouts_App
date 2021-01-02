@@ -68,9 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Shout(props) {
-  // const[myshout,setMyshouts]=useState(false)
-  console.log("ShoutsNew==", props.myshouts);
+function Shout({ shouts }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const username = sessionStorage.getItem("user");
@@ -111,39 +109,28 @@ function Shout(props) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  let action = <div></div>;
+  var action = <div></div>;
+  if (shouts.username === username) {
+    action = (
+      <IconButton aria-label="settings" onClick={handleClick}>
+        <MoreVertIcon />
+      </IconButton>
+    );
+  }
 
-  const profilepic = (data) => {
-    for (let item1 of props.profiles) {
-      if (item1.username === data.username) {
-        return item1.user_image.slice(21);
-      }
-    }
-  };
   return (
     <Grid item md={6}>
-      <Card className={classes.root} spacing={1} key={props.shouts.post_id}>
+      <Card className={classes.root} spacing={1}>
         <CardHeader
           avatar={
-            <Avatar
-              aria-label="recipe"
-              className={classes.avatar}
-              src={profilepic(props.shouts)}
-            ></Avatar>
+            <Avatar aria-label="recipe" className={classes.avatar}>
+              R
+            </Avatar>
           }
-          action={
-            props.shouts.username == username ? (
-              <IconButton aria-label="settings" onClick={handleClick}>
-                <MoreVertIcon />
-              </IconButton>
-            ) : (
-              <div></div>
-            )
-          }
-          title={props.shouts.username}
-          subheader={props.shouts.date_posted}
+          action={action}
+          title={shouts.username}
+          subheader={shouts.date_posted}
         />
-
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
@@ -170,41 +157,41 @@ function Shout(props) {
         </Menu>
         <CardContent>
           <Typography variant="h6" color="textSecondary" component="p">
-            {props.shouts.title}
+            {shouts.title}
           </Typography>
         </CardContent>
-        {props.shouts.post_type === "I" ? (
+        {shouts.post_type === "I" ? (
           <CardMedia
             className={classes.media}
-            image={props.shouts.media}
+            image={shouts.media}
             title="Paella dish"
           />
         ) : null}
-        {props.shouts.post_type === "T" ? (
+        {shouts.post_type === "T" ? (
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              {props.shouts.description}
+              {shouts.description}
             </Typography>
           </CardContent>
         ) : null}
-        {props.shouts.post_type === "A" ? (
+        {shouts.post_type === "A" ? (
           <CardContent>
             <div className={classes.audio}>
               <ReactAudioPlayer
-                src={props.shouts.media}
+                src={shouts.media}
                 controls
                 style={{ width: "100%" }}
               />
             </div>
           </CardContent>
         ) : null}
-        {props.shouts.post_type === "V" ? (
+        {shouts.post_type === "V" ? (
           <CardContent>
             <div>
               <ReactPlayer
                 width="100%"
                 height="100%"
-                url={props.shouts.media}
+                url={shouts.media}
                 playing={true}
                 controls={true}
                 light={false}
@@ -223,22 +210,20 @@ function Shout(props) {
             <ChatBubbleIcon />
           </IconButton>
         </CardActions>
-
         <DeleteModal
           open={modalOpen}
           handleClose={handleModalClose}
-          postTitle={props.shouts.title}
-          postId={props.shouts.post_id}
-          myshout={props.myshouts}
+          postTitle={shouts.title}
+          postId={shouts.post_id}
         />
         <EditModal
           open={editModalOpen}
           handleClose={handleModalClose}
-          postTitle={props.shouts.title}
-          postContent={props.shouts.description}
-          postId={props.shouts.post_id}
-          media={props.shouts.media}
-          post_type={props.shouts.post_type}
+          postTitle={shouts.title}
+          postContent={shouts.description}
+          postId={shouts.post_id}
+          media={shouts.media}
+          post_type={shouts.post_type}
         />
       </Card>
     </Grid>
@@ -247,8 +232,6 @@ function Shout(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.login,
-
-    profiles: state.friendList.profiles,
   };
 };
 export default connect(mapStateToProps)(Shout);

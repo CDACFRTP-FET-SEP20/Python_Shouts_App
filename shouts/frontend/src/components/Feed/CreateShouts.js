@@ -21,15 +21,19 @@ const useStyles = makeStyles((theme) => ({
   shadows: ["none"],
   root: {
     flexGrow: 1,
+    marginTop: "70px",
+    marginLeft: "20px",
   },
   paper_grid: {
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
     borderRadius: "15px",
-    width:"70%",
-    "@media (max-width: 900px)": {
+    width: "50%",
+    marginLeft: "25%",
+    "@media (max-width: 500px)": {
       width: "70%",
+      marginLeft: "10%",
     },
   },
   create__card: {
@@ -52,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     "@media (max-width: 900px)": {
       width: "70%",
+      "& input": {
+        width: "100%",
+        padding: "5px",
+      },
     },
     "& form": {
       flex: 1,
@@ -164,18 +172,29 @@ function getModalStyle() {
   };
 }
 function CreateShouts(props) {
-  console.log("Create",props);
+  console.log("Create", props);
   const classes = useStyles();
+  var usernameDis = sessionStorage.getItem("user");
+  var i = usernameDis.indexOf(" ");
+  var user = usernameDis.substr(0, i);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [media, setMedia] = useState("");
   const [post_type, setPostType] = useState("T");
   const [modalStyle] = useState(getModalStyle);
   const [openText, setOpenText] = useState(false);
-  const[username,setUserName]=useState(props.user.user_id)
+  const [username, setUserName] = useState(props.user.user_id);
   var date = new Date();
 
   var post_date = dateFormat(date, "yyyy-mm-dd HH:MM");
+  const profilepic = () => {
+    for (let item1 of props.profiles) {
+      if (item1.username === usernameDis) {
+        console.log("prr==========", item1.user_image.slice(21));
+        return item1.user_image.slice(21);
+      }
+    }
+  };
   // ==========================Text Modal Controls======================================
 
   const handleOpen = () => {
@@ -277,64 +296,64 @@ function CreateShouts(props) {
       </Modal>
 
       {/*======================Create Shouts============= */}
-      <Grid container spacing={1} alignItems="center">
-        <Grid item xs={12}>
-          <Paper className={classes.paper_grid}>
-            <div className={classes.create__top}>
-              <Avatar />
-              <form>
-                <input
-                  className={classes.create__input}
-                  type="text"
-                  placeholder="What's on your mind,Amy?"
-                  onClick={() => {
-                    handleOpen();
-                    setPostType("T");
-                  }}
-                />
-              </form>
+
+      <Grid item xs={12}>
+        <Paper className={classes.paper_grid}>
+          <div className={classes.create__top}>
+            <Avatar src={profilepic()} />
+            <form>
+              <input
+                className={classes.create__input}
+                type="text"
+                placeholder={`What's on your mind ${user}?`}
+                onClick={() => {
+                  handleOpen();
+                  setPostType("T");
+                }}
+              />
+            </form>
+          </div>
+        </Paper>
+      </Grid>
+      <br />
+      <Grid item xs={12}>
+        <Paper className={classes.paper_grid}>
+          <div className={classes.create__bottom}>
+            <div
+              className={classes.create__option}
+              onClick={() => {
+                handleOpen();
+                setPostType("V");
+                setDescription("");
+              }}
+            >
+              <VideocamIcon style={{ color: "red" }} />
+              <h3>Video</h3>
             </div>
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.paper_grid}>
-            <div className={classes.create__bottom}>
-              <div
-                className={classes.create__option}
-                onClick={() => {
-                  handleOpen();
-                  setPostType("V");
-                  setDescription("");
-                }}
-              >
-                <VideocamIcon style={{ color: "red" }} />
-                <h3>Video</h3>
-              </div>
-              <div
-                className={classes.create__option}
-                onClick={() => {
-                  handleOpen();
-                  setPostType("I");
-                  setDescription("");
-                }}
-              >
-                <AddAPhotoIcon style={{ color: "green" }} />
-                <h3>Photo</h3>
-              </div>
-              <div
-                className={classes.create__option}
-                onClick={() => {
-                  handleOpen();
-                  setPostType("A");
-                  setDescription("");
-                }}
-              >
-                <AudiotrackIcon style={{ color: "orange" }} />
-                <h3>Audio</h3>
-              </div>
+            <div
+              className={classes.create__option}
+              onClick={() => {
+                handleOpen();
+                setPostType("I");
+                setDescription("");
+              }}
+            >
+              <AddAPhotoIcon style={{ color: "green" }} />
+              <h3>Photo</h3>
             </div>
-          </Paper>
-        </Grid>
+            <div
+              className={classes.create__option}
+              onClick={() => {
+                handleOpen();
+                setPostType("A");
+                setDescription("");
+              }}
+            >
+              <AudiotrackIcon style={{ color: "orange" }} />
+              <h3>Audio</h3>
+            </div>
+          </div>
+        </Paper>
       </Grid>
     </div>
   );
@@ -342,5 +361,6 @@ function CreateShouts(props) {
 const mapStateToProps = (state) => ({
   shouts: state.shouts,
   user: state.login,
+  profiles: state.friendList.profiles,
 });
 export default connect(mapStateToProps)(CreateShouts);

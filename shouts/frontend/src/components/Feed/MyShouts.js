@@ -4,9 +4,10 @@ import Grid from "@material-ui/core/Grid";
 import { Container, makeStyles } from "@material-ui/core";
 import { connect } from "react-redux";
 import axios from "axios";
-import Shout from "./Shout";
+import Shoutyy from "./Shoutyy";
 import CreateShouts from "./CreateShouts";
 import { getMyPost } from "../../actions/PostActions";
+import Header1 from "../Header/Navbar";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   //   alignItems: "center",
   //   backgroundColor: "#f1f2f5",
   //   "@media (max-width: 900px)": {
-      
+
   //     padding: "10px 50px",
   //   },
   // },
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 function MyShouts(props) {
   const classes = useStyles();
   var user_id = props.user.user_id;
-  console.log("myshouts",props.user.user_id);
+  console.log("myshouts", props.user.user_id);
   useEffect(() => {
     console.log("myshouts");
     // ==============Get Shouts======================
@@ -50,14 +51,21 @@ function MyShouts(props) {
 
   return (
     <>
-      <div className={classes.feed}>
+      <Header1 />
+
       {/* ==============Create Shouts====================== */}
+      <Grid container spacing={2} justify="center" alignItems="center">
         <CreateShouts />
-      {/* ==============Display Shouts====================== */}
-        {props.shouts.map((shout) => (
-          <Shout key={shout.post_id} shouts={shout} />
-        ))}
-      </div>
+      </Grid>
+      <Grid item sm>
+        <Paper>
+          {/* ==============Display Shouts====================== */}
+          {props.shouts.map((shout) => (
+            // <Shoutyy key={shout.post_id} shouts={shout} />
+            <Shoutyy key={shout.post_id} shouts={shout} myshouts={true} />
+          ))}
+        </Paper>
+      </Grid>
     </>
   );
 }

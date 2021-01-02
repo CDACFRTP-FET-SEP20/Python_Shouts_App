@@ -6,17 +6,17 @@ import { connect } from "react-redux";
 
 import axios from "axios";
 import Cookies from "js-cookie";
-import {getPosts} from '../../actions/PostActions'
-import {deletePost} from '../../actions/PostActions'
+import { getPosts } from "../../actions/PostActions";
+import { deletePost, deleteMyPost } from "../../actions/PostActions";
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     top: "calc(50% - 9rem)",
     left: "calc(50% - 13rem)",
     width: "80vmin",
-    borderRadius:"15px",
-    backgroundColor:"white",
-    outline:0,
+    borderRadius: "15px",
+    backgroundColor: "white",
+    outline: 0,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -42,18 +42,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DeleteModal(props) {
+  console.log(props.user.user_id);
   const classes = useStyles();
   const csrftoken = Cookies.get("csrftoken");
-
-  
 
   const cancelDelete = () => {
     props.handleClose();
   };
 
   const onDeleteClicked = () => {
-    deletePost(props);
-    
+    if (props.myshout) {
+      deleteMyPost(props);
+    } else {
+      deletePost(props);
+    }
+
     props.handleClose();
   };
 
@@ -85,7 +88,6 @@ function DeleteModal(props) {
           >
             Yes
           </Button>
-          
         </div>
       </div>
     </Modal>
@@ -93,5 +95,6 @@ function DeleteModal(props) {
 }
 const mapStateToProps = (state) => ({
   shouts: state.shouts,
+  user: state.login,
 });
 export default connect(mapStateToProps)(DeleteModal);

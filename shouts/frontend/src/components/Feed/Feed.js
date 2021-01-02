@@ -2,10 +2,13 @@ import { makeStyles } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 // import CreateShout from "./CreateShout";
 import Shout from "./Shout";
+import Shoutyy from "./Shoutyy";
 import CreateShouts from "./CreateShouts";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/PostActions";
 import { profiledata } from "../Services/FriendService";
+import { Grid, Paper } from "@material-ui/core";
+import Navbar from "../Header/Navbar";
 const useStyles = makeStyles({
   // feed: {
   //   flex: 1,
@@ -40,14 +43,30 @@ function Feed(props) {
   console.log("*****feed*********", props.profiles);
 
   return (
-    <div className={classes.feed}>
-      {/*==============Create Shouts====================== */}
-      <CreateShouts />
-      {/*==============Display Shouts====================== */}
-      {props.shouts.map((shout) => (
-        <Shout key={shout.post_id} shouts={shout} />
-      ))}
-    </div>
+    <>
+      <Navbar />
+
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justifyContent="center
+      "
+      >
+        <CreateShouts />
+      </Grid>
+      <Grid item sm>
+        <Paper>
+          {/*==============Create Shouts====================== */}
+
+          {/*==============Display Shouts====================== */}
+          {props.shouts.map((shout) => (
+            // <Shout key={shout.post_id} shouts={shout} />
+            <Shoutyy key={shout.post_id} shouts={shout} myshouts={false} />
+          ))}
+        </Paper>
+      </Grid>
+    </>
   );
 }
 const mapStateToProps = (state) => ({

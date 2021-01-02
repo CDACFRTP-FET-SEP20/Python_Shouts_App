@@ -42,6 +42,20 @@ export const deletePost = (props) => {
     .then((res) => getPosts(props))
     .catch((error) => console.log(error));
 };
+// ===============================DeletePosts================================
+export const deleteMyPost = (props) => {
+  console.log(props);
+  axios({
+    method: "delete",
+    url: `/api/posts/${props.postId}/`,
+
+    headers: {
+      "X-CSRFToken": csrftoken,
+    },
+  })
+    .then((res) => getMyPost(props, props.user.user_id))
+    .catch((error) => console.log(error));
+};
 
 // ===============================UpdatePosts================================
 export const updatePost = (props, values) => {
