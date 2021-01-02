@@ -104,7 +104,7 @@ class ProfileView(viewsets.ModelViewSet):
 
 
 # friend request list
-@api_view(['GET'])
+@api_view(['GET','PATCH', 'DELETE', 'POST'])
 def FriendRequestList(request, pk):
     filter_obj = Profile.objects.get(user_id=pk)
     friends = Friends.objects.filter(
@@ -134,15 +134,18 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset=Profile.objects.all().order_by('username')
     serializer_class=UsersSerializer
 
-class MyPostsViewSet(viewsets.ModelViewSet):
-    print("mypost")
-    queryset=Posts.objects.filter(username="21972bf4-f2c5-4658-b08a-6378034f8ee1").order_by('-date_posted')
-    serializer_class=PostsSerializer
+# class MyPostsViewSet(viewsets.ModelViewSet):
+#     print("mypost")
+#     queryset=Posts.objects.filter(username="21972bf4-f2c5-4658-b08a-6378034f8ee1").order_by('-date_posted')
+#     serializer_class=PostsSerializer
 
-# def MyPostsViewSet(request,pk):
-#     filter_obj = Profile.objects.get(user_id=pk)
-#     queryset=Posts.objects.filter(username=filter_obj).order_by('-date_posted')
-#     serializer=PostsSerializer(queryset,many=True)
+@api_view(['GET'])
+def MyPostsViewSet(request,pk):
+    print("MyViewSet")
+    filter_obj = Profile.objects.get(user_id=pk)
+    queryset=Posts.objects.filter(username=filter_obj).order_by('-date_posted')
+    serializer=PostsSerializer(queryset,many=True)
+    return Response(serializer.data)
 
 
 class PostsViewSet(viewsets.ModelViewSet):

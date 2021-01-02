@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "15px",
     backgroundColor: "white",
     boxShadow: "0px 5px 7px -7px rgba(0,0,0,0.75)",
-    width:"76%",
+    width: "76%",
     "@media (max-width: 900px)": {
       width: "78%",
     },
@@ -100,13 +100,15 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
     color: theme.palette.text.secondary,
     borderRadius: "15px",
-    
   },
-  "reactAudioPlayer" :{
-    width:"100%",
-  }
+  reactAudioPlayer: {
+    width: "100%",
+  },
 }));
-function Shout({ shouts }) {
+function Shout(props) {
+  console.log("Shouts==", props);
+  const username = sessionStorage.getItem("user");
+  const [myshout, setMyShout] = useState(props.myshout);
   const classes = useStyles();
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -114,7 +116,7 @@ function Shout({ shouts }) {
   const [postId, setPostId] = useState("");
   const [postContent, setPostContent] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
-// ===========================Menu================================
+  // ===========================Menu================================
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -133,24 +135,35 @@ function Shout({ shouts }) {
     setPostTitle(postTitle);
     setPostId(postId);
   };
-    // ===========================Edit================================
+  // ===========================Edit================================
   const onEditePost = (postContent, postTitle, postId) => {
     setEditModalOpen(true);
     setPostContent(postContent);
     setPostTitle(postTitle);
     setPostId(postId);
   };
+  const profilepic = (data) => {
+    for (let item1 of props.profiles) {
+      if (item1.username === data.username) {
+        return item1.user_image.slice(21);
+      }
+    }
+  };
 
   return (
     <div className={classes.shout}>
+      {/* {props.shouts.title} */}
       <div className={classes.shout_top}>
-        <Avatar className={classes.shout__avatar} src="" />
+        <Avatar
+          className={classes.shout__avatar}
+          src={profilepic(props.shouts)}
+        />
 
         <div className={classes.shout__topInfo}>
-          <h3>{shouts.username}</h3>
-          <p>{shouts.date_posted}</p>
+          <h3>{props.shouts.username}</h3>
+          <p>{props.shouts.date_posted}</p>
         </div>
-        {shouts.username === "Amy Santiago" ? (
+        {props.shouts.username === username ? (
           <div>
             <div className={classes.shout_top}>
               <Button
@@ -186,22 +199,21 @@ function Shout({ shouts }) {
                 </MenuItem>
               </Menu>
             </div>
-            
           </div>
         ) : null}
       </div>
 
       <div className={classes.shout__bottom}>
-        <p>{shouts.title}</p>
-        <p>{shouts.description}</p>
+        <p>{props.shouts.title}</p>
+        <p>{props.shouts.description}</p>
       </div>
       {/* ====================Video========================== */}
-      {shouts.post_type === "V" ? (
+      {props.shouts.post_type === "V" ? (
         <div>
           <ReactPlayer
             width="100%"
             height="100%"
-            url={shouts.media}
+            url={props.shouts.media}
             playing={true}
             controls={true}
             light={false}
@@ -212,15 +224,19 @@ function Shout({ shouts }) {
         </div>
       ) : null}
       {/* ====================Audio========================== */}
-      {shouts.post_type === "A" ? (
+      {props.shouts.post_type === "A" ? (
         <div className={classes.audio}>
-          <ReactAudioPlayer src={shouts.media} controls style={{width:"100%"}} />
+          <ReactAudioPlayer
+            src={props.shouts.media}
+            controls
+            style={{ width: "100%" }}
+          />
         </div>
       ) : null}
       {/* ====================Image========================== */}
-      {shouts.post_type === "I" ? (
+      {props.shouts.post_type === "I" ? (
         <div className={classes.shout__media}>
-          <img src={shouts.media} alt="" />
+          <img src={props.shouts.media} alt="" />
         </div>
       ) : null}
 
@@ -237,20 +253,26 @@ function Shout({ shouts }) {
       <DeleteModal
         open={modalOpen}
         handleClose={handleModalClose}
-        postTitle={shouts.title}
-        postId={shouts.post_id}
+        postTitle={props.shouts.title}
+        postId={props.shouts.post_id}
+        myshout={props.myshouts}
       />
       <EditModal
         open={editModalOpen}
         handleClose={handleModalClose}
-        postTitle={shouts.title}
-        postContent={shouts.description}
-        postId={shouts.post_id}
-        media={shouts.media}
-        post_type={shouts.post_type}
+        postTitle={props.shouts.title}
+        postContent={props.shouts.description}
+        postId={props.shouts.post_id}
+        media={props.shouts.media}
+        post_type={props.shouts.post_type}
       />
     </div>
   );
 }
-
-export default Shout;
+const mapStateToProps = (state) => {
+  return {
+    user: state.login,
+    profiles: state.friendList.profiles,
+  };
+};
+export default connect(mapStateToProps)(Shout);

@@ -74,7 +74,7 @@ export default function register() {
         .then((respone) => respone.json())
         .then((data) => {
           console.log("data", data);
-          history.push("login");
+          history.push("/login");
         });
     } else {
       alert("Password and Confirm Password should be same");
