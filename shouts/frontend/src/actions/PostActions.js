@@ -71,6 +71,20 @@ export const updatePost = (props, values) => {
     .then((res) => getPosts(props))
     .catch((error) => console.log(error));
 };
+// ===============================UpdatePosts================================
+export const updateMyPost = (props, values) => {
+  console.log(props.myshout);
+  axios({
+    method: "patch",
+    url: `/api/posts/${props.postId}/`,
+    data: values,
+    headers: {
+      "X-CSRFToken": csrftoken,
+    },
+  })
+    .then((res) => getMyPost(props, props.user.user_id))
+    .catch((error) => console.log(error));
+};
 // ===============================GetMyPost================================
 export const getMyPost = (props, user_id) => {
   const authToken = props.user.token;

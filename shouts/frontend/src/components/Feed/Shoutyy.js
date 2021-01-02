@@ -239,6 +239,7 @@ function Shout(props) {
           postId={props.shouts.post_id}
           media={props.shouts.media}
           post_type={props.shouts.post_type}
+          myshout={props.myshouts}
         />
       </Card>
     </Grid>
