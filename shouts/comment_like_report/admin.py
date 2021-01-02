@@ -29,7 +29,7 @@ class ShoutLikeAdmin(admin.ModelAdmin):
 
 @admin.register(ShoutReport)
 class ShoutReportAdmin(admin.ModelAdmin):
-    list_display = ["id", "shout_id","user_id"]
+    list_display = ["id", "shout_id","user_id","report_type"]
 
 # @admin.register(TraineeUserMapping)
 # class TraineeUserMappingAdmin(admin.ModelAdmin):

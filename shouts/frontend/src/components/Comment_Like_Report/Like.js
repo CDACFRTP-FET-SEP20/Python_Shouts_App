@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
+import Button from "@material-ui/core/Button";
 
 function Like(props) {
   const [isLiked, setIsLiked] = useState(true);
@@ -107,15 +108,15 @@ function Like(props) {
         <p>This is like</p>
         {isLiked ? (
           <div>
-            <button
+            <Button
               type="submit"
               name="like_button"
               value="like"
               onClick={handleSubmit}
             >
               <ThumbUpIcon /> Like
-            </button>
-            <p>{like_count}</p>
+            </Button>
+            <p>{like_count} likes</p>
           </div>
         ) : (
           <div>
@@ -127,11 +128,9 @@ function Like(props) {
             >
               <ThumbDownIcon /> Unlike
             </button>
-            <p>{like_count}</p>
+            <p>{like_count} likes</p>
           </div>
         )}
-
-        {like_count}
       </form>
     </div>
   );

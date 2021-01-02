@@ -84,3 +84,4 @@ class ShoutReport(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     shout_id = models.ForeignKey(Shout, on_delete=models.CASCADE, related_name='ReportedPost',default="", editable=False, null=True)
     user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='Report_User', default="",editable=False,null=True)
+    report_type = models.CharField(max_length=256,null=True)

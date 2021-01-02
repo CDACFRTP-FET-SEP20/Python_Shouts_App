@@ -106,5 +106,6 @@ class ReportSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'shout_id',
-            'user_id'
+            'user_id',
+            'report_type'
         ]
