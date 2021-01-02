@@ -139,7 +139,8 @@ class UserViewSet(viewsets.ModelViewSet):
 #     queryset=Posts.objects.filter(username="21972bf4-f2c5-4658-b08a-6378034f8ee1").order_by('-date_posted')
 #     serializer_class=PostsSerializer
 
-@api_view(['GET'])
+@api_view(['GET','PATCH', 'DELETE', 'POST'])
+@permission_classes([IsAuthenticated])
 def MyPostsViewSet(request,pk):
     print("MyViewSet")
     filter_obj = Profile.objects.get(user_id=pk)
@@ -147,6 +148,12 @@ def MyPostsViewSet(request,pk):
     serializer=PostsSerializer(queryset,many=True)
     return Response(serializer.data)
 
+# @api_view(['GET','PATCH', 'DELETE', 'POST'])
+# @permission_classes([IsAuthenticated])
+# def PostsViewSet(request):
+#     queryset=Posts.objects.all().order_by('-date_posted')
+#     serializer=PostsSerializer(queryset,many=True)
+#     return Response(serializer.data)
 
 class PostsViewSet(viewsets.ModelViewSet):
     queryset=Posts.objects.all().order_by('-date_posted')

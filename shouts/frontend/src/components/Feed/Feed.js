@@ -53,12 +53,12 @@ function Feed(props) {
         justifyContent="center
       "
       >
+        {/*==============Create Shouts====================== */}
+
         <CreateShouts />
       </Grid>
       <Grid item sm>
         <Paper>
-          {/*==============Create Shouts====================== */}
-
           {/*==============Display Shouts====================== */}
           {props.shouts.map((shout) => (
             // <Shout key={shout.post_id} shouts={shout} />
