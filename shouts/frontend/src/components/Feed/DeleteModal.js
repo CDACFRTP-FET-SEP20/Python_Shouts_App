@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DeleteModal(props) {
-  console.log(props.user.user_id);
+  
   const classes = useStyles();
   const csrftoken = Cookies.get("csrftoken");
 

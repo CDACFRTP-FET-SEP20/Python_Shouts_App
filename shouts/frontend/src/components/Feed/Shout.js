@@ -106,7 +106,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function Shout(props) {
-  console.log("Shouts==", props);
   const username = sessionStorage.getItem("user");
   const [myshout, setMyShout] = useState(props.myshout);
   const classes = useStyles();
@@ -265,6 +264,7 @@ function Shout(props) {
         postId={props.shouts.post_id}
         media={props.shouts.media}
         post_type={props.shouts.post_type}
+        myshout={props.myshouts}
       />
     </div>
   );

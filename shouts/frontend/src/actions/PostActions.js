@@ -71,9 +71,9 @@ export const updatePost = (props, values) => {
     .then((res) => getPosts(props))
     .catch((error) => console.log(error));
 };
-// ===============================UpdateMyPosts================================
+// ===============================UpdatePosts================================
 export const updateMyPost = (props, values) => {
-  console.log(values);
+  console.log(props.myshout);
   axios({
     method: "patch",
     url: `/api/posts/${props.postId}/`,
