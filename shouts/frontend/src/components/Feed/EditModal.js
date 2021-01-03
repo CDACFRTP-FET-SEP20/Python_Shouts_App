@@ -169,5 +169,6 @@ function EditModal(props) {
 }
 const mapStateToProps = (state) => ({
   shouts: state.shouts,
+  user: state.login,
 });
 export default connect(mapStateToProps)(EditModal);
