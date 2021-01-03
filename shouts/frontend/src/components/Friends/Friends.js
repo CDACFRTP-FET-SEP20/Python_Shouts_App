@@ -8,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import useStyles from "./UseStyles";
 import { makeStyles } from "@material-ui/core/styles";
+import Header1 from "../Header/Navbar";
 
 const dashStyles = makeStyles((theme) => ({
   root: {
@@ -37,12 +38,13 @@ const Friends = () => {
   const dashstyle = dashStyles();
   return (
     <div>
+      <Header1 />
       <div className={classes.root}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
             <Paper
               className={dashstyle.paper}
-              style={{ backgroundColor: "#ff1744" }}
+              style={{ backgroundColor: "#3f51b5" }}
             >
               <Dashboard />
             </Paper>

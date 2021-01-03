@@ -9,3 +9,5 @@ pytz==2020.4
 six==1.15.0
 sqlparse==0.4.1
 virtualenv==20.2.2
+pillow==8.0.1
+django-cors-headers==3.6.0

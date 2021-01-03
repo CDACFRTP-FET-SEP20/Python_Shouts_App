@@ -51,48 +51,50 @@ function Dashboard(props) {
   };
 
   return (
-    <div className={classes.cardDashboard}>
-      {/* <Link to="/dashboard"> */}
-      <Avatar
-        alt="Remy Sharp"
-        src={userprofilepic()}
-        className={classes.extraLarge}
-      />
-      {/* </Link> */}
-      <Box style={{ color: "white" }} fontSize={24} mt={2} mb={1}>
-        {props.user.username.toUpperCase()}
-      </Box>
-      <Box style={{ color: "#f3e5f5" }} fontSize={16} mb={5}>
-        {props.user.bio}
-      </Box>
+    <div>
+      <div className={classes.cardDashboard}>
+        {/* <Link to="/dashboard"> */}
+        <Avatar
+          alt="Remy Sharp"
+          src={userprofilepic()}
+          className={classes.extraLarge}
+        />
+        {/* </Link> */}
+        <Box style={{ color: "white" }} fontSize={24} mt={2} mb={1}>
+          {props.user.username.toUpperCase()}
+        </Box>
+        <Box style={{ color: "#f3e5f5" }} fontSize={16} mb={5}>
+          {props.user.bio}
+        </Box>
 
-      <Link
-        to="/dashboard/friendlist"
-        style={links}
-        onClick={() => changeSearchState("friend")}
-      >
-        <Paper className={classes.paper}>
-          Friends({props.friendList.length})
-        </Paper>
-      </Link>
+        <Link
+          to="/dashboard/friendlist"
+          style={links}
+          onClick={() => changeSearchState("friend")}
+        >
+          <Paper className={classes.paper}>
+            Friends({props.friendList.length})
+          </Paper>
+        </Link>
 
-      <Link
-        to="/dashboard/requestsent"
-        style={links}
-        onClick={() => changeSearchState("requestsent")}
-      >
-        <Paper className={classes.paper}>Search Friends</Paper>
-      </Link>
+        <Link
+          to="/dashboard/requestsent"
+          style={links}
+          onClick={() => changeSearchState("requestsent")}
+        >
+          <Paper className={classes.paper}>Search Friends</Paper>
+        </Link>
 
-      <Link
-        to="/dashboard/requestreceived"
-        style={links}
-        onClick={() => changeSearchState("requestreceived")}
-      >
-        <Paper className={classes.paper}>
-          Friend Requests({props.requestReceived.length})
-        </Paper>
-      </Link>
+        <Link
+          to="/dashboard/requestreceived"
+          style={links}
+          onClick={() => changeSearchState("requestreceived")}
+        >
+          <Paper className={classes.paper}>
+            Friend Requests({props.requestReceived.length})
+          </Paper>
+        </Link>
+      </div>
     </div>
   );
 }
