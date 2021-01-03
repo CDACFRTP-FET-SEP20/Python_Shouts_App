@@ -4,7 +4,12 @@ import Cookies from "js-cookie";
 const csrftoken = Cookies.get("csrftoken");
 // ===============================GetPosts================================
 export const getPosts = (props) => {
-  fetch("/api/posts/")
+  const authToken = props.user.token;
+  fetch("/api/posts/", {
+    headers: {
+      Authorization: `Token ${authToken}`,
+    },
+  })
     .then((resp) => resp.json())
     .then((data) =>
       props.dispatch({
@@ -15,12 +20,14 @@ export const getPosts = (props) => {
 };
 // ===============================CreatePosts================================
 export const createPost = (props, uploadData) => {
+  const authToken = props.user.token;
   axios({
     method: "post",
     url: "/api/posts/",
     data: uploadData,
     headers: {
       "X-CSRFToken": csrftoken,
+      Authorization: `Token ${authToken}`,
     },
   }).then((res) =>
     props.dispatch({
@@ -33,7 +40,7 @@ export const createPost = (props, uploadData) => {
 export const deletePost = (props) => {
   axios({
     method: "delete",
-    url: `/api/posts/${props.postId}/`,
+    url: `/api/shouts/${props.postId}/`,
 
     headers: {
       "X-CSRFToken": csrftoken,
@@ -47,7 +54,7 @@ export const deleteMyPost = (props) => {
   console.log(props);
   axios({
     method: "delete",
-    url: `/api/posts/${props.postId}/`,
+    url: `/api/shouts/${props.postId}/`,
 
     headers: {
       "X-CSRFToken": csrftoken,
@@ -59,27 +66,31 @@ export const deleteMyPost = (props) => {
 
 // ===============================UpdatePosts================================
 export const updatePost = (props, values) => {
+  const authToken = props.user.token;
   console.log(values);
   axios({
     method: "patch",
-    url: `/api/posts/${props.postId}/`,
+    url: `/api/shouts/${props.postId}/`,
     data: values,
     headers: {
       "X-CSRFToken": csrftoken,
+      Authorization: `Token ${authToken}`,
     },
   })
     .then((res) => getPosts(props))
     .catch((error) => console.log(error));
 };
-// ===============================UpdatePosts================================
+// ===============================UpdateMyPosts================================
 export const updateMyPost = (props, values) => {
+  const authToken = props.user.token;
   console.log(props.myshout);
   axios({
     method: "patch",
-    url: `/api/posts/${props.postId}/`,
+    url: `/api/shouts/${props.postId}/`,
     data: values,
     headers: {
       "X-CSRFToken": csrftoken,
+      Authorization: `Token ${authToken}`,
     },
   })
     .then((res) => getMyPost(props, props.user.user_id))
