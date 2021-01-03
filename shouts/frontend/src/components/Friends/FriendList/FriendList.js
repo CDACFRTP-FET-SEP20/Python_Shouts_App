@@ -10,6 +10,8 @@ import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import useStyles from "../UseStyles";
 import { friendlistdata, newfrienddata } from "../../Services/FriendService";
 import Search from "../Dashboard/Search";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 function FriendList(props) {
   const classes = useStyles();
@@ -27,6 +29,8 @@ function FriendList(props) {
         newfrienddata(props);
       })
       .catch((error) => console.log(error));
+
+    // toast.error("Removed from friend list");
   };
 
   const searchedArray = props.friendList.filter((item) => {
@@ -111,6 +115,7 @@ function FriendList(props) {
             </Grid>
           );
         })}
+        {/* <ToastContainer /> */}
       </Grid>
     </div>
   );
