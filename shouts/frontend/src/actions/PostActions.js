@@ -42,7 +42,7 @@ export const deletePost = (props) => {
     .then((res) => getPosts(props))
     .catch((error) => console.log(error));
 };
-// ===============================DeletePosts================================
+// ===============================DeleteMyPosts================================
 export const deleteMyPost = (props) => {
   console.log(props);
   axios({
@@ -69,6 +69,20 @@ export const updatePost = (props, values) => {
     },
   })
     .then((res) => getPosts(props))
+    .catch((error) => console.log(error));
+};
+// ===============================UpdateMyPosts================================
+export const updateMyPost = (props, values) => {
+  console.log(values);
+  axios({
+    method: "patch",
+    url: `/api/posts/${props.postId}/`,
+    data: values,
+    headers: {
+      "X-CSRFToken": csrftoken,
+    },
+  })
+    .then((res) => getMyPost(props, props.user.user_id))
     .catch((error) => console.log(error));
 };
 // ===============================GetMyPost================================

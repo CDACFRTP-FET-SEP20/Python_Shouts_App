@@ -9,7 +9,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-import { updatePost } from "../../actions/PostActions";
+import { updatePost, updateMyPost } from "../../actions/PostActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,12 +56,13 @@ function EditModal(props) {
   var imageInputRef = React.useRef();
   const csrftoken = Cookies.get("csrftoken");
   const uploadData = new FormData();
+  console.log("Edit Modal=====", props.myshout);
   // change the state each time the component rerender
   useEffect(() => {
     setTitle(props.postTitle);
     setDescription(props.postContent);
     setMedia(props.media);
-   
+
     setPostType(props.post_type);
   }, [props.postTitle, props.postContent, props.post_type, props.media]);
   var mediaType = "";
@@ -71,8 +72,7 @@ function EditModal(props) {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-    
-    
+
     uploadData.append("title", title);
     {
       props.post_type === "T"
@@ -80,7 +80,11 @@ function EditModal(props) {
         : uploadData.append("media", media);
     }
 
-    updatePost(props, uploadData);
+    if (props.myshout) {
+      updateMyPost(props, uploadData);
+    } else {
+      updatePost(props, uploadData);
+    }
 
     props.handleClose();
   };
@@ -135,7 +139,6 @@ function EditModal(props) {
                   required
                   accept={mediaType}
                   type="file"
-                 
                   onChange={(e) => setMedia(e.target.files[0])}
                 />
               </div>
@@ -167,5 +170,6 @@ function EditModal(props) {
 }
 const mapStateToProps = (state) => ({
   shouts: state.shouts,
+  user: state.login,
 });
 export default connect(mapStateToProps)(EditModal);
