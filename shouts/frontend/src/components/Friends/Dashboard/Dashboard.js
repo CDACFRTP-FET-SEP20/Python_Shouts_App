@@ -34,7 +34,7 @@ function Dashboard(props) {
 
   useEffect(() => {
     friendlistreceived(props);
-    friendlistdata(props);
+    // friendlistdata(props);
     newfrienddata(props);
     // profiledata(props);
 
