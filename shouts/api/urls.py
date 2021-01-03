@@ -21,7 +21,7 @@ router = routers.DefaultRouter()
 # )
 
 router.register(r'users',UserViewSet)
-router.register(r'shouts',PostsViewSetPatchDelete)
+# router.register(r'shouts',PostsViewSetPatchDelete)
 
 # my_post_list=MyPostsViewSet.as_view({
 #     'get':'list',
@@ -41,7 +41,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('friendlist/<str:pk>', FriendsAppView, name='FriendsAppView'),
     path('posts/', PostsViewSet, name='PostsViewSet'),
-    
+    path('shouts/<str:pk>/', PostsViewSetPatchDelete, name='PostsViewSetPatchDelete'),
     path('profile/', profileList, name='profileList'),
     path('profile/<str:pk>', profileList, name='profileList'),
     path('requestreceived/<str:pk>', FriendRequestList, name='FriendRequestList'),
