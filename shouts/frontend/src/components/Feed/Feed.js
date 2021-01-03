@@ -6,7 +6,7 @@ import Shoutyy from "./Shoutyy";
 import CreateShouts from "./CreateShouts";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/PostActions";
-import { profiledata } from "../Services/FriendService";
+import { profiledata, friendlistdata } from "../Services/FriendService";
 import { Grid, Paper } from "@material-ui/core";
 import Navbar from "../Header/Navbar";
 const useStyles = makeStyles({
@@ -36,11 +36,40 @@ function Feed(props) {
 
   useEffect(() => {
     profiledata(props);
+    friendlistdata(props);
     // ==============Get Shouts======================
     getPosts(props);
   }, []);
 
-  console.log("*****feed*********", props.profiles);
+  console.log("*****feed*********", props);
+
+  const filteredArray = [];
+  function filteredFeed() {
+    for (let shout of props.shouts) {
+      if (shout.username === props.user.username) {
+        console.log("user.username");
+        filteredArray.push(shout);
+      }
+      for (let friend of props.friendList) {
+        if (
+          shout.username === friend.sender &&
+          friend.sender !== props.user.username
+        ) {
+          console.log("sender");
+          filteredArray.push(shout);
+        }
+        if (
+          shout.username === friend.receiver &&
+          friend.receiver !== props.user.username
+        ) {
+          console.log("receiver");
+          filteredArray.push(shout);
+        }
+      }
+    }
+  }
+  filteredFeed();
+  console.log("Filter array==", filteredArray);
 
   return (
     <>
@@ -60,7 +89,7 @@ function Feed(props) {
       <Grid item sm>
         <Paper>
           {/*==============Display Shouts====================== */}
-          {props.shouts.map((shout) => (
+          {filteredArray.map((shout) => (
             // <Shout key={shout.post_id} shouts={shout} />
             <Shoutyy key={shout.post_id} shouts={shout} myshouts={false} />
           ))}
@@ -73,5 +102,6 @@ const mapStateToProps = (state) => ({
   shouts: state.shouts,
   user: state.login,
   profiles: state.friendList.profiles,
+  friendList: state.friendList.friendList,
 });
 export default connect(mapStateToProps)(Feed);
