@@ -18,6 +18,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -109,7 +110,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navbar() {
+function Navbar(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -132,6 +133,14 @@ export default function Navbar() {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const searchPosts = (e) => {
+    console.log(e.target.value);
+    props.dispatch({
+      type: "Search Posts",
+      payload: e.target.value,
+    });
   };
 
   const menuId = "primary-search-account-menu";
@@ -212,14 +221,18 @@ export default function Navbar() {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
+            <form>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+                value={props.postSearch}
+                onChange={searchPosts}
+              />
+            </form>
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
@@ -270,3 +283,11 @@ export default function Navbar() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    postSearch: state.postSearch,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);
