@@ -170,24 +170,34 @@ def PostsViewSet(request):
     
 
         
-# @api_view(['PATCH'])
-# @permission_classes([IsAuthenticated])
-# def PostsViewSetPatchDelete(request,pk):
-#     if request.method == 'PATCH':
-#         accept_data = request.data
-#         posts = Posts.objects.get(username=accept_data['username'])
-#         print("accept_data", accept_data)
-#         serializer = PostsSerializer(accept_data,data=posts,partial=True)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-            
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+@api_view(['GET','PATCH','DELETE'])
+@permission_classes([IsAuthenticated])
+def PostsViewSetPatchDelete(request,pk):
+    if request.method == 'GET':
+        print(request.data)
+        posts = Posts.objects.get(post_id=pk)
+        serializer = PostsSerializer(posts)
+        return Response(serializer.data)
 
-class PostsViewSetPatchDelete(viewsets.ModelViewSet):
-    queryset=Posts.objects.all().order_by('-date_posted')
-    serializer_class=PostsSerializer
+
+    if request.method == 'PATCH':
+        
+        posts = Posts.objects.get(post_id=pk)
+        print("accept_data", request.data)
+        serializer = PostsSerializer(instance=posts,data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    if request.method=="DELETE":
+        posts = Posts.objects.get(post_id=pk)
+        posts.delete()
+        return Response('Shout Deleted Successfully')
+# class PostsViewSetPatchDelete(viewsets.ModelViewSet):
+#     queryset=Posts.objects.all().order_by('-date_posted')
+#     serializer_class=PostsSerializer
 
     
 

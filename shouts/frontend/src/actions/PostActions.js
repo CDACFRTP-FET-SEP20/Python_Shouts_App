@@ -38,12 +38,14 @@ export const createPost = (props, uploadData) => {
 };
 // ===============================DeletePosts================================
 export const deletePost = (props) => {
+  const authToken = props.user.token;
   axios({
     method: "delete",
     url: `/api/shouts/${props.postId}/`,
 
     headers: {
       "X-CSRFToken": csrftoken,
+      Authorization: `Token ${authToken}`,
     },
   })
     .then((res) => getPosts(props))
@@ -51,6 +53,7 @@ export const deletePost = (props) => {
 };
 // ===============================DeleteMyPosts================================
 export const deleteMyPost = (props) => {
+  const authToken = props.user.token;
   console.log(props);
   axios({
     method: "delete",
@@ -58,6 +61,7 @@ export const deleteMyPost = (props) => {
 
     headers: {
       "X-CSRFToken": csrftoken,
+      Authorization: `Token ${authToken}`,
     },
   })
     .then((res) => getMyPost(props, props.user.user_id))
