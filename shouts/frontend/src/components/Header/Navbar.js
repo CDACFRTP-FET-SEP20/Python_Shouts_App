@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   },
   links: {
     color: "white",
-
+    width: "48px",
     cursor: "pointer",
     textDecoration: "none",
     "&:hover": {
