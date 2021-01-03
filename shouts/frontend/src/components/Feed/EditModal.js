@@ -56,6 +56,7 @@ function EditModal(props) {
   var imageInputRef = React.useRef();
   const csrftoken = Cookies.get("csrftoken");
   const uploadData = new FormData();
+  console.log("Edit Modal=====", props.myshout);
   // change the state each time the component rerender
   useEffect(() => {
     setTitle(props.postTitle);

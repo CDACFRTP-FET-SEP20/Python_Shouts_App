@@ -5,7 +5,7 @@ from .views import (
     FriendRequestList,
     MakeNewFriends,
     FriendsAppView,
-    UserViewSet,PostsViewSet,MyPostsViewSet
+    UserViewSet,PostsViewSet,MyPostsViewSet,PostsViewSetPatchDelete
 )
 from rest_framework import routers
 
@@ -21,7 +21,7 @@ router = routers.DefaultRouter()
 # )
 
 router.register(r'users',UserViewSet)
-router.register(r'posts',PostsViewSet)
+router.register(r'shouts',PostsViewSetPatchDelete)
 
 # my_post_list=MyPostsViewSet.as_view({
 #     'get':'list',
@@ -40,6 +40,8 @@ profileList = ProfileView.as_view({
 urlpatterns = [
     path('', include(router.urls)),
     path('friendlist/<str:pk>', FriendsAppView, name='FriendsAppView'),
+    path('posts/', PostsViewSet, name='PostsViewSet'),
+    
     path('profile/', profileList, name='profileList'),
     path('profile/<str:pk>', profileList, name='profileList'),
     path('requestreceived/<str:pk>', FriendRequestList, name='FriendRequestList'),

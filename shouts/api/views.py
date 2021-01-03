@@ -148,21 +148,48 @@ def MyPostsViewSet(request,pk):
     serializer=PostsSerializer(queryset,many=True)
     return Response(serializer.data)
 
-# @api_view(['GET','PATCH', 'DELETE', 'POST'])
-# @permission_classes([IsAuthenticated])
-# def PostsViewSet(request):
-#     queryset=Posts.objects.all().order_by('-date_posted')
-#     serializer=PostsSerializer(queryset,many=True)
-#     return Response(serializer.data)
+@api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
+def PostsViewSet(request):
+    if request.method == 'GET':
+        print(request.data)
+        posts = Posts.objects.all().order_by('-date_posted')
+        serializer = PostsSerializer(posts, many=True)
+        return Response(serializer.data)
 
-class PostsViewSet(viewsets.ModelViewSet):
+    if request.method=='POST':
+        shout_data=request.data
+        
+      
+        serializer=PostsSerializer(data=shout_data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+    
+
+        
+# @api_view(['PATCH'])
+# @permission_classes([IsAuthenticated])
+# def PostsViewSetPatchDelete(request,pk):
+#     if request.method == 'PATCH':
+#         accept_data = request.data
+#         posts = Posts.objects.get(username=accept_data['username'])
+#         print("accept_data", accept_data)
+#         serializer = PostsSerializer(accept_data,data=posts,partial=True)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class PostsViewSetPatchDelete(viewsets.ModelViewSet):
     queryset=Posts.objects.all().order_by('-date_posted')
     serializer_class=PostsSerializer
 
-    def get(self, request): 
-        detail = [ {"name": detail.name,"detail": detail.detail}  
-        for detail in Posts.objects.all()] 
-        return Response(detail)
+    
 
 
     # def post(self,request,*args,**kwargs):
@@ -180,8 +207,5 @@ class PostsViewSet(viewsets.ModelViewSet):
         
         # return HttpResponse({'message':'Post created!'},status=200)
 
-        def delete(request, pk):
-            post = Posts.objects.get(pk=post_id)
-            if request.user== post.username:
-                Post.objects.get(pk=post_id).delete()
-            return HttpResponse({'message':'Post deleted!'},status=200)
+       
+       
