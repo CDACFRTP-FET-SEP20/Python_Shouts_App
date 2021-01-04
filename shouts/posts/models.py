@@ -61,3 +61,14 @@ class ShoutLike(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class ShoutReport(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    shout_id = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='ReportedPost', null=True)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Report_User', null=True)
+    report_type = models.CharField(max_length=256,null=True)
+    
+    def __str__(self):
+        return str(self.id)

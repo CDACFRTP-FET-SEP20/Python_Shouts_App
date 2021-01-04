@@ -6,7 +6,8 @@ from .views import (
     MakeNewFriends,
     FriendsAppView,
     UserViewSet,PostsViewSet,MyPostsViewSet,PostsViewSetPatchDelete,
-    CommentViewSet,LikeViewSet
+    CommentViewSet,LikeViewSet,
+    ReportViewSet
 )
 from rest_framework import routers
 
@@ -60,6 +61,17 @@ like_details = LikeViewSet.as_view({
     'delete':'destroy'
 })
 
+report_list = ReportViewSet.as_view({
+    "get" : "list",
+    "post" : "create"
+})
+
+report_details = ReportViewSet.as_view({
+    "get" : "retrieve",
+    "patch" : "partial_update",
+    'delete':'destroy'
+})
+
 urlpatterns = [
     path('', include(router.urls)),
     path('friendlist/<str:pk>', FriendsAppView, name='FriendsAppView'),
@@ -74,6 +86,9 @@ urlpatterns = [
     
     path('shoutlike/', like_list, name = 'shoutlike'),
     path('shoutlike/<str:pk>/',like_details, name = 'like_Delete'),
+
+    path('shoutreport/', report_list, name = 'shoutreport'),
+    path('shoutreport/<str:pk>/',report_details, name = 'report_Delete'),
 
 
 ]

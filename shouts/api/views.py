@@ -5,8 +5,8 @@ from .serializers import (
     UsersSerializer,
     PostsSerializer,
     CommentSerializer,
-    LikeSerializer
-    
+    LikeSerializer,
+    ReportSerializer
     # FriendRequestSendSerializer
 )
 
@@ -17,7 +17,7 @@ from rest_framework.decorators import api_view, permission_classes
 from accounts.models import Profile
 from friends.models import Friends
 from rest_framework.permissions import IsAuthenticated
-from posts.models import Posts,ShoutLike,ShoutComment
+from posts.models import Posts,ShoutLike,ShoutComment, ShoutReport
 from django.http import HttpResponse
 # from django.contrib.auth.models import User
 
@@ -251,3 +251,36 @@ class CommentViewSet(viewsets.ModelViewSet):
             if request.id == comment.id:
                 ShoutComment.objects.get(pk=id).delete()
             return HttpResponse({'message':'Comment Deleted!'},status=200)
+
+# ===================== Report ============================
+
+# @api_view(['GET','PATCH', 'DELETE', 'POST'])
+# # @permission_classes([IsAuthenticated])
+# def ReportViewSet(request, pk, uid):
+#     if request.method == 'GET':
+#         print(request.data)
+#         # posts = Posts.objects.get(post_id=pk)
+#         # profile = Profile.objects.get(user_id=uid)
+#         reports = ShoutReport.objects.all()
+#         serializer = ReportSerializer(reports)
+#         return Response(serializer.data)
+
+#     if request.method == 'POST':
+#         posts = Posts.objects.get(post_id=pk)
+#         profile = Profile.objects.get(user_id=uid)
+#         report = {
+#             'post_id': posts,
+#             'user_id': profile
+#         }
+
+#         serializer = FriendsSerializer(data=report)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+#         if request.method == 'POST':
+
+class ReportViewSet(viewsets.ModelViewSet):
+    queryset = ShoutReport.objects.all()
+    serializer_class = ReportSerializer   
