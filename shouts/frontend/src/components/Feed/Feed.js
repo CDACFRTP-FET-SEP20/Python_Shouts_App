@@ -77,6 +77,18 @@ function Feed(props) {
   filteredFeed();
   console.log("Filter array==", filteredArray);
 
+  const searchedArray = filteredArray.filter(
+    (shout) =>
+      shout.username.toLowerCase().includes(props.postSearch.toLowerCase()) ||
+      shout.title.toLowerCase().includes(props.postSearch.toLowerCase()) ||
+      shout.description
+        .toLowerCase()
+        .includes(props.postSearch.toLowerCase()) ||
+      shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
+  );
+
+  console.log("searchedArray==", searchedArray);
+
   return (
     <>
       <Navbar />
@@ -102,7 +114,7 @@ function Feed(props) {
       >
         
           {/*==============Display Shouts====================== */}
-          {filteredArray.map((shout) => (
+          {searchedArray.map((shout) => (
             // <Shout key={shout.post_id} shouts={shout} />
             <Shoutyy key={shout.post_id} shouts={shout} myshouts={false} />
           ))}
@@ -115,6 +127,7 @@ const mapStateToProps = (state) => ({
   shouts: state.shouts,
   user: state.login,
   profiles: state.friendList.profiles,
+  postSearch: state.postSearch,
   friendList: state.friendList.friendList,
   reports: state.report.report,
 });

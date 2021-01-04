@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -17,7 +17,9 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import HomeIcon from "@material-ui/icons/Home";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -109,7 +111,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Navbar() {
+function Navbar(props) {
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -134,6 +137,14 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const searchPosts = (e) => {
+    console.log(e.target.value);
+    props.dispatch({
+      type: "Search Posts",
+      payload: e.target.value,
+    });
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -149,6 +160,20 @@ export default function Navbar() {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
+  const [isAuthenticated, setisAuthenticated] = useState(true);
+
+  const logout = () => {
+    props.dispatch({
+      type: "AddToken",
+      payload: "",
+    });
+    props.dispatch({
+      type: "AddUser",
+      payload: "",
+    });
+    setisAuthenticated(false);
+    window.location.href = "/app/login";
+  };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -185,13 +210,14 @@ export default function Navbar() {
           <p>Friends</p>
         </MenuItem>
       </Link>
-      <Link to="/logout" className={classes.linksMobile}>
+      <Link className={classes.linksMobile}>
         <MenuItem>
           <IconButton
             aria-label="account of current user"
             aria-controls="primary-search-account-menu"
             aria-haspopup="true"
             color="inherit"
+            onClick={logout}
           >
             <PowerSettingsNewIcon />
           </IconButton>
@@ -212,14 +238,18 @@ export default function Navbar() {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
+            <form>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+                value={props.postSearch}
+                onChange={searchPosts}
+              />
+            </form>
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
@@ -241,12 +271,13 @@ export default function Navbar() {
                 <SupervisedUserCircleIcon />
               </IconButton>
             </Link>
-            <Link to="/logout" className={classes.links}>
+            <Link className={classes.links}>
               <IconButton
                 edge="end"
                 aria-label="account of current user"
                 aria-haspopup="true"
                 color="inherit"
+                onClick={logout}
               >
                 <PowerSettingsNewIcon />
               </IconButton>
@@ -270,3 +301,12 @@ export default function Navbar() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    postSearch: state.postSearch,
+    user: state.login,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);
