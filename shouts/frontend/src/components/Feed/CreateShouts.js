@@ -219,6 +219,8 @@ function CreateShouts(props) {
     createPost(props, uploadData);
 
     setOpenText(false);
+    setTitle("");
+    setDescription("");
   };
 
   var mediaType = "";

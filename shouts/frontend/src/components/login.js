@@ -45,31 +45,31 @@ function login(props) {
     setFormData({ ...formData, [name]: value });
   };
 
-  const pushfunction = () => {
-    history.push(`/`);
-  };
+  // const pushfunction = () => {
+  //   history.push(`/`);
+  // };
 
-  const userdatafunction = (data) => {
-    fetch(`http://localhost:8000/profile/getProfile/${data.user_id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        props.dispatch({
-          type: "AddUser",
-          payload: data,
-        });
-      });
-  };
-  const tokenfunction = (data) => {
-    props.dispatch({
-      type: "AddToken",
-      payload: data,
-    });
-  };
+  // const userdatafunction = (data) => {
+  //   fetch(`http://localhost:8000/profile/getProfile/${data.user_id}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       props.dispatch({
+  //         type: "AddUser",
+  //         payload: data,
+  //       });
+  //     });
+  // };
+  // const tokenfunction = (data) => {
+  //   props.dispatch({
+  //     type: "AddToken",
+  //     payload: data,
+  //   });
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
