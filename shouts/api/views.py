@@ -4,6 +4,8 @@ from .serializers import (
     ProfileSerializer,
     UsersSerializer,
     PostsSerializer,
+    CommentSerializer,
+    LikeSerializer
     
     # FriendRequestSendSerializer
 )
@@ -15,7 +17,7 @@ from rest_framework.decorators import api_view, permission_classes
 from accounts.models import Profile
 from friends.models import Friends
 from rest_framework.permissions import IsAuthenticated
-from posts.models import Posts
+from posts.models import Posts,ShoutLike,ShoutComment
 from django.http import HttpResponse
 # from django.contrib.auth.models import User
 
@@ -217,5 +219,35 @@ def PostsViewSetPatchDelete(request,pk):
         
         # return HttpResponse({'message':'Post created!'},status=200)
 
-       
-       
+# ==============Likes and Comment Views===========================
+class LikeViewSet(viewsets.ModelViewSet):
+    queryset = ShoutLike.objects.all()
+    serializer_class = LikeSerializer
+
+    def get(self, request): 
+        likes = ShoutLike.objects.all() 
+        # count_like = ShoutLike.objects.raw('select count(*) from comment_like_report_shoutlike')
+        # print(count_like)
+        return HttpResponse(likes)
+
+    def delete(self,request, pk):
+            unlike = Posts.objects.get(id=pk)
+            if request.id == unlike.id:
+                ShoutLike.objects.get(id=pk).delete()
+            return Response({'message':'Unlike!'},status=200)
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = ShoutComment.objects.all()
+    serializer_class = CommentSerializer 
+
+    def get(self, request): 
+        comment = [ {"comment": comment.comment,"date": comment.date}  
+        for comment in ShoutComment.objects.all()] 
+        return Response(comment)
+
+    def delete(self,request, pk):
+            comment = Posts.objects.get(pk=id)
+            if request.id == comment.id:
+                ShoutComment.objects.get(pk=id).delete()
+            return HttpResponse({'message':'Comment Deleted!'},status=200)

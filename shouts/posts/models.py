@@ -34,3 +34,30 @@ class Posts(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+class ShoutComment(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    shout_id = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='UserPost',default="", editable=False, null=True)
+    comment = models.CharField(max_length=256,null=True)
+    date = models.DateTimeField(default=datetime.now, editable=False)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Comment_User', default="",editable=False,null=True)
+    #name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return str(self.id)
+
+LIKE_CHOICES = (
+    ('Like','Like'),
+    ('Unlike','Unlike'),
+)
+class ShoutLike(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    shout_id = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='LikedPost',default="", editable=False, null=True)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Like_User', default="",editable=False,null=True)
+    #value = models.CharField(choices=LIKE_CHOICES, default='Like',max_length=10)
+
+    def __str__(self):
+        return str(self.id)

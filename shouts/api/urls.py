@@ -5,7 +5,8 @@ from .views import (
     FriendRequestList,
     MakeNewFriends,
     FriendsAppView,
-    UserViewSet,PostsViewSet,MyPostsViewSet,PostsViewSetPatchDelete
+    UserViewSet,PostsViewSet,MyPostsViewSet,PostsViewSetPatchDelete,
+    CommentViewSet,LikeViewSet
 )
 from rest_framework import routers
 
@@ -36,6 +37,28 @@ profileList = ProfileView.as_view({
     'delete': 'destroy'
 })
 
+# =====================Like and Comment========================
+comment_list = CommentViewSet.as_view({
+    "get" : "list",
+    "post" : "create"
+})
+
+comment_details = CommentViewSet.as_view({
+    "get" : "retrieve",
+    "patch" : "partial_update",
+    "delete" : "destroy"
+})
+
+like_list = LikeViewSet.as_view({
+    "get" : "list",
+    "post" : "create"
+})
+
+like_details = LikeViewSet.as_view({
+    "get" : "retrieve",
+    "patch" : "partial_update",
+    'delete':'destroy'
+})
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -47,6 +70,10 @@ urlpatterns = [
     path('requestreceived/<str:pk>', FriendRequestList, name='FriendRequestList'),
     path('requestsent/<str:pk>', MakeNewFriends, name='MakeNewFriends'),
     path('mypostlist/<str:pk>/', MyPostsViewSet, name='my_post_list'),
+    path('shoutcomment/', comment_list, name = 'shoutcomment'),
+    
+    path('shoutlike/', like_list, name = 'shoutlike'),
+    path('shoutlike/<str:pk>/',like_details, name = 'like_Delete'),
 
 
 ]

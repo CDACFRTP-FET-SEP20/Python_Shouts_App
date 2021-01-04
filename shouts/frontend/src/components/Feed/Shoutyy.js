@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -25,7 +25,11 @@ import EditModal from "./EditModal";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { connect } from "react-redux";
-
+import {getLikes} from '../../actions/LikeActions'
+import Cookies from "js-cookie";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import ThumbDownIcon from "@material-ui/icons/ThumbDown";
+import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "100px",
@@ -70,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Shout(props) {
   // const[myshout,setMyshouts]=useState(false)
-  console.log("ShoutsNew==", props.myshouts);
+  console.log("ShoutsNew==", props);
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const username = sessionStorage.getItem("user");
@@ -81,6 +85,71 @@ function Shout(props) {
   const [postId, setPostId] = useState("");
   const [postContent, setPostContent] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const [isLiked, setIsLiked] = useState(true);
+
+  const csrftoken = Cookies.get("csrftoken");
+  console.log(csrftoken);
+  useEffect(() => {
+    getLikes(props);
+  }, []);
+
+  const [formData, setFormData] = useState({
+    user_id: props.user.user_id,
+    shout_id: props.shouts.post_id,
+    like_id: props.like.id,
+  });
+  console.log("Like id",props.like);
+  const deleteLike = () => {
+    axios({
+      method: "delete",
+      url: `http://localhost:8000/api/shoutlike/${formData.like_id}/`,
+      headers: {
+        "X-CSRFToken": csrftoken,
+      },
+    })
+      // .then((res) => getLike(props))
+      .then((data) => getLikes(props))
+      .catch((error) => console.log(error));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("formdata", formData);
+
+    fetch("http://localhost:8000/api/shoutlike/", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => getLikes(props));
+
+    setIsLiked(false);
+
+    //   axios
+    // .patch(`http://localhost:8000/comment_like_report/shoutlike/`, data)
+    // .then((res) => friendlistreceived(props))
+    // .catch((error) => console.log(error));
+    // console.log(data + "data")
+  };
+
+  const handleUnlike = (e) => {
+    e.preventDefault();
+
+    setIsLiked(true);
+    console.log("inside handleLike",formData);
+
+    deleteLike();
+  };
+
+  let fil = props.like.filter(
+    (c) => c.shout_id === props.shouts.post_id
+  );
+  console.log("prop-fil==", fil);
+  const like_count = fil.length;
   // ===========================Menu================================
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -216,9 +285,17 @@ function Shout(props) {
           </CardContent>
         ) : null}
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
+        {isLiked ? (
+          <>
+          <IconButton aria-label="add to favorites" onClick={handleSubmit}>
+            {/* <FavoriteIcon /> */}
+            <ThumbUpIcon />
+          </IconButton><p>{like_count} likes</p></>):
+          <>
+          <IconButton aria-label="add to favorites" onClick={handleUnlike}>
+            {/* <FavoriteIcon /> */}
+            <ThumbDownIcon />
+          </IconButton><p>{like_count} likes</p></>}
           <IconButton aria-label="comment">
             <ChatBubbleIcon />
           </IconButton>
@@ -248,7 +325,7 @@ function Shout(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.login,
-
+    like: state.like.like,
     profiles: state.friendList.profiles,
   };
 };

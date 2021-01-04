@@ -27,7 +27,8 @@ function App() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.app__body}>
+      <h1 >Head</h1>
       <Provider store={store}>
         <BrowserRouter basename="/app">
           {/* <Grid item sm>

@@ -2,7 +2,7 @@ from rest_framework import serializers
 from accounts.models import Profile
 from friends.models import Friends
 from django.db.models import Q
-from posts.models import Posts
+from posts.models import Posts,ShoutComment,ShoutLike
 
 
 class FriendsSerializer(serializers.ModelSerializer):
@@ -59,3 +59,51 @@ class PostsSerializer(serializers.ModelSerializer):
         rep = super(PostsSerializer, self).to_representation(instance)
         rep['username'] = instance.username.username
         return rep
+
+# =================Like and Comment serializers=================
+class CommentSerializer(serializers.ModelSerializer):
+
+    # date= datetime.strftime(ShoutComment.date,"%Y-%m-%d")
+    shout_id = serializers.SlugRelatedField(
+        queryset = Posts.objects.all(),
+        # many = True,
+        slug_field = 'post_id',
+    )
+
+    user_id = serializers.SlugRelatedField(
+        queryset = Profile.objects.all(),
+        # many = True,
+        slug_field = 'user_id',
+    )
+    class Meta:
+        model = ShoutComment
+
+        fields = [
+            'id',
+            'shout_id',
+            'comment',
+            'date',
+            'updated_at',
+            'user_id',
+        ]
+
+class LikeSerializer(serializers.ModelSerializer):
+
+    shout_id = serializers.SlugRelatedField(
+        queryset = Posts.objects.all(),
+        slug_field = 'post_id'
+    )
+
+    user_id = serializers.SlugRelatedField(
+        queryset = Profile.objects.all(),
+        slug_field = 'user_id',
+    )
+
+    class Meta:
+        model = ShoutLike
+
+        fields = [
+            'id',
+            'shout_id',
+            'user_id',
+        ]

@@ -28,8 +28,11 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f1f2f5",
+    
   },
+  feedBackground:{
+    backgroundColor: "#f1f5f2",
+  }
 });
 function Feed(props) {
   const classes = useStyles();
@@ -79,15 +82,15 @@ function Feed(props) {
         container
         spacing={2}
         alignItems="center"
-        justifycontent="center
-      "
+        justifycontent="center"
+       className={classes.feedBackground}
       >
         {/*==============Create Shouts====================== */}
 
         <CreateShouts />
       </Grid>
-      <Grid item sm>
-        <Paper>
+      <Grid item sm className={classes.feedBackground}>
+        <Paper className={classes.feedBackground}>
           {/*==============Display Shouts====================== */}
           {filteredArray.map((shout) => (
             // <Shout key={shout.post_id} shouts={shout} />
