@@ -9,6 +9,8 @@ import { getPosts } from "../../actions/PostActions";
 import { profiledata, friendlistdata } from "../Services/FriendService";
 import { Grid, Paper } from "@material-ui/core";
 import Navbar from "../Header/Navbar";
+import { getReports } from "../Services/ReportService";
+
 const useStyles = makeStyles({
   // feed: {
   //   flex: 1,
@@ -28,7 +30,10 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f1f2f5",
+    
+  },
+  feedBackground: {
+    backgroundColor: "#f1f5f2",
   },
 });
 function Feed(props) {
@@ -37,8 +42,10 @@ function Feed(props) {
   useEffect(() => {
     profiledata(props);
     friendlistdata(props);
+
     // ==============Get Shouts======================
     getPosts(props);
+    getReports(props);
   }, []);
 
   console.log("*****feed*********", props);
@@ -91,21 +98,28 @@ function Feed(props) {
         container
         spacing={2}
         alignItems="center"
-        justifycontent="center
-      "
+        justifycontent="center"
+        className={classes.feedBackground}
       >
         {/*==============Create Shouts====================== */}
 
         <CreateShouts />
       </Grid>
-      <Grid item sm>
-        <Paper>
+      {/* <Grid item sm className={classes.feedBackground}> */}
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justifycontent="center"
+       className={classes.feedBackground}
+      >
+        
           {/*==============Display Shouts====================== */}
           {searchedArray.map((shout) => (
             // <Shout key={shout.post_id} shouts={shout} />
             <Shoutyy key={shout.post_id} shouts={shout} myshouts={false} />
           ))}
-        </Paper>
+        
       </Grid>
     </>
   );
@@ -116,5 +130,6 @@ const mapStateToProps = (state) => ({
   profiles: state.friendList.profiles,
   postSearch: state.postSearch,
   friendList: state.friendList.friendList,
+  reports: state.report.report,
 });
 export default connect(mapStateToProps)(Feed);

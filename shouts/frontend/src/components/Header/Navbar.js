@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -18,8 +18,9 @@ import HomeIcon from "@material-ui/icons/Home";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import UpdateIcon from "@material-ui/icons/Update";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -112,6 +113,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Navbar(props) {
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -159,6 +161,21 @@ function Navbar(props) {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
+  const [isAuthenticated, setisAuthenticated] = useState(true);
+
+  const logout = () => {
+    console.log("Logout");
+    props.dispatch({
+      type: "AddToken",
+      payload: "",
+    });
+    props.dispatch({
+      type: "AddUser",
+      payload: "",
+    });
+    setisAuthenticated(false);
+    window.location.href = "/app/login";
+  };
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -195,6 +212,7 @@ function Navbar(props) {
           <p>Friends</p>
         </MenuItem>
       </Link>
+
       <Link to="/updateProfile" className={classes.linksMobile}>
         <MenuItem>
           <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -204,6 +222,9 @@ function Navbar(props) {
         </MenuItem>
       </Link>
       <Link to="/logout" className={classes.linksMobile}>
+
+      <Link className={classes.linksMobile} onClick={logout}>
+
         <MenuItem>
           <IconButton
             aria-label="account of current user"
@@ -263,6 +284,7 @@ function Navbar(props) {
                 <SupervisedUserCircleIcon />
               </IconButton>
             </Link>
+
             <Link to="/updateProfile" className={classes.links}>
               <IconButton
                 aria-label="show 17 new notifications"
@@ -272,11 +294,14 @@ function Navbar(props) {
               </IconButton>
             </Link>
             <Link to="/logout" className={classes.links}>
+
+            <Link className={classes.links}>
               <IconButton
                 edge="end"
                 aria-label="account of current user"
                 aria-haspopup="true"
                 color="inherit"
+                onClick={logout}
               >
                 <PowerSettingsNewIcon />
               </IconButton>
@@ -304,7 +329,9 @@ function Navbar(props) {
 const mapStateToProps = (state) => {
   return {
     postSearch: state.postSearch,
+    user: state.login,
   };
 };
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(Navbar)
+
