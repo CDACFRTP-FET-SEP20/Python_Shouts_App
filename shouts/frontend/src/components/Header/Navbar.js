@@ -163,6 +163,7 @@ function Navbar(props) {
   const [isAuthenticated, setisAuthenticated] = useState(true);
 
   const logout = () => {
+    console.log("Logout");
     props.dispatch({
       type: "AddToken",
       payload: "",
@@ -210,14 +211,13 @@ function Navbar(props) {
           <p>Friends</p>
         </MenuItem>
       </Link>
-      <Link className={classes.linksMobile}>
+      <Link className={classes.linksMobile} onClick={logout}>
         <MenuItem>
           <IconButton
             aria-label="account of current user"
             aria-controls="primary-search-account-menu"
             aria-haspopup="true"
             color="inherit"
-            onClick={logout}
           >
             <PowerSettingsNewIcon />
           </IconButton>
