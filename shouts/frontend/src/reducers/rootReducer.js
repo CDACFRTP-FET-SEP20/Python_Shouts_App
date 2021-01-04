@@ -9,6 +9,7 @@ import SenderReducer from "../components/Friends/Sent/SenderReducer";
 import BlockFriendReducer from "../components/Friends/BlockFriend/BlockFriendReducer";
 import SearchReducer from "../components/Friends/Dashboard/SearchReducer";
 import ShoutsReducer from "./ShoutsReducer";
+import PostSearchReducer from "./PostSearchReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   requestSent: SenderReducer,
   friendList: FriendListReducer,
   blockFriendList: BlockFriendReducer,
+  postSearch: PostSearchReducer,
   search: SearchReducer,
   shouts: ShoutsReducer,
 });
