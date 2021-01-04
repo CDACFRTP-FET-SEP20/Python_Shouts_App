@@ -221,10 +221,8 @@ function Navbar(props) {
           <p>Update Profile</p>
         </MenuItem>
       </Link>
-      <Link to="/logout" className={classes.linksMobile}>
 
       <Link className={classes.linksMobile} onClick={logout}>
-
         <MenuItem>
           <IconButton
             aria-label="account of current user"
@@ -293,7 +291,6 @@ function Navbar(props) {
                 <UpdateIcon />
               </IconButton>
             </Link>
-            <Link to="/logout" className={classes.links}>
 
             <Link className={classes.links}>
               <IconButton
@@ -333,5 +330,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Navbar)
-
+export default connect(mapStateToProps)(Navbar);
