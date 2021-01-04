@@ -45,51 +45,36 @@ function login(props) {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const pushfunction = () => {
-  //   history.push(`/`);
-  // };
-
-  // const userdatafunction = (data) => {
-  //   fetch(`http://localhost:8000/profile/getProfile/${data.user_id}`, {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       props.dispatch({
-  //         type: "AddUser",
-  //         payload: data,
-  //       });
-  //     });
-  // };
-  // const tokenfunction = (data) => {
-  //   props.dispatch({
-  //     type: "AddToken",
-  //     payload: data,
-  //   });
-  // };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     console.log("Login Submit===", formData);
 
-    fetch("/profile/login/", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((respone) => respone.json())
-      .then((data) => {
-        props.dispatch({
-          type: "AddToken",
-          payload: data,
-        });
-      });
+    if (!formData.email.includes("@")) {
+      alert("Please enter valid Email");
+    } else if (formData.email != "" && formData.password != "") {
+      fetch("/profile/login/", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((respone) => respone.json())
+        .then((data) => {
+          props.dispatch({
+            type: "AddToken",
+            payload: data,
+          });
+        })
+        .catch(() => alert("Incorrect Email or Password"));
+    } else if (formData.password === "") {
+      alert("Please enter password");
+    } else if (formData.email === "") {
+      alert("Please enter email");
+    } else {
+      alert("Please enter email and password");
+    }
 
     // pushfunction();
   };
