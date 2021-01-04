@@ -8,8 +8,7 @@ function reducer(state = initialState, action) {
   if (action.type === "AddToken") {
     sessionStorage.setItem("token", action.payload.token);
     sessionStorage.setItem("user", action.payload.username);
-    console.log(action.payload
-      );
+    console.log(action.payload);
     console.log("Reducer====", action.payload.username);
     state = action.payload;
     return {
@@ -17,6 +16,13 @@ function reducer(state = initialState, action) {
       token: sessionStorage.getItem("token"),
       isAuthenticated: true,
       user: action.payload.user,
+    };
+  }
+
+  if (action.type === "UpdateUser") {
+    return {
+      ...state,
+      bio: action.payload.bio,
     };
   }
 
