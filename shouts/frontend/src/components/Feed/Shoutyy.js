@@ -101,6 +101,7 @@ function Shout(props) {
     like_id: props.like.id,
   });
   console.log("Like id", props.like);
+  //----------------------Delete Like-------------------//
   const deleteLike = () => {
     axios({
       method: "delete",
@@ -113,6 +114,8 @@ function Shout(props) {
       .then((data) => getLikes(props))
       .catch((error) => console.log(error));
   };
+
+  //---------------------------Handle Submit----------------------//
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("formdata", formData);
@@ -136,19 +139,36 @@ function Shout(props) {
     // .catch((error) => console.log(error));
     // console.log(data + "data")
   };
-
+  //------------------------------Handle Unlike--------------------//
   const handleUnlike = (e) => {
     e.preventDefault();
 
     setIsLiked(true);
     console.log("inside handleLike", formData);
-
     deleteLike();
+    // deleteLike(like.id);
   };
 
   let fil = props.like.filter((c) => c.shout_id === props.shouts.post_id);
   console.log("prop-fil==", fil);
   const like_count = fil.length;
+
+  // const isLiked = (data) => {
+  //   for (let lk of props.like) {
+  //     if (
+  //       lk.shout_id === data.post_id &&
+  //       lk.user_id === props.user.user_id
+  //     ) {
+  //       console.log("isLiked false");
+  //       return false;
+  //     }
+  //   }
+  //   console.log("isLiked true");
+  //   return true;
+  // };
+
+  // console.log("Like--------------->", props);
+
   // ===========================Menu================================
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
