@@ -35,8 +35,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: "100px",
     borderRadius: "15px",
+    marginTop:"20px",
     width: "80%",
-    marginLeft: "60%",
+    margin: "7%",
     "@media (max-width: 900px)": {
       width: "70%",
       marginLeft: "15%",
@@ -61,16 +62,21 @@ const useStyles = makeStyles((theme) => ({
   },
   paper_grid: {
     padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
+    textAlign: "left",
+    color: "#f1f2f5",
     borderRadius: "15px",
     width: "60%",
     marginLeft: "20%",
+    backgroundColor:"#f1f2f5",
     "@media (max-width: 500px)": {
       width: "70%",
       marginLeft: "10%",
     },
   },
+  shout:{
+    backgroundColor:"#f1f2f5",
+    marginTop:"20px",
+  }
 }));
 
 function Shout(props) {
@@ -210,7 +216,8 @@ function Shout(props) {
   };
 
   return (
-    <Grid item md={6}>
+    <Grid item xs={12} className={classes.shout}>
+      <Paper className={classes.paper_grid}>
       <Card className={classes.root} spacing={1} key={props.shouts.post_id}>
         <CardHeader
           avatar={
@@ -346,6 +353,7 @@ function Shout(props) {
           myshout={props.myshouts}
         />
       </Card>
+      </Paper>
     </Grid>
   );
 }
