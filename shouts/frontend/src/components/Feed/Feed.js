@@ -9,6 +9,8 @@ import { getPosts } from "../../actions/PostActions";
 import { profiledata, friendlistdata } from "../Services/FriendService";
 import { Grid, Paper } from "@material-ui/core";
 import Navbar from "../Header/Navbar";
+import { getReports } from "../Services/ReportService";
+
 const useStyles = makeStyles({
   // feed: {
   //   flex: 1,
@@ -28,11 +30,10 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    
   },
-  feedBackground:{
+  feedBackground: {
     backgroundColor: "#f1f5f2",
-  }
+  },
 });
 function Feed(props) {
   const classes = useStyles();
@@ -40,8 +41,10 @@ function Feed(props) {
   useEffect(() => {
     profiledata(props);
     friendlistdata(props);
+
     // ==============Get Shouts======================
     getPosts(props);
+    getReports(props);
   }, []);
 
   console.log("*****feed*********", props);
@@ -83,7 +86,7 @@ function Feed(props) {
         spacing={2}
         alignItems="center"
         justifycontent="center"
-       className={classes.feedBackground}
+        className={classes.feedBackground}
       >
         {/*==============Create Shouts====================== */}
 
@@ -113,5 +116,6 @@ const mapStateToProps = (state) => ({
   user: state.login,
   profiles: state.friendList.profiles,
   friendList: state.friendList.friendList,
+  reports: state.report.report,
 });
 export default connect(mapStateToProps)(Feed);

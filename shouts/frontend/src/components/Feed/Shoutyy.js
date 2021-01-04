@@ -25,11 +25,12 @@ import EditModal from "./EditModal";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { connect } from "react-redux";
-import {getLikes} from '../../actions/LikeActions'
+import { getLikes } from "../../actions/LikeActions";
 import Cookies from "js-cookie";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
-import axios from 'axios';
+import ShowReport from "../ShoutReport/ShowReport";
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: "100px",
@@ -105,7 +106,7 @@ function Shout(props) {
     shout_id: props.shouts.post_id,
     like_id: props.like.id,
   });
-  console.log("Like id",props.like);
+  console.log("Like id", props.like);
   const deleteLike = () => {
     axios({
       method: "delete",
@@ -146,14 +147,12 @@ function Shout(props) {
     e.preventDefault();
 
     setIsLiked(true);
-    console.log("inside handleLike",formData);
+    console.log("inside handleLike", formData);
 
     deleteLike();
   };
 
-  let fil = props.like.filter(
-    (c) => c.shout_id === props.shouts.post_id
-  );
+  let fil = props.like.filter((c) => c.shout_id === props.shouts.post_id);
   console.log("prop-fil==", fil);
   const like_count = fil.length;
   // ===========================Menu================================
@@ -195,6 +194,7 @@ function Shout(props) {
       }
     }
   };
+
   return (
     <Grid item xs={12} className={classes.shout}>
       <Paper className={classes.paper_grid}>
@@ -292,20 +292,27 @@ function Shout(props) {
           </CardContent>
         ) : null}
         <CardActions disableSpacing>
-        {isLiked ? (
-          <>
-          <IconButton aria-label="add to favorites" onClick={handleSubmit}>
-            {/* <FavoriteIcon /> */}
-            <ThumbUpIcon />
-          </IconButton><p>{like_count} likes</p></>):
-          <>
-          <IconButton aria-label="add to favorites" onClick={handleUnlike}>
-            {/* <FavoriteIcon /> */}
-            <ThumbDownIcon />
-          </IconButton><p>{like_count} likes</p></>}
+          {isLiked ? (
+            <>
+              <IconButton aria-label="add to favorites" onClick={handleSubmit}>
+                {/* <FavoriteIcon /> */}
+                <ThumbUpIcon />
+              </IconButton>
+              <p>{like_count} likes</p>
+            </>
+          ) : (
+            <>
+              <IconButton aria-label="add to favorites" onClick={handleUnlike}>
+                {/* <FavoriteIcon /> */}
+                <ThumbDownIcon />
+              </IconButton>
+              <p>{like_count} likes</p>
+            </>
+          )}
           <IconButton aria-label="comment">
             <ChatBubbleIcon />
           </IconButton>
+          <ShowReport shouts={props.shouts} />
         </CardActions>
 
         <DeleteModal
@@ -334,7 +341,9 @@ const mapStateToProps = (state) => {
   return {
     user: state.login,
     like: state.like.like,
+    // shouts: state.shouts,
     profiles: state.friendList.profiles,
+    reports: state.report.report,
   };
 };
 export default connect(mapStateToProps)(Shout);

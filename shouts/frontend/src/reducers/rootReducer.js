@@ -9,8 +9,9 @@ import SenderReducer from "../components/Friends/Sent/SenderReducer";
 import BlockFriendReducer from "../components/Friends/BlockFriend/BlockFriendReducer";
 import SearchReducer from "../components/Friends/Dashboard/SearchReducer";
 import ShoutsReducer from "./ShoutsReducer";
-import LikeReducer from './LikeReducer';
-import CommentReducer from './CommentReducer'
+import LikeReducer from "./LikeReducer";
+import CommentReducer from "./CommentReducer";
+import ReportReducer from "./ReportReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   shouts: ShoutsReducer,
   like: LikeReducer,
   Comment: CommentReducer,
+  report: ReportReducer,
 });
 
 export default rootReducer;

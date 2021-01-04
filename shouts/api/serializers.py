@@ -2,7 +2,7 @@ from rest_framework import serializers
 from accounts.models import Profile
 from friends.models import Friends
 from django.db.models import Q
-from posts.models import Posts,ShoutComment,ShoutLike
+from posts.models import Posts,ShoutComment,ShoutLike,ShoutReport
 
 
 class FriendsSerializer(serializers.ModelSerializer):
@@ -106,4 +106,26 @@ class LikeSerializer(serializers.ModelSerializer):
             'id',
             'shout_id',
             'user_id',
+        ]
+
+class ReportSerializer(serializers.ModelSerializer):
+    
+    shout_id = serializers.SlugRelatedField(
+        queryset = Posts.objects.all(),
+        slug_field = 'post_id'
+    )
+
+    user_id = serializers.SlugRelatedField(
+        queryset = Profile.objects.all(),
+        slug_field = 'user_id',
+    )
+
+    class Meta:
+        model = ShoutReport
+
+        fields = [
+            'id',
+            'shout_id',
+            'user_id',
+            'report_type'
         ]
