@@ -91,7 +91,7 @@ function Feed(props) {
         container
         spacing={2}
         alignItems="center"
-        justifyContent="center
+        justifycontent="center
       "
       >
         {/*==============Create Shouts====================== */}
