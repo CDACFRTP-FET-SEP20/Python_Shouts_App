@@ -28,7 +28,7 @@ function App() {
 
   return (
     <div className={classes.app__body}>
-      <h1 >Head</h1>
+     
       <Provider store={store}>
         <BrowserRouter basename="/app">
           {/* <Grid item sm>
@@ -57,4 +57,5 @@ function App() {
 export default App;
 
 const container = document.getElementById("app");
+console.log(container);
 render(<App />, container);

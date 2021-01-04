@@ -89,14 +89,21 @@ function Feed(props) {
 
         <CreateShouts />
       </Grid>
-      <Grid item sm className={classes.feedBackground}>
-        <Paper className={classes.feedBackground}>
+      {/* <Grid item sm className={classes.feedBackground}> */}
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justifycontent="center"
+       className={classes.feedBackground}
+      >
+        
           {/*==============Display Shouts====================== */}
           {filteredArray.map((shout) => (
             // <Shout key={shout.post_id} shouts={shout} />
             <Shoutyy key={shout.post_id} shouts={shout} myshouts={false} />
           ))}
-        </Paper>
+        
       </Grid>
     </>
   );
