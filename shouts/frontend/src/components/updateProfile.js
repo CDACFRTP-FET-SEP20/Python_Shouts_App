@@ -4,6 +4,7 @@ import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import UpdateIcon from "@material-ui/icons/Update";
 import { useHistory } from "react-router-dom";
+import Header1 from "../components/Header/Navbar";
 
 const useStyles = makeStyles({
   avatarTheme: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 function updateProfile(props) {
-  const [bio, setBio] = useState("");
+  const [bio, setBio] = useState(props.user.bio);
   const history = useHistory();
   const [imageData, setImageData] = useState(null);
   const authToken = props.user.token;
@@ -31,6 +32,8 @@ function updateProfile(props) {
   console.log(props);
 
   let postData = new FormData();
+
+  //----------------------Update Profile-------------------------//
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,7 +50,7 @@ function updateProfile(props) {
       postData.append("user_image", imageData, imageData.name);
     }
 
-    fetch(`http://localhost:8000/profile/getProfile/${props.user.user_id}`, {
+    fetch(`/profile/getProfile/${props.user.user_id}`, {
       method: "PATCH",
       body: postData,
       headers: {
@@ -69,6 +72,7 @@ function updateProfile(props) {
   const classes = useStyles();
   return (
     <div>
+      <Header1 />
       <Grid>
         <Paper elevation={10} className={classes.paperStyle}>
           <Grid align="center">
@@ -88,23 +92,20 @@ function updateProfile(props) {
           />
           <br />
           <br />
-          <br />
           <label htmlFor="upload-photo">
             <input
               style={{ display: "none" }}
               id="upload-photo"
               name="upload-photo"
-              // value={props.}
               onChange={handlefilechange}
               type="file"
             />
 
             <Button color="secondary" variant="contained" component="span">
-              Upload Profile Picture
+              Upload Profile Pic
             </Button>
           </label>
 
-          <br />
           <br />
           <br />
           <Button
@@ -116,7 +117,6 @@ function updateProfile(props) {
           >
             Update
           </Button>
-          <br />
           <br />
           <br />
         </Paper>
