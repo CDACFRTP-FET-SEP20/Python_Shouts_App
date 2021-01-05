@@ -10,6 +10,7 @@ import { profiledata, friendlistdata } from "../Services/FriendService";
 import { Grid, Paper } from "@material-ui/core";
 import Navbar from "../Header/Navbar";
 import { getReports } from "../Services/ReportService";
+import { getComments } from "../Services/CommentServices";
 
 const useStyles = makeStyles({
   // feed: {
@@ -30,7 +31,6 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    
   },
   feedBackground: {
     backgroundColor: "#f1f5f2",
@@ -42,7 +42,7 @@ function Feed(props) {
   useEffect(() => {
     profiledata(props);
     friendlistdata(props);
-
+    getComments(props);
     // ==============Get Shouts======================
     getPosts(props);
     getReports(props);
@@ -109,15 +109,13 @@ function Feed(props) {
         spacing={2}
         alignItems="center"
         justifycontent="center"
-       className={classes.feedBackground}
+        className={classes.feedBackground}
       >
-        
-          {/*==============Display Shouts====================== */}
-          {searchedArray.map((shout) => (
-            // <Shout key={shout.post_id} shouts={shout} />
-            <Shoutyy key={shout.post_id} shouts={shout} myshouts={false} />
-          ))}
-        
+        {/*==============Display Shouts====================== */}
+        {searchedArray.map((shout) => (
+          // <Shout key={shout.post_id} shouts={shout} />
+          <Shoutyy key={shout.post_id} shouts={shout} myshouts={false} />
+        ))}
       </Grid>
     </>
   );
@@ -129,5 +127,6 @@ const mapStateToProps = (state) => ({
   postSearch: state.postSearch,
   friendList: state.friendList.friendList,
   reports: state.report.report,
+  comments: state.Comment.comments,
 });
 export default connect(mapStateToProps)(Feed);

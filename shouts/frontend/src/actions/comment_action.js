@@ -6,7 +6,7 @@ export function fetchComments(props){
     const csrftoken = Cookies.get("csrftoken")
          return function(dispatch){
 
-        axios.get(`http://localhost:8000/comment_like_report/shoutcomment/`)
+        axios.get(`http://localhost:8000/api/shoutcomment/`)
       .then(res => {
         const data = res.data;
         console.log(data);

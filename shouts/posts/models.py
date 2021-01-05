@@ -38,11 +38,11 @@ class Posts(models.Model):
 class ShoutComment(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    shout_id = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='UserPost',default="", editable=False, null=True)
+    shout_id = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name='UserPost',default="", null=True)
     comment = models.CharField(max_length=256,null=True)
-    date = models.DateTimeField(default=datetime.now, editable=False)
-    updated_at = models.DateTimeField(auto_now_add=True)
-    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Comment_User', default="",editable=False,null=True)
+    date = models.DateTimeField(default=datetime.now)
+    # updated_at = models.DateTimeField(auto_now_add=True)
+    user_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Comment_User', default="",null=True)
     #name = models.CharField(max_length=255)
 
     def __str__(self):

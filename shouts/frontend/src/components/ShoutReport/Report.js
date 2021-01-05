@@ -28,6 +28,7 @@ function Report(props) {
 
   //----------------------Delete Report----------------------//
   const authToken = props.user.token;
+  
   const deleteReport = (id) => {
     axios({
       method: "delete",
