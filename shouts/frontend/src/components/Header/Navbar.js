@@ -20,6 +20,8 @@ import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "../../store/store"
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -189,7 +191,7 @@ function Navbar(props) {
       <Link exact to="/" className={classes.linksMobile}>
         <MenuItem>
           <IconButton aria-label="show 4 new mails" color="inherit">
-            <HomeIcon />
+            <HomeIcon data-testid="homeMob"/>
           </IconButton>
           <p>Home</p>
         </MenuItem>
@@ -197,7 +199,7 @@ function Navbar(props) {
       <Link to="/mypost" className={classes.linksMobile}>
         <MenuItem>
           <IconButton aria-label="show 4 new mails" color="inherit">
-            <AccountCircle />
+            <AccountCircle data-testid="profileMob"/>
           </IconButton>
           <p>My Profile</p>
         </MenuItem>
@@ -205,7 +207,7 @@ function Navbar(props) {
       <Link to="/dashboard" className={classes.linksMobile}>
         <MenuItem>
           <IconButton aria-label="show 11 new notifications" color="inherit">
-            <SupervisedUserCircleIcon />
+            <SupervisedUserCircleIcon data-testid="friendsMob"/>
           </IconButton>
           <p>Friends</p>
         </MenuItem>
@@ -219,7 +221,7 @@ function Navbar(props) {
             color="inherit"
             onClick={logout}
           >
-            <PowerSettingsNewIcon />
+            <PowerSettingsNewIcon data-testid="logoutMob"/>
           </IconButton>
           <p>Logout</p>
         </MenuItem>
@@ -228,13 +230,12 @@ function Navbar(props) {
   );
 
   return (
-    <div className={classes.grow}>
+    
+    <div className={classes.grow} >
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Shout It
-          </Typography>
-          <div className={classes.search}>
+          <Typography  className={classes.title} variant="h6" noWrap><div>Shout It</div></Typography>
+          <div  className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -248,6 +249,7 @@ function Navbar(props) {
                 inputProps={{ "aria-label": "search" }}
                 value={props.postSearch}
                 onChange={searchPosts}
+                data-testid="search"
               />
             </form>
           </div>
@@ -255,12 +257,12 @@ function Navbar(props) {
           <div className={classes.sectionDesktop}>
             <Link to="/" className={classes.links}>
               <IconButton aria-label="show 4 new mails" color="inherit">
-                <HomeIcon />
+                <HomeIcon data-testid="home" />
               </IconButton>
             </Link>
             <Link to="/mypost" className={classes.links}>
               <IconButton aria-label="show 4 new mails" color="inherit">
-                <AccountCircle />
+                <AccountCircle data-testid="profile"/>
               </IconButton>
             </Link>
             <Link to="/dashboard" className={classes.links}>
@@ -268,7 +270,7 @@ function Navbar(props) {
                 aria-label="show 17 new notifications"
                 color="inherit"
               >
-                <SupervisedUserCircleIcon />
+                <SupervisedUserCircleIcon data-testid="friends"/>
               </IconButton>
             </Link>
             <Link className={classes.links}>
@@ -279,7 +281,7 @@ function Navbar(props) {
                 color="inherit"
                 onClick={logout}
               >
-                <PowerSettingsNewIcon />
+                <PowerSettingsNewIcon data-testid="logout"/>
               </IconButton>
             </Link>
           </div>
@@ -291,7 +293,7 @@ function Navbar(props) {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon data-testid="menu"/>
             </IconButton>
           </div>
         </Toolbar>
@@ -299,6 +301,7 @@ function Navbar(props) {
       {renderMobileMenu}
       {renderMenu}
     </div>
+    
   );
 }
 
