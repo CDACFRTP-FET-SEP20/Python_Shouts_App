@@ -77,6 +77,16 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f1f2f5",
     marginTop: "20px",
   },
+  likes:{
+    backgroundColor:"#3f51b5",
+    color:"white"
+  },
+  like_unlike:{
+    color:"white"
+  },
+  subheader:{
+    color:"white"
+  }
 }));
 
 function Shout(props) {
@@ -211,16 +221,19 @@ function Shout(props) {
       <Paper className={classes.paper_grid}>
         <Card className={classes.root} spacing={1} key={props.shouts.post_id}>
           <CardHeader
+          className={classes.likes}
+          classes={{subheader:classes.subheader}}
             avatar={
               <Avatar
                 aria-label="recipe"
                 className={classes.avatar}
                 src={profilepic(props.shouts)}
+                
               ></Avatar>
             }
             action={
               props.shouts.username == username ? (
-                <IconButton aria-label="settings" onClick={handleClick}>
+                <IconButton aria-label="settings" onClick={handleClick} className={classes.like_unlike}>
                   <MoreVertIcon />
                 </IconButton>
               ) : (
@@ -302,12 +315,13 @@ function Shout(props) {
               </div>
             </CardContent>
           ) : null}
-          <CardActions disableSpacing>
+          <CardActions disableSpacing className={classes.likes}>
             {isLiked(props.shouts) ? (
               <>
                 <IconButton
                   aria-label="add to favorites"
                   onClick={handleSubmit}
+                  className={classes.like_unlike}
                 >
                   {/* <FavoriteIcon /> */}
                   <ThumbUpIcon />
@@ -319,6 +333,7 @@ function Shout(props) {
                 <IconButton
                   aria-label="add to favorites"
                   onClick={() => handleUnlike(props.shouts)}
+                  className={classes.like_unlike}
                 >
                   {/* <FavoriteIcon /> */}
                   <ThumbDownIcon />
@@ -326,10 +341,13 @@ function Shout(props) {
                 <p>{like_count}</p>
               </>
             )}
-            <IconButton aria-label="comment">
+            <IconButton aria-label="comment" className={classes.like_unlike}>
               <ChatBubbleIcon />
             </IconButton>
-            <ShowReport shouts={props.shouts} />
+            <IconButton aria-label="comment" className={classes.like_unlike}>
+            <ShowReport shouts={props.shouts}/>
+            </IconButton>
+            
           </CardActions>
 
           <DeleteModal
