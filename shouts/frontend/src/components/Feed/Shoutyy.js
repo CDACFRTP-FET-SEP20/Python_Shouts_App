@@ -388,7 +388,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.login,
     like: state.like.like,
-    // shouts: state.shouts,
+
     profiles: state.friendList.profiles,
     reports: state.report.report,
 
