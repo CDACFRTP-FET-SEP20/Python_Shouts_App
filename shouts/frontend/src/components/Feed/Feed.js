@@ -48,13 +48,13 @@ function Feed(props) {
     getReports(props);
   }, []);
 
-  console.log("*****feed*********", props);
+  console.log("*****feed*********", props.shouts);
 
   const filteredArray = [];
   function filteredFeed() {
     for (let shout of props.shouts) {
       if (shout.username === props.user.username) {
-        console.log("user.username");
+        
         filteredArray.push(shout);
       }
       for (let friend of props.friendList) {
@@ -62,14 +62,14 @@ function Feed(props) {
           shout.username === friend.sender &&
           friend.sender !== props.user.username
         ) {
-          console.log("sender");
+         
           filteredArray.push(shout);
         }
         if (
           shout.username === friend.receiver &&
           friend.receiver !== props.user.username
         ) {
-          console.log("receiver");
+          
           filteredArray.push(shout);
         }
       }
@@ -82,9 +82,7 @@ function Feed(props) {
     (shout) =>
       shout.username.toLowerCase().includes(props.postSearch.toLowerCase()) ||
       shout.title.toLowerCase().includes(props.postSearch.toLowerCase()) ||
-      shout.description
-        .toLowerCase()
-        .includes(props.postSearch.toLowerCase()) ||
+      
       shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
   );
 
