@@ -5,7 +5,6 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import IconButton from "@material-ui/core/IconButton";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ShowReport(props) {
+function ShowLikeCount(props) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -63,7 +62,6 @@ function ShowReport(props) {
   return (
     <div>
       <Button type="button" onClick={handleOpen}>
-        <ReportIcon />
         Report
       </Button>
       <Modal
@@ -87,4 +85,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ShowReport);
+export default connect(mapStateToProps)(ShowLikeCount);

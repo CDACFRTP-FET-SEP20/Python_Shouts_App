@@ -11,8 +11,8 @@ import Cookies from "js-cookie";
 import Avatar from "@material-ui/core/Avatar";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
-
 import { getComments } from "../Services/CommentServices";
+//----------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -23,8 +23,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
   },
   large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+    width: theme.spacing(5),
+    height: theme.spacing(5),
+  },
+  uname: {
+    fontSize: "1.2rem",
   },
 }));
 
@@ -78,15 +81,20 @@ const commentList = (props) => {
     for (let profile of props.profiles) {
       if (profile.user_id === item.user_id) {
         return (
-          <>
-            <Avatar
-              alt="Brian Adams"
-              src={profile.user_image.slice(21)}
-              className={classes.large}
-            ></Avatar>
-            <span>{profile.username}</span>
-          </>
+          <Avatar
+            alt="Brian Adams"
+            src={profile.user_image.slice(21)}
+            className={classes.large}
+          ></Avatar>
         );
+      }
+    }
+  };
+
+  const getUserName = (item) => {
+    for (let profile of props.profiles) {
+      if (profile.user_id === item.user_id) {
+        return <span>{profile.username}</span>;
       }
     }
   };
@@ -94,21 +102,29 @@ const commentList = (props) => {
   return (
     <>
       <div>
-        <h1>Comments:</h1>
         <table className={classes.table}>
           <tbody>
             {fil.map((item, k) => (
-              <tr key={k}>
-                <th>{userdetails(item)}</th>
-                <td>
-                  <h3>{item.comment}</h3>
-                </td>
-
-                <td>{item.date.substring(0, 10)}</td>
-                <td>{item.date.substring(11, 19)}</td>
-
-                {filterdeletedata(item)}
-              </tr>
+             
+              //----------------------------------------------------------------
+              <React.Fragment key={k}>
+                <tr>
+                  <td>{userdetails(item)}</td>
+                  <td colSpan="2">
+                    &nbsp;<b className={classes.uname}>{getUserName(item)}</b>
+                    &nbsp;&nbsp;&nbsp;
+                    {item.date.substring(0, 10)}&nbsp;&nbsp;
+                    {item.date.substring(11, 19)}
+                  </td>
+                  <td style={{ marginRight: 2 + "em" }}>
+                    {filterdeletedata(item)}
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td colSpan="3">{item.comment}</td>
+                </tr>
+              </React.Fragment>
             ))}
           </tbody>
           <tfoot></tfoot>
