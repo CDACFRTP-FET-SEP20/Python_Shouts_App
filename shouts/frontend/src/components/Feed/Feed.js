@@ -82,7 +82,6 @@ function Feed(props) {
     (shout) =>
       shout.username.toLowerCase().includes(props.postSearch.toLowerCase()) ||
       shout.title.toLowerCase().includes(props.postSearch.toLowerCase()) ||
-      
       shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
   );
 
