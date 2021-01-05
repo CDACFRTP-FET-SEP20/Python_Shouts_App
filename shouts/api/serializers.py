@@ -83,7 +83,6 @@ class CommentSerializer(serializers.ModelSerializer):
             'shout_id',
             'comment',
             'date',
-            'updated_at',
             'user_id',
         ]
 

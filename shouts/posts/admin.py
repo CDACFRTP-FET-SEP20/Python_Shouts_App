@@ -17,4 +17,6 @@ class ShoutReportAdmin(admin.ModelAdmin):
 
 @admin.register(ShoutComment)
 class ShoutCommentAdmin(admin.ModelAdmin):
-    list_display = ["id", "shout_id","comment","date","updated_at","user_id"]
+
+    list_display = ["id", "shout_id","comment","date","user_id"]
+

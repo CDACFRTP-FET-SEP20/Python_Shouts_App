@@ -30,6 +30,9 @@ import Cookies from "js-cookie";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import ShowReport from "../ShoutReport/ShowReport";
+
+import ShowComment from "../ShowComment/ShowComment";
+
 import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,6 +80,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f1f2f5",
     marginTop: "20px",
   },
+
+  likes: {
+    backgroundColor: "#3f51b5",
+    color: "white",
+  },
+  like_unlike: {
+    color: "white",
+  },
+  subheader: {
+    color: "white",
+  },
 }));
 
 function Shout(props) {
@@ -93,7 +107,7 @@ function Shout(props) {
   const [postContent, setPostContent] = useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const [isLiked, setIsLiked] = useState(true);
+  // const [isLiked, setIsLiked] = useState(true);
 
   const csrftoken = Cookies.get("csrftoken");
   console.log(csrftoken);
@@ -104,14 +118,14 @@ function Shout(props) {
   const [formData, setFormData] = useState({
     user_id: props.user.user_id,
     shout_id: props.shouts.post_id,
-    like_id: props.like.id,
+    // like_id: props.like.id,
   });
   console.log("Like id", props.like);
   //----------------------Delete Like-------------------//
-  const deleteLike = () => {
+  const deleteLike = (id) => {
     axios({
       method: "delete",
-      url: `http://localhost:8000/api/shoutlike/${formData.like_id}/`,
+      url: `http://localhost:8000/api/shoutlike/${id}/`,
       headers: {
         "X-CSRFToken": csrftoken,
       },
@@ -125,6 +139,7 @@ function Shout(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("formdata", formData);
+    console.log("Likes Array===>", props.like);
 
     fetch("http://localhost:8000/api/shoutlike/", {
       method: "POST",
@@ -136,44 +151,39 @@ function Shout(props) {
     })
       .then((response) => response.json())
       .then((data) => getLikes(props));
-
-    setIsLiked(false);
-
-    //   axios
-    // .patch(`http://localhost:8000/comment_like_report/shoutlike/`, data)
-    // .then((res) => friendlistreceived(props))
-    // .catch((error) => console.log(error));
-    // console.log(data + "data")
   };
   //------------------------------Handle Unlike--------------------//
-  const handleUnlike = (e) => {
-    e.preventDefault();
+  const handleUnlike = (data) => {
+    for (let lk of props.like) {
+      if (lk.shout_id === data.post_id && lk.user_id === props.user.user_id) {
+        console.log("isLiked false");
 
-    setIsLiked(true);
-    console.log("inside handleLike", formData);
-    deleteLike();
-    // deleteLike(like.id);
+        deleteLike(lk.id);
+      }
+    }
   };
 
   let fil = props.like.filter((c) => c.shout_id === props.shouts.post_id);
   console.log("prop-fil==", fil);
   const like_count = fil.length;
 
-  // const isLiked = (data) => {
-  //   for (let lk of props.like) {
-  //     if (
-  //       lk.shout_id === data.post_id &&
-  //       lk.user_id === props.user.user_id
-  //     ) {
-  //       console.log("isLiked false");
-  //       return false;
-  //     }
-  //   }
-  //   console.log("isLiked true");
-  //   return true;
-  // };
+  let filtercomment = props.comments.filter(
+    (c) => c.shout_id === props.shouts.post_id
+  );
+  const comment_count = filtercomment.length;
 
-  // console.log("Like--------------->", props);
+  const isLiked = (data) => {
+    for (let lk of props.like) {
+      if (lk.shout_id === data.post_id && lk.user_id === props.user.user_id) {
+        console.log("isLiked false");
+        return false;
+      }
+    }
+    console.log("isLiked true");
+    return true;
+  };
+
+  console.log("Like--------------->", props);
 
   // ===========================Menu================================
   const handleClick = (event) => {
@@ -220,6 +230,8 @@ function Shout(props) {
       <Paper className={classes.paper_grid}>
         <Card className={classes.root} spacing={1} key={props.shouts.post_id}>
           <CardHeader
+            className={classes.likes}
+            classes={{ subheader: classes.subheader }}
             avatar={
               <Avatar
                 aria-label="recipe"
@@ -229,7 +241,11 @@ function Shout(props) {
             }
             action={
               props.shouts.username == username ? (
-                <IconButton aria-label="settings" onClick={handleClick}>
+                <IconButton
+                  aria-label="settings"
+                  onClick={handleClick}
+                  className={classes.like_unlike}
+                >
                   <MoreVertIcon />
                 </IconButton>
               ) : (
@@ -311,34 +327,39 @@ function Shout(props) {
               </div>
             </CardContent>
           ) : null}
-          <CardActions disableSpacing>
-            {isLiked ? (
+
+          <CardActions disableSpacing className={classes.likes}>
+            {isLiked(props.shouts) ? (
               <>
                 <IconButton
                   aria-label="add to favorites"
                   onClick={handleSubmit}
+                  className={classes.like_unlike}
                 >
-                  {/* <FavoriteIcon /> */}
                   <ThumbUpIcon />
                 </IconButton>
-                <p>{like_count} likes</p>
+                <p>{like_count}</p>
               </>
             ) : (
               <>
                 <IconButton
                   aria-label="add to favorites"
-                  onClick={handleUnlike}
+                  onClick={() => handleUnlike(props.shouts)}
+                  className={classes.like_unlike}
                 >
-                  {/* <FavoriteIcon /> */}
                   <ThumbDownIcon />
                 </IconButton>
-                <p>{like_count} likes</p>
+                <p>{like_count}</p>
               </>
             )}
-            <IconButton aria-label="comment">
-              <ChatBubbleIcon />
+
+            <IconButton aria-label="comment" className={classes.like_unlike}>
+              <ShowComment shouts={props.shouts} />
             </IconButton>
-            <ShowReport shouts={props.shouts} />
+            <p>{comment_count}</p>
+            <IconButton aria-label="comment" className={classes.like_unlike}>
+              <ShowReport shouts={props.shouts} />
+            </IconButton>
           </CardActions>
 
           <DeleteModal
@@ -367,9 +388,11 @@ const mapStateToProps = (state) => {
   return {
     user: state.login,
     like: state.like.like,
-    // shouts: state.shouts,
+
     profiles: state.friendList.profiles,
     reports: state.report.report,
+
+    comments: state.Comment.comments,
   };
 };
 export default connect(mapStateToProps)(Shout);

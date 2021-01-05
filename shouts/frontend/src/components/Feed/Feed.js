@@ -10,6 +10,7 @@ import { profiledata, friendlistdata } from "../Services/FriendService";
 import { Grid, Paper } from "@material-ui/core";
 import Navbar from "../Header/Navbar";
 import { getReports } from "../Services/ReportService";
+import { getComments } from "../Services/CommentServices";
 
 const useStyles = makeStyles({
   // feed: {
@@ -41,19 +42,19 @@ function Feed(props) {
   useEffect(() => {
     profiledata(props);
     friendlistdata(props);
-
+    getComments(props);
     // ==============Get Shouts======================
     getPosts(props);
     getReports(props);
   }, []);
 
-  console.log("*****feed*********", props);
+  console.log("*****feed*********", props.shouts);
 
   const filteredArray = [];
   function filteredFeed() {
     for (let shout of props.shouts) {
       if (shout.username === props.user.username) {
-        console.log("user.username");
+        
         filteredArray.push(shout);
       }
       for (let friend of props.friendList) {
@@ -61,14 +62,14 @@ function Feed(props) {
           shout.username === friend.sender &&
           friend.sender !== props.user.username
         ) {
-          console.log("sender");
+         
           filteredArray.push(shout);
         }
         if (
           shout.username === friend.receiver &&
           friend.receiver !== props.user.username
         ) {
-          console.log("receiver");
+          
           filteredArray.push(shout);
         }
       }
@@ -81,9 +82,7 @@ function Feed(props) {
     (shout) =>
       shout.username.toLowerCase().includes(props.postSearch.toLowerCase()) ||
       shout.title.toLowerCase().includes(props.postSearch.toLowerCase()) ||
-      shout.description
-        .toLowerCase()
-        .includes(props.postSearch.toLowerCase()) ||
+      
       shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
   );
 
@@ -110,15 +109,13 @@ function Feed(props) {
         spacing={2}
         alignItems="center"
         justifycontent="center"
-       className={classes.feedBackground}
+        className={classes.feedBackground}
       >
-        
-          {/*==============Display Shouts====================== */}
-          {searchedArray.map((shout) => (
-            // <Shout key={shout.post_id} shouts={shout} />
-            <Shoutyy key={shout.post_id} shouts={shout} myshouts={false} />
-          ))}
-        
+        {/*==============Display Shouts====================== */}
+        {searchedArray.map((shout) => (
+          // <Shout key={shout.post_id} shouts={shout} />
+          <Shoutyy key={shout.post_id} shouts={shout} myshouts={false} />
+        ))}
       </Grid>
     </>
   );
@@ -130,5 +127,6 @@ const mapStateToProps = (state) => ({
   postSearch: state.postSearch,
   friendList: state.friendList.friendList,
   reports: state.report.report,
+  comments: state.Comment.comments,
 });
 export default connect(mapStateToProps)(Feed);

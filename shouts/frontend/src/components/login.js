@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   avatarTheme: {
-    background: "#4d4dff",
+    background: "#2D3EC2",
   },
 
   paperStyle: {
@@ -45,53 +45,39 @@ function login(props) {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const pushfunction = () => {
-  //   history.push(`/`);
-  // };
-
-  // const userdatafunction = (data) => {
-  //   fetch(`http://localhost:8000/profile/getProfile/${data.user_id}`, {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       props.dispatch({
-  //         type: "AddUser",
-  //         payload: data,
-  //       });
-  //     });
-  // };
-  // const tokenfunction = (data) => {
-  //   props.dispatch({
-  //     type: "AddToken",
-  //     payload: data,
-  //   });
-  // };
+  //-----------------Handle LogIn User--------------------//
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     console.log("Login Submit===", formData);
 
-    fetch("/profile/login/", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((respone) => respone.json())
-      .then((data) => {
-        props.dispatch({
-          type: "AddToken",
-          payload: data,
-        });
-      });
-
-    // pushfunction();
+    //-----------Validations if correct then log in User-------------//
+    if (!formData.email.includes("@")) {
+      alert("Please enter valid Email");
+    } else if (formData.email != "" && formData.password != "") {
+      fetch("/profile/login/", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((respone) => respone.json())
+        .then((data) => {
+          props.dispatch({
+            type: "AddToken",
+            payload: data,
+          });
+        })
+        .catch(() => alert("Incorrect Email or Password"));
+    } else if (formData.password === "") {
+      alert("Please enter password");
+    } else if (formData.email === "") {
+      alert("Please enter email");
+    } else {
+      alert("Please enter email and password");
+    }
   };
   const paperStyle = {
     padding: 20,
@@ -154,8 +140,6 @@ function login(props) {
             </Button>
             <br />
             <br />
-            <br />
-
             <Typography>
               Don't have an account yet?
               <Link to="/register">Sign Up</Link>

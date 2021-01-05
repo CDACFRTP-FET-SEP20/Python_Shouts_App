@@ -1,11 +1,6 @@
 const initialState = {
   friendList: [],
-  user: {
-    user_id: "26216682-71e4-4f55-b0fe-014e64bd880a",
-    username: "abc",
-    bio: "No bio.....",
-    user_image: "/media/avatar.png",
-  },
+
 
   profiles:[]
 };

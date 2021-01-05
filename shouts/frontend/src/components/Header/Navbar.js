@@ -16,6 +16,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import HomeIcon from "@material-ui/icons/Home";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
+import UpdateIcon from "@material-ui/icons/Update";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -165,6 +166,7 @@ function Navbar(props) {
   const [isAuthenticated, setisAuthenticated] = useState(true);
 
   const logout = () => {
+    console.log("Logout");
     props.dispatch({
       type: "AddToken",
       payload: "",
@@ -212,14 +214,23 @@ function Navbar(props) {
           <p>Friends</p>
         </MenuItem>
       </Link>
-      <Link className={classes.linksMobile}>
+
+      <Link to="/updateProfile" className={classes.linksMobile}>
+        <MenuItem>
+          <IconButton aria-label="show 11 new notifications" color="inherit">
+            <UpdateIcon />
+          </IconButton>
+          <p>Update Profile</p>
+        </MenuItem>
+      </Link>
+
+      <Link className={classes.linksMobile} onClick={logout}>
         <MenuItem>
           <IconButton
             aria-label="account of current user"
             aria-controls="primary-search-account-menu"
             aria-haspopup="true"
             color="inherit"
-            onClick={logout}
           >
             <PowerSettingsNewIcon data-testid="logoutMob"/>
           </IconButton>
@@ -273,6 +284,16 @@ function Navbar(props) {
                 <SupervisedUserCircleIcon data-testid="friends"/>
               </IconButton>
             </Link>
+
+            <Link to="/updateProfile" className={classes.links}>
+              <IconButton
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <UpdateIcon />
+              </IconButton>
+            </Link>
+
             <Link className={classes.links}>
               <IconButton
                 edge="end"
