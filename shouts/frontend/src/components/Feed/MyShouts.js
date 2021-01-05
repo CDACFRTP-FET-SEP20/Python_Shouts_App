@@ -52,6 +52,17 @@ function MyShouts(props) {
     getMyPost(props, user_id);
   }, []);
 
+  const searchedArray = props.shouts.filter(
+    (shout) =>
+      shout.title.toLowerCase().includes(props.postSearch.toLowerCase()) ||
+      shout.description
+        .toLowerCase()
+        .includes(props.postSearch.toLowerCase()) ||
+      shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
+  );
+
+  console.log(searchedArray);
+
   return (
     <>
       <Header1 />
@@ -63,7 +74,7 @@ function MyShouts(props) {
       <Grid item sm>
         <Paper className={classes.feedBackground}>
           {/* ==============Display Shouts====================== */}
-          {props.shouts.map((shout) => (
+          {searchedArray.map((shout) => (
             // <Shoutyy key={shout.post_id} shouts={shout} />
             <Shoutyy key={shout.post_id} shouts={shout} myshouts={true} />
           ))}
@@ -75,5 +86,6 @@ function MyShouts(props) {
 const mapStateToProps = (state) => ({
   shouts: state.shouts,
   user: state.login,
+  postSearch: state.postSearch,
 });
 export default connect(mapStateToProps)(MyShouts);

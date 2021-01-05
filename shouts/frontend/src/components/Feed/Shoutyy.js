@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: "100px",
     borderRadius: "15px",
-    marginTop:"20px",
+    marginTop: "20px",
     width: "80%",
     margin: "7%",
     "@media (max-width: 900px)": {
@@ -67,16 +67,16 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "15px",
     width: "60%",
     marginLeft: "20%",
-    backgroundColor:"#f1f2f5",
+    backgroundColor: "#f1f2f5",
     "@media (max-width: 500px)": {
       width: "70%",
       marginLeft: "10%",
     },
   },
-  shout:{
-    backgroundColor:"#f1f2f5",
-    marginTop:"20px",
-  }
+  shout: {
+    backgroundColor: "#f1f2f5",
+    marginTop: "20px",
+  },
 }));
 
 function Shout(props) {
@@ -107,6 +107,7 @@ function Shout(props) {
     like_id: props.like.id,
   });
   console.log("Like id", props.like);
+  //----------------------Delete Like-------------------//
   const deleteLike = () => {
     axios({
       method: "delete",
@@ -119,6 +120,8 @@ function Shout(props) {
       .then((data) => getLikes(props))
       .catch((error) => console.log(error));
   };
+
+  //---------------------------Handle Submit----------------------//
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("formdata", formData);
@@ -142,19 +145,36 @@ function Shout(props) {
     // .catch((error) => console.log(error));
     // console.log(data + "data")
   };
-
+  //------------------------------Handle Unlike--------------------//
   const handleUnlike = (e) => {
     e.preventDefault();
 
     setIsLiked(true);
     console.log("inside handleLike", formData);
-
     deleteLike();
+    // deleteLike(like.id);
   };
 
   let fil = props.like.filter((c) => c.shout_id === props.shouts.post_id);
   console.log("prop-fil==", fil);
   const like_count = fil.length;
+
+  // const isLiked = (data) => {
+  //   for (let lk of props.like) {
+  //     if (
+  //       lk.shout_id === data.post_id &&
+  //       lk.user_id === props.user.user_id
+  //     ) {
+  //       console.log("isLiked false");
+  //       return false;
+  //     }
+  //   }
+  //   console.log("isLiked true");
+  //   return true;
+  // };
+
+  // console.log("Like--------------->", props);
+
   // ===========================Menu================================
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -198,141 +218,147 @@ function Shout(props) {
   return (
     <Grid item xs={12} className={classes.shout}>
       <Paper className={classes.paper_grid}>
-      <Card className={classes.root} spacing={1} key={props.shouts.post_id}>
-        <CardHeader
-          avatar={
-            <Avatar
-              aria-label="recipe"
-              className={classes.avatar}
-              src={profilepic(props.shouts)}
-            ></Avatar>
-          }
-          action={
-            props.shouts.username == username ? (
-              <IconButton aria-label="settings" onClick={handleClick}>
-                <MoreVertIcon />
-              </IconButton>
-            ) : (
-              <div></div>
-            )
-          }
-          title={props.shouts.username}
-          subheader={props.shouts.date_posted}
-        />
-
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem
-            onClick={(e) => {
-              handleClose();
-              onEditePost(postContent, postTitle, postId);
-            }}
-          >
-            Edit
-          </MenuItem>
-          <MenuItem
-            onClick={(e) => {
-              handleClose();
-              onDeletePost(postTitle, postId);
-            }}
-          >
-            Delete
-          </MenuItem>
-        </Menu>
-        <CardContent>
-          <Typography variant="h6" color="textSecondary" component="p">
-            {props.shouts.title}
-          </Typography>
-        </CardContent>
-        {props.shouts.post_type === "I" ? (
-          <CardMedia
-            className={classes.media}
-            image={props.shouts.media}
-            title="Paella dish"
+        <Card className={classes.root} spacing={1} key={props.shouts.post_id}>
+          <CardHeader
+            avatar={
+              <Avatar
+                aria-label="recipe"
+                className={classes.avatar}
+                src={profilepic(props.shouts)}
+              ></Avatar>
+            }
+            action={
+              props.shouts.username == username ? (
+                <IconButton aria-label="settings" onClick={handleClick}>
+                  <MoreVertIcon />
+                </IconButton>
+              ) : (
+                <div></div>
+              )
+            }
+            title={props.shouts.username}
+            subheader={props.shouts.date_posted}
           />
-        ) : null}
-        {props.shouts.post_type === "T" ? (
+
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem
+              onClick={(e) => {
+                handleClose();
+                onEditePost(postContent, postTitle, postId);
+              }}
+            >
+              Edit
+            </MenuItem>
+            <MenuItem
+              onClick={(e) => {
+                handleClose();
+                onDeletePost(postTitle, postId);
+              }}
+            >
+              Delete
+            </MenuItem>
+          </Menu>
           <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {props.shouts.description}
+            <Typography variant="h6" color="textSecondary" component="p">
+              {props.shouts.title}
             </Typography>
           </CardContent>
-        ) : null}
-        {props.shouts.post_type === "A" ? (
-          <CardContent>
-            <div className={classes.audio}>
-              <ReactAudioPlayer
-                src={props.shouts.media}
-                controls
-                style={{ width: "100%" }}
-              />
-            </div>
-          </CardContent>
-        ) : null}
-        {props.shouts.post_type === "V" ? (
-          <CardContent>
-            <div>
-              <ReactPlayer
-                width="100%"
-                height="100%"
-                url={props.shouts.media}
-                playing={true}
-                controls={true}
-                light={false}
-                loop={true}
-                volume={0}
-                muted={false}
-              />
-            </div>
-          </CardContent>
-        ) : null}
-        <CardActions disableSpacing>
-          {isLiked ? (
-            <>
-              <IconButton aria-label="add to favorites" onClick={handleSubmit}>
-                {/* <FavoriteIcon /> */}
-                <ThumbUpIcon />
-              </IconButton>
-              <p>{like_count} likes</p>
-            </>
-          ) : (
-            <>
-              <IconButton aria-label="add to favorites" onClick={handleUnlike}>
-                {/* <FavoriteIcon /> */}
-                <ThumbDownIcon />
-              </IconButton>
-              <p>{like_count} likes</p>
-            </>
-          )}
-          <IconButton aria-label="comment">
-            <ChatBubbleIcon />
-          </IconButton>
-          <ShowReport shouts={props.shouts} />
-        </CardActions>
+          {props.shouts.post_type === "I" ? (
+            <CardMedia
+              className={classes.media}
+              image={props.shouts.media}
+              title="Paella dish"
+            />
+          ) : null}
+          {props.shouts.post_type === "T" ? (
+            <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {props.shouts.description}
+              </Typography>
+            </CardContent>
+          ) : null}
+          {props.shouts.post_type === "A" ? (
+            <CardContent>
+              <div className={classes.audio}>
+                <ReactAudioPlayer
+                  src={props.shouts.media}
+                  controls
+                  style={{ width: "100%" }}
+                />
+              </div>
+            </CardContent>
+          ) : null}
+          {props.shouts.post_type === "V" ? (
+            <CardContent>
+              <div>
+                <ReactPlayer
+                  width="100%"
+                  height="100%"
+                  url={props.shouts.media}
+                  playing={true}
+                  controls={true}
+                  light={false}
+                  loop={true}
+                  volume={0}
+                  muted={false}
+                />
+              </div>
+            </CardContent>
+          ) : null}
+          <CardActions disableSpacing>
+            {isLiked ? (
+              <>
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={handleSubmit}
+                >
+                  {/* <FavoriteIcon /> */}
+                  <ThumbUpIcon />
+                </IconButton>
+                <p>{like_count} likes</p>
+              </>
+            ) : (
+              <>
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={handleUnlike}
+                >
+                  {/* <FavoriteIcon /> */}
+                  <ThumbDownIcon />
+                </IconButton>
+                <p>{like_count} likes</p>
+              </>
+            )}
+            <IconButton aria-label="comment">
+              <ChatBubbleIcon />
+            </IconButton>
+            <ShowReport shouts={props.shouts} />
+          </CardActions>
 
-        <DeleteModal
-          open={modalOpen}
-          handleClose={handleModalClose}
-          postTitle={props.shouts.title}
-          postId={props.shouts.post_id}
-          myshout={props.myshouts}
-        />
-        <EditModal
-          open={editModalOpen}
-          handleClose={handleModalClose}
-          postTitle={props.shouts.title}
-          postContent={props.shouts.description}
-          postId={props.shouts.post_id}
-          media={props.shouts.media}
-          post_type={props.shouts.post_type}
-          myshout={props.myshouts}
-        />
-      </Card>
+          <DeleteModal
+            open={modalOpen}
+            handleClose={handleModalClose}
+            postTitle={props.shouts.title}
+            postId={props.shouts.post_id}
+            myshout={props.myshouts}
+          />
+          <EditModal
+            open={editModalOpen}
+            handleClose={handleModalClose}
+            postTitle={props.shouts.title}
+            postContent={props.shouts.description}
+            postId={props.shouts.post_id}
+            media={props.shouts.media}
+            post_type={props.shouts.post_type}
+            myshout={props.myshouts}
+          />
+        </Card>
       </Paper>
     </Grid>
   );

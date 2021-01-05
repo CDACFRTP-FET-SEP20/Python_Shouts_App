@@ -21,6 +21,10 @@ const dashStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
     paddingTop: "2rem",
     paddingBottom: "2rem",
+
+    "@media (max-width : 600px)": {
+      height: "60vh",
+    },
     // backgroundColor: '#e8eaf6'
   },
   large: {
