@@ -43,6 +43,7 @@ class ShoutComment(models.Model):
     date = models.DateTimeField(default=datetime.now)
     # updated_at = models.DateTimeField(auto_now_add=True)
     user_id = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='Comment_User', default="",null=True)
+
     #name = models.CharField(max_length=255)
 
     def __str__(self):

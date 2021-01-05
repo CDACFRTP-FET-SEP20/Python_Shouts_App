@@ -48,13 +48,12 @@ function Feed(props) {
     getReports(props);
   }, []);
 
-  console.log("*****feed*********", props.shouts);
+  console.log("*****feed*********", props);
 
   const filteredArray = [];
   function filteredFeed() {
     for (let shout of props.shouts) {
       if (shout.username === props.user.username) {
-        
         filteredArray.push(shout);
       }
       for (let friend of props.friendList) {
@@ -62,14 +61,12 @@ function Feed(props) {
           shout.username === friend.sender &&
           friend.sender !== props.user.username
         ) {
-         
           filteredArray.push(shout);
         }
         if (
           shout.username === friend.receiver &&
           friend.receiver !== props.user.username
         ) {
-          
           filteredArray.push(shout);
         }
       }

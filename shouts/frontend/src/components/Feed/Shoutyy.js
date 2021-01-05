@@ -30,7 +30,9 @@ import Cookies from "js-cookie";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import ShowReport from "../ShoutReport/ShowReport";
+
 import ShowComment from "../ShowComment/ShowComment";
+
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
@@ -80,8 +82,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f1f2f5",
     marginTop: "20px",
   },
-
-  //--------------------------------//
   paper: {
     position: "absolute",
     width: 400,
@@ -404,6 +404,7 @@ function Shout(props) {
               </div>
             </CardContent>
           ) : null}
+
           <CardActions disableSpacing className={classes.likes}>
             {isLiked(props.shouts) ? (
               <>

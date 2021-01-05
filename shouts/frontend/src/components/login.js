@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   avatarTheme: {
-    background: "#4d4dff",
+    background: "#2D3EC2",
   },
 
   paperStyle: {
@@ -45,11 +45,14 @@ function login(props) {
     setFormData({ ...formData, [name]: value });
   };
 
+  //-----------------Handle LogIn User--------------------//
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     console.log("Login Submit===", formData);
 
+    //-----------Validations if correct then log in User-------------//
     if (!formData.email.includes("@")) {
       alert("Please enter valid Email");
     } else if (formData.email != "" && formData.password != "") {
@@ -75,8 +78,6 @@ function login(props) {
     } else {
       alert("Please enter email and password");
     }
-
-    // pushfunction();
   };
   const paperStyle = {
     padding: 20,
@@ -139,8 +140,6 @@ function login(props) {
             </Button>
             <br />
             <br />
-            <br />
-
             <Typography>
               Don't have an account yet?
               <Link to="/register">Sign Up</Link>

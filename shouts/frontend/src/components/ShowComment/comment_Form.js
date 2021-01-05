@@ -1,11 +1,7 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import uuidv1 from "uuid";
-import { addComment } from "../../actions/CommentBox";
 import axios from "axios";
 import Cookies from "js-cookie";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core";
 import { getComments } from "../Services/CommentServices";
 import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";
