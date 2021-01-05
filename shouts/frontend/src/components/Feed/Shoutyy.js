@@ -30,6 +30,9 @@ import Cookies from "js-cookie";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import ShowReport from "../ShoutReport/ShowReport";
+
+import ShowComment from "../ShowComment/ShowComment";
+
 import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,16 +80,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f1f2f5",
     marginTop: "20px",
   },
-  likes:{
-    backgroundColor:"#3f51b5",
-    color:"white"
+
+  likes: {
+    backgroundColor: "#3f51b5",
+    color: "white",
   },
-  like_unlike:{
-    color:"white"
+  like_unlike: {
+    color: "white",
   },
-  subheader:{
-    color:"white"
-  }
+  subheader: {
+    color: "white",
+  },
 }));
 
 function Shout(props) {
@@ -163,6 +167,11 @@ function Shout(props) {
   console.log("prop-fil==", fil);
   const like_count = fil.length;
 
+  let filtercomment = props.comments.filter(
+    (c) => c.shout_id === props.shouts.post_id
+  );
+  const comment_count = filtercomment.length;
+
   const isLiked = (data) => {
     for (let lk of props.like) {
       if (lk.shout_id === data.post_id && lk.user_id === props.user.user_id) {
@@ -221,19 +230,22 @@ function Shout(props) {
       <Paper className={classes.paper_grid}>
         <Card className={classes.root} spacing={1} key={props.shouts.post_id}>
           <CardHeader
-          className={classes.likes}
-          classes={{subheader:classes.subheader}}
+            className={classes.likes}
+            classes={{ subheader: classes.subheader }}
             avatar={
               <Avatar
                 aria-label="recipe"
                 className={classes.avatar}
                 src={profilepic(props.shouts)}
-                
               ></Avatar>
             }
             action={
               props.shouts.username == username ? (
-                <IconButton aria-label="settings" onClick={handleClick} className={classes.like_unlike}>
+                <IconButton
+                  aria-label="settings"
+                  onClick={handleClick}
+                  className={classes.like_unlike}
+                >
                   <MoreVertIcon />
                 </IconButton>
               ) : (
@@ -315,6 +327,7 @@ function Shout(props) {
               </div>
             </CardContent>
           ) : null}
+
           <CardActions disableSpacing className={classes.likes}>
             {isLiked(props.shouts) ? (
               <>
@@ -323,7 +336,6 @@ function Shout(props) {
                   onClick={handleSubmit}
                   className={classes.like_unlike}
                 >
-                  {/* <FavoriteIcon /> */}
                   <ThumbUpIcon />
                 </IconButton>
                 <p>{like_count}</p>
@@ -335,19 +347,19 @@ function Shout(props) {
                   onClick={() => handleUnlike(props.shouts)}
                   className={classes.like_unlike}
                 >
-                  {/* <FavoriteIcon /> */}
                   <ThumbDownIcon />
                 </IconButton>
                 <p>{like_count}</p>
               </>
             )}
+
             <IconButton aria-label="comment" className={classes.like_unlike}>
-              <ChatBubbleIcon />
+              <ShowComment shouts={props.shouts} />
             </IconButton>
+            <p>{comment_count}</p>
             <IconButton aria-label="comment" className={classes.like_unlike}>
-            <ShowReport shouts={props.shouts}/>
+              <ShowReport shouts={props.shouts} />
             </IconButton>
-            
           </CardActions>
 
           <DeleteModal
@@ -379,6 +391,8 @@ const mapStateToProps = (state) => {
     // shouts: state.shouts,
     profiles: state.friendList.profiles,
     reports: state.report.report,
+
+    comments: state.Comment.comments,
   };
 };
 export default connect(mapStateToProps)(Shout);

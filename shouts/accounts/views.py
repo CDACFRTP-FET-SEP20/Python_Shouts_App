@@ -33,7 +33,6 @@ class LoginViewSets(views.APIView):
         # but response will be send back from here only
         serializer.is_valid(raise_exception=True)
         
-
         user = serializer.validated_data["user"]
 
         if user:
