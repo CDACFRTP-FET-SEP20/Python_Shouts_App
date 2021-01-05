@@ -19,7 +19,6 @@ const useStyles = makeStyles({
     backgroundColor: "#f1f2f5",
   },
   app__body: {
-    // display: "flex",
     backgroundColor: "#f1f2f5",
   },
 });
@@ -27,30 +26,22 @@ function App() {
   const classes = useStyles();
 
   return (
+    <Provider store={store}>
     <div className={classes.app__body}>
-     
-      <Provider store={store}>
+      
         <BrowserRouter basename="/app">
-          {/* <Grid item sm>
-              <Paper>
-                <Navbar />
-              </Paper>
-            </Grid> */}
-
           <Switch>
             <PrivateRoute exact path="/" component={Feed} />
-
             <PrivateRoute path="/mypost" component={MyShouts} />
-            {/* <Route path="/mypost" component={MyShouts} /> */}
             <PrivateRoute path="/dashboard" component={Friends} />
             <PrivateRoute path="/updateProfile" component={UpdateProfile} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            {/* <Route path="/" component={Feed} /> */}
           </Switch>
         </BrowserRouter>
-      </Provider>
+      
     </div>
+    </Provider>
   );
 }
 
@@ -58,4 +49,4 @@ export default App;
 
 const container = document.getElementById("app");
 console.log(container);
-render(<App />, container);
+render(<App />, container|| document.createElement('div') );
