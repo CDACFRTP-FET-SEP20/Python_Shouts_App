@@ -6,11 +6,15 @@ import Feed from "../src/components/Feed/Feed";
 const mockStore = configureMockStore();
 const store = mockStore({});
 describe("Feed Component", () => {
-    
+    const props = {
+      profiles:{
+          
+      }
+    };
   it("Should display Feed Component", () => {
     render(
       <Provider store={store}>
-        <Feed />
+        <Feed {...props} />
       </Provider>
     );
   });
