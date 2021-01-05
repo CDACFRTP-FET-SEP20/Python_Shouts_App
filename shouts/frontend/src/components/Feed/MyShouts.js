@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     backgroundColor: "#f1f2f5",
   },
+  feedBackground:{
+    backgroundColor: "#f1f2f5",
+  }
 }));
 function MyShouts(props) {
   const classes = useStyles();
@@ -69,7 +72,7 @@ function MyShouts(props) {
         <CreateShouts />
       </Grid>
       <Grid item sm>
-        <Paper>
+        <Paper className={classes.feedBackground}>
           {/* ==============Display Shouts====================== */}
           {searchedArray.map((shout) => (
             // <Shoutyy key={shout.post_id} shouts={shout} />

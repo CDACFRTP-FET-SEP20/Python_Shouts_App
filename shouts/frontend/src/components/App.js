@@ -27,7 +27,8 @@ function App() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.app__body}>
+     
       <Provider store={store}>
         <BrowserRouter basename="/app">
           {/* <Grid item sm>
@@ -56,4 +57,5 @@ function App() {
 export default App;
 
 const container = document.getElementById("app");
+console.log(container);
 render(<App />, container);
