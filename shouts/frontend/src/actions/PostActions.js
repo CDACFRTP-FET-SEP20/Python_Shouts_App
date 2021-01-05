@@ -16,7 +16,7 @@ export const getPosts = (props) => {
         type: "setShouts",
         payload: data,
       })
-    );
+    ).catch((error) => console.log("error", error));
 };
 // ===============================CreatePosts================================
 export const createPost = (props, uploadData) => {
@@ -34,7 +34,7 @@ export const createPost = (props, uploadData) => {
       type: "createShouts",
       payload: res,
     })
-  );
+  ).catch((error) => console.log("error", error));
 };
 // ===============================DeletePosts================================
 export const deletePost = (props) => {
@@ -115,5 +115,5 @@ export const getMyPost = (props, user_id) => {
         type: "setMyShouts",
         payload: data,
       })
-    );
+    ).catch((error) => console.log("error", error));
 };

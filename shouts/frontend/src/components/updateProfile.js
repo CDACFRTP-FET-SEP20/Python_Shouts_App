@@ -1,18 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import {
-  Grid,
-  Paper,
-  Avatar,
-  TextField,
-  Button,
-  Typography,
-  Input,
-} from "@material-ui/core";
-import LockRoundedIcon from "@material-ui/icons/LockRounded";
+import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import ImageIcon from "@material-ui/icons/Image";
-import { Link } from "react-router-dom";
+import UpdateIcon from "@material-ui/icons/Update";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   avatarTheme: {
@@ -27,14 +18,53 @@ const useStyles = makeStyles({
   },
 });
 
-export default function updateProfile() {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    bio: "",
-  });
-
+function updateProfile(props) {
+  const [bio, setBio] = useState("");
+  const history = useHistory();
   const [imageData, setImageData] = useState(null);
+  const authToken = props.user.token;
+
+  const handlefilechange = (e) => {
+    setImageData(e.target.files[0]);
+  };
+
+  console.log(props);
+
+  let postData = new FormData();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let bioObj;
+    let resultObj;
+
+    if (imageData === null && bio != "") {
+      postData.append("bio", bio);
+    } else if (imageData != null && bio === "") {
+      postData.append("user_image", imageData, imageData.name);
+    } else {
+      postData.append("bio", bio);
+      postData.append("user_image", imageData, imageData.name);
+    }
+
+    fetch(`http://localhost:8000/profile/getProfile/${props.user.user_id}`, {
+      method: "PATCH",
+      body: postData,
+      headers: {
+        Authorization: `Token ${authToken}`,
+      },
+    })
+      .then((respone) => respone.json())
+      .then((data) => {
+        console.log("send data---", data);
+        props.dispatch({
+          type: "UpdateUser",
+          payload: { bio: bio },
+        });
+      });
+
+    history.push("/");
+  };
 
   const classes = useStyles();
   return (
@@ -43,63 +73,48 @@ export default function updateProfile() {
         <Paper elevation={10} className={classes.paperStyle}>
           <Grid align="center">
             <Avatar className={classes.avatarTheme}>
-              <LockRoundedIcon />
+              <UpdateIcon />
             </Avatar>
             <h2>Update Profile</h2>
           </Grid>
-
           <TextField
-            label="Username"
-            placeholder="username"
-            name="username"
-            // value={formData.email}
-            // onChange={handleChange}
-            fullWidth
-            required
-          />
-          <TextField
-            label="Password"
-            placeholder="password"
-            type="password"
-            name="password"
-            // value={formData.password}
-            // onChange={handleChange}
-            fullWidth
-            required
-          />
-
-          <TextField
-            label="Bio"
+            label="Update Bio"
             placeholder="bio"
             name="bio"
-            // value={formData.email}
-            // onChange={handleChange}
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
             fullWidth
             required
           />
+          <br />
+          <br />
+          <br />
+          <label htmlFor="upload-photo">
+            <input
+              style={{ display: "none" }}
+              id="upload-photo"
+              name="upload-photo"
+              // value={props.}
+              onChange={handlefilechange}
+              type="file"
+            />
+
+            <Button color="secondary" variant="contained" component="span">
+              Upload Profile Picture
+            </Button>
+          </label>
 
           <br />
           <br />
           <br />
-
-          <label>Change Profile Picture</label>
-
-          <Input type="file">
-            <ImageIcon></ImageIcon>
-          </Input>
-
-          <br />
-          <br />
-          <br />
-
           <Button
             type="submit"
             color="primary"
             variant="contained"
-            // onClick={handleSubmit}
+            onClick={handleSubmit}
             fullWidth
           >
-            Sign In
+            Update
           </Button>
           <br />
           <br />
@@ -109,3 +124,11 @@ export default function updateProfile() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.login,
+  };
+};
+
+export default connect(mapStateToProps)(updateProfile);
