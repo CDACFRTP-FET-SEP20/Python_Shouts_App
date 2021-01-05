@@ -99,6 +99,16 @@ const useStyles = makeStyles((theme) => ({
     width: "1rem",
     textAlign: "center",
   },
+  likes: {
+    backgroundColor: "#3f51b5",
+    color: "white",
+  },
+  like_unlike: {
+    color: "white",
+  },
+  subheader: {
+    color: "white",
+  },
 }));
 
 function rand() {
@@ -297,6 +307,8 @@ function Shout(props) {
       <Paper className={classes.paper_grid}>
         <Card className={classes.root} spacing={1} key={props.shouts.post_id}>
           <CardHeader
+            className={classes.likes}
+            classes={{ subheader: classes.subheader }}
             avatar={
               <Avatar
                 aria-label="recipe"
@@ -306,7 +318,11 @@ function Shout(props) {
             }
             action={
               props.shouts.username == username ? (
-                <IconButton aria-label="settings" onClick={handleClick}>
+                <IconButton
+                  aria-label="settings"
+                  onClick={handleClick}
+                  className={classes.like_unlike}
+                >
                   <MoreVertIcon />
                 </IconButton>
               ) : (
@@ -388,12 +404,13 @@ function Shout(props) {
               </div>
             </CardContent>
           ) : null}
-          <CardActions disableSpacing>
+          <CardActions disableSpacing className={classes.likes}>
             {isLiked(props.shouts) ? (
               <>
                 <IconButton
                   aria-label="add to favorites"
                   onClick={handleSubmit}
+                  className={classes.like_unlike}
                 >
                   <ThumbUpIcon />
                 </IconButton>
@@ -414,6 +431,7 @@ function Shout(props) {
                 <IconButton
                   aria-label="add to favorites"
                   onClick={() => handleUnlike(props.shouts)}
+                  className={classes.like_unlike}
                 >
                   <ThumbDownIcon />
                 </IconButton>
@@ -430,11 +448,14 @@ function Shout(props) {
                 </Modal>
               </>
             )}
-            <IconButton aria-label="comment">
+
+            <IconButton aria-label="comment" className={classes.like_unlike}>
               <ShowComment shouts={props.shouts} />
             </IconButton>
             <p>{comment_count}</p>
-            <ShowReport shouts={props.shouts} />
+            <IconButton aria-label="comment" className={classes.like_unlike}>
+              <ShowReport shouts={props.shouts} />
+            </IconButton>
           </CardActions>
 
           <DeleteModal

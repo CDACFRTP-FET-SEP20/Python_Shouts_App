@@ -62,7 +62,7 @@ function ShowReport(props) {
 
   return (
     <div>
-      <Button type="button" onClick={handleOpen}>
+      <Button type="button" onClick={handleOpen} style={{color:"white"}}>
         <ReportIcon />
         Report
       </Button>
