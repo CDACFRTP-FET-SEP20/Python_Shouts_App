@@ -16,10 +16,9 @@ const initialState = {
 };  
 const commentReducer = (state = initialState, action) => {  
   switch (action.type) {  
-    case FETCH_COMMENTS:  
-      return { ...state,comments:action.payload};  
-    case "AddComment":
-      return { ...state,comments:action.payload}; 
+    case "getComment":
+      console.log("getComments", action.payload);
+      return { ...state, comments: action.payload }; 
     default:  
       return state;  
   }  

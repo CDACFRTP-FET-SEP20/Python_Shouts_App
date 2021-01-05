@@ -30,6 +30,7 @@ import Cookies from "js-cookie";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import ShowReport from "../ShoutReport/ShowReport";
+import ShowComment from "../ShowComment/ShowComment";
 import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -152,6 +153,11 @@ function Shout(props) {
   let fil = props.like.filter((c) => c.shout_id === props.shouts.post_id);
   console.log("prop-fil==", fil);
   const like_count = fil.length;
+
+  let filtercomment = props.comments.filter(
+    (c) => c.shout_id === props.shouts.post_id
+  );
+  const comment_count = filtercomment.length;
 
   const isLiked = (data) => {
     for (let lk of props.like) {
@@ -327,8 +333,9 @@ function Shout(props) {
               </>
             )}
             <IconButton aria-label="comment">
-              <ChatBubbleIcon />
+              <ShowComment shouts={props.shouts} />
             </IconButton>
+            <p>{comment_count}</p>
             <ShowReport shouts={props.shouts} />
           </CardActions>
 
@@ -361,6 +368,7 @@ const mapStateToProps = (state) => {
     // shouts: state.shouts,
     profiles: state.friendList.profiles,
     reports: state.report.report,
+    comments: state.Comment.comments,
   };
 };
 export default connect(mapStateToProps)(Shout);
