@@ -241,16 +241,16 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = ShoutComment.objects.all()
     serializer_class = CommentSerializer 
 
-    def get(self, request): 
-        comment = [ {"comment": comment.comment,"date": comment.date}  
-        for comment in ShoutComment.objects.all()] 
-        return Response(comment)
+    # def get(self, request): 
+    #     comment = [ {"comment": comment.comment,"date": comment.date}  
+    #     for comment in ShoutComment.objects.all()] 
+    #     return Response(comment)
 
-    def delete(self,request, pk):
-            comment = Posts.objects.get(pk=id)
-            if request.id == comment.id:
-                ShoutComment.objects.get(pk=id).delete()
-            return HttpResponse({'message':'Comment Deleted!'},status=200)
+    # def delete(self,request, pk):
+    #         comment = Posts.objects.get(pk=id)
+    #         if request.id == comment.id:
+    #             ShoutComment.objects.get(pk=id).delete()
+    #         return HttpResponse({'message':'Comment Deleted!'},status=200)
 
 # ===================== Report ============================
 

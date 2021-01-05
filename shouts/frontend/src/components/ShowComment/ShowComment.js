@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import Report from "./Report";
-import ReportIcon from "@material-ui/icons/Report";
+import List from "../ShowComment/List";
+import CommentRoundedIcon from "@material-ui/icons/CommentRounded";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
+import IconButton from "@material-ui/core/IconButton";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ShowReport(props) {
+function ShowComment(props) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -50,7 +52,7 @@ function ShowReport(props) {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <Report shouts={props.shouts} />
+      <List shouts={props.shouts} />
     </div>
   );
   const [showComponent, setShowComponent] = useState(false);
@@ -60,11 +62,8 @@ function ShowReport(props) {
   };
 
   return (
-    <div>
-      <Button type="button" onClick={handleOpen} style={{color:"white"}}>
-        <ReportIcon />
-        Report
-      </Button>
+    <>
+      <ChatBubbleIcon type="button" onClick={handleOpen}></ChatBubbleIcon>
       <Modal
         open={open}
         onClose={handleClose}
@@ -73,17 +72,19 @@ function ShowReport(props) {
       >
         {body}
       </Modal>
-    </div>
+    </>
   );
 }
 
+// export default ShowComment;
 const mapStateToProps = (state) => {
   return {
     user: state.login,
     like: state.like.like,
     profiles: state.friendList.profiles,
     reports: state.report.report,
+    comments: state.Comment.comments,
   };
 };
 
-export default connect(mapStateToProps)(ShowReport);
+export default connect(mapStateToProps)(ShowComment);
