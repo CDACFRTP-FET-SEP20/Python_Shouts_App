@@ -43,8 +43,6 @@ export default function register() {
   const [imageData, setImageData] = useState(null);
 
   const handleChange = ({ target }) => {
-    console.log(target);
-
     const { name, value } = target;
     setFormData({ ...formData, [name]: value });
   };
@@ -143,6 +141,8 @@ export default function register() {
             />
 
             <br />
+            <br />
+            <br />
 
             <Button
               type="submit"
@@ -154,7 +154,7 @@ export default function register() {
               Register
             </Button>
             <br />
-
+            <br />
             <Typography>
               Already have an account?
               <Link to="/login">Sign In</Link>

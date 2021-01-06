@@ -12,18 +12,6 @@ import { getReports } from "../Services/ReportService";
 import { getComments } from "../Services/CommentServices";
 
 const useStyles = makeStyles({
-  // feed: {
-  //   flex: 1,
-  //   padding: "30px 200px",
-  //   flexDirection: "column",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   backgroundColor: "#f1f2f5",
-  //   "@media (max-width: 900px)": {
-
-  //     padding: "10px 50px",
-  //   },
-  // },
   feed: {
     flex: 1,
     padding: "30px 150px",
@@ -46,7 +34,6 @@ function Feed(props) {
     getPosts(props);
     getReports(props);
   }, []);
-
 
   const filteredArray = [];
   function filteredFeed() {
@@ -71,7 +58,6 @@ function Feed(props) {
     }
   }
   filteredFeed();
-  
 
   const searchedArray = filteredArray.filter(
     (shout) =>
@@ -79,7 +65,6 @@ function Feed(props) {
       shout.title.toLowerCase().includes(props.postSearch.toLowerCase()) ||
       shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
   );
-
 
   return (
     <>

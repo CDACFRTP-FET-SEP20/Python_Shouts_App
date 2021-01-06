@@ -32,7 +32,7 @@ function Search(props) {
       payload: e.target.value,
     });
   };
-  
+
   const classes = useStyles();
   return (
     <div>

@@ -29,8 +29,6 @@ function updateProfile(props) {
     setImageData(e.target.files[0]);
   };
 
-  console.log(props);
-
   let postData = new FormData();
 
   //----------------------Update Profile-------------------------//
@@ -59,7 +57,6 @@ function updateProfile(props) {
     })
       .then((respone) => respone.json())
       .then((data) => {
-        console.log("send data---", data);
         props.dispatch({
           type: "UpdateUser",
           payload: { bio: bio },
