@@ -54,7 +54,7 @@ export const deletePost = (props) => {
 // ===============================DeleteMyPosts================================
 export const deleteMyPost = (props) => {
   const authToken = props.user.token;
-  console.log(props);
+  
   axios({
     method: "delete",
     url: `/api/shouts/${props.postId}/`,
@@ -71,7 +71,7 @@ export const deleteMyPost = (props) => {
 // ===============================UpdatePosts================================
 export const updatePost = (props, values) => {
   const authToken = props.user.token;
-  console.log(values);
+  
   axios({
     method: "patch",
     url: `/api/shouts/${props.postId}/`,
@@ -87,7 +87,7 @@ export const updatePost = (props, values) => {
 // ===============================UpdateMyPosts================================
 export const updateMyPost = (props, values) => {
   const authToken = props.user.token;
-  console.log(props.myshout);
+  
   axios({
     method: "patch",
     url: `/api/shouts/${props.postId}/`,

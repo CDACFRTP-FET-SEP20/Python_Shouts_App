@@ -4,7 +4,6 @@ const initialState = {
 
 function ReportReducer(state = initialState, action) {
   if (action.type === "getreports") {
-    console.log("getreports", action.payload);
     return { ...state, report: action.payload };
   }
 

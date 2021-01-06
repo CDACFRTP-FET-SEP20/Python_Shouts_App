@@ -141,7 +141,6 @@ function Navbar(props) {
   };
 
   const searchPosts = (e) => {
-    // console.log(e.target.value);
     props.dispatch({
       type: "Search Posts",
       payload: e.target.value,
@@ -166,7 +165,6 @@ function Navbar(props) {
   const [isAuthenticated, setisAuthenticated] = useState(true);
 
   const logout = () => {
-    // console.log("Logout");
     props.dispatch({
       type: "AddToken",
       payload: "",

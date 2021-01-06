@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-// import CreateShout from "./CreateShout";
-import Shout from "./Shout";
+
 import Shoutyy from "./Shoutyy";
 import CreateShouts from "./CreateShouts";
 import { connect } from "react-redux";
@@ -13,18 +12,6 @@ import { getReports } from "../Services/ReportService";
 import { getComments } from "../Services/CommentServices";
 
 const useStyles = makeStyles({
-  // feed: {
-  //   flex: 1,
-  //   padding: "30px 200px",
-  //   flexDirection: "column",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   backgroundColor: "#f1f2f5",
-  //   "@media (max-width: 900px)": {
-
-  //     padding: "10px 50px",
-  //   },
-  // },
   feed: {
     flex: 1,
     padding: "30px 150px",
@@ -47,8 +34,6 @@ function Feed(props) {
     getPosts(props);
     getReports(props);
   }, []);
-
-  // console.log("*****feed*********", props);
 
   const filteredArray = [];
   function filteredFeed() {
@@ -73,7 +58,6 @@ function Feed(props) {
     }
   }
   filteredFeed();
-  // console.log("Filter array==", filteredArray);
 
   const searchedArray = filteredArray.filter(
     (shout) =>
@@ -81,8 +65,6 @@ function Feed(props) {
       shout.title.toLowerCase().includes(props.postSearch.toLowerCase()) ||
       shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
   );
-
-  // console.log("searchedArray==", searchedArray);
 
   return (
     <>
@@ -119,6 +101,7 @@ function Feed(props) {
 const mapStateToProps = (state) => ({
   shouts: state.shouts,
   user: state.login,
+
   profiles: state.friendList.profiles,
   postSearch: state.postSearch,
   friendList: state.friendList.friendList,
