@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { getComments } from "../Services/CommentServices";
 import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   table: {
     textAlign: "center",
