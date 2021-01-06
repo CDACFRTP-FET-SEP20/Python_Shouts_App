@@ -43,9 +43,6 @@ function MyShouts(props) {
   const searchedArray = props.shouts.filter(
     (shout) =>
       shout.title.toLowerCase().includes(props.postSearch.toLowerCase()) ||
-      shout.description
-        .toLowerCase()
-        .includes(props.postSearch.toLowerCase()) ||
       shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
   );
 
