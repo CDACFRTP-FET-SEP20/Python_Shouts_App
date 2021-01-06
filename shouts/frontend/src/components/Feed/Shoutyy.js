@@ -394,7 +394,7 @@ function Shout(props) {
                   width="100%"
                   height="100%"
                   url={props.shouts.media}
-                  playing={true}
+                  playing={false}
                   controls={true}
                   light={false}
                   loop={true}

@@ -13,6 +13,7 @@ import { Grid, makeStyles, Paper } from "@material-ui/core";
 import Feed from "./Feed/Feed";
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./Header/Navbar";
+import Page404 from "./Error/Page404";
 
 const useStyles = makeStyles({
   App: {
@@ -26,22 +27,23 @@ function App() {
   const classes = useStyles();
 
   return (
-    <Provider store={store}>
-    <div className={classes.app__body}>
-      
-        <BrowserRouter basename="/app">
-          <Switch>
-            <PrivateRoute exact path="/" component={Feed} />
-            <PrivateRoute path="/mypost" component={MyShouts} />
-            <PrivateRoute path="/dashboard" component={Friends} />
-            <PrivateRoute path="/updateProfile" component={UpdateProfile} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-          </Switch>
-        </BrowserRouter>
-      
-    </div>
-    </Provider>
+    <React.StrictMode>
+      <Provider store={store}>
+        <div className={classes.app__body}>
+          <BrowserRouter basename="/app">
+            <Switch>
+              <PrivateRoute exact path="/" component={Feed} />
+              <PrivateRoute path="/mypost" component={MyShouts} />
+              <PrivateRoute path="/dashboard" component={Friends} />
+              <PrivateRoute path="/updateProfile" component={UpdateProfile} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <Route component={Page404} />
+            </Switch>
+          </BrowserRouter>
+        </div>
+      </Provider>
+    </React.StrictMode>
   );
 }
 
@@ -49,4 +51,4 @@ export default App;
 
 const container = document.getElementById("app");
 console.log(container);
-render(<App />, container|| document.createElement('div') );
+render(<App />, container || document.createElement("div"));
