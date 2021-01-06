@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import Paper from "@material-ui/core/Paper";
@@ -10,8 +10,6 @@ import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import useStyles from "../UseStyles";
 import { friendlistdata, newfrienddata } from "../../Services/FriendService";
 import Search from "../Dashboard/Search";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 
 function FriendList(props) {
   const classes = useStyles();
@@ -29,8 +27,6 @@ function FriendList(props) {
         newfrienddata(props);
       })
       .catch((error) => console.log(error));
-
-    // toast.error("Removed from friend list");
   };
 
   const searchedArray = props.friendList.filter((item) => {
@@ -40,11 +36,9 @@ function FriendList(props) {
       return item.receiver.toLowerCase().includes(props.search.toLowerCase());
   });
 
-
   const senderprofilepic = (data) => {
     for (let item1 of props.profiles) {
       if (item1.username === data.sender) {
-        
         return item1.user_image.slice(21);
       }
     }
@@ -52,7 +46,6 @@ function FriendList(props) {
   const receiverprofilepic = (data) => {
     for (let item1 of props.profiles) {
       if (item1.username === data.receiver) {
-        
         return item1.user_image.slice(21);
       }
     }

@@ -1,8 +1,6 @@
 const initialState = {
   friendList: [],
-
-
-  profiles:[]
+  profiles: [],
 };
 
 function FriendListReducer(state = initialState, action) {
@@ -10,7 +8,7 @@ function FriendListReducer(state = initialState, action) {
     return { ...state, friendList: action.payload };
   }
 
-  if (action.type === "storeProfileinfo"){
+  if (action.type === "storeProfileinfo") {
     return { ...state, profiles: action.payload };
   }
   return state;

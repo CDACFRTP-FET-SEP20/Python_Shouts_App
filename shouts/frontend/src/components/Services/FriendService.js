@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const friendlistdata = (props) => {
-
   const authToken = props.user.token;
   const pk = props.user.user_id;
   axios
@@ -40,7 +39,6 @@ export const friendlistreceived = (props) => {
 export const newfrienddata = (props) => {
   const authToken = props.user.token;
   const pk = props.user.user_id;
-  
 
   fetch(`/api/requestsent/${pk}`, {
     headers: {

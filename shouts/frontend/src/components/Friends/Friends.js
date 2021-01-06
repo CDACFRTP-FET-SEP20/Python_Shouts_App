@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import FriendList from "./FriendList/FriendList";
 import RequestSent from "./Sent/RequestSent";
@@ -25,7 +25,6 @@ const dashStyles = makeStyles((theme) => ({
     "@media (max-width : 600px)": {
       height: "60vh",
     },
-    // backgroundColor: '#e8eaf6'
   },
   large: {
     width: theme.spacing(7),

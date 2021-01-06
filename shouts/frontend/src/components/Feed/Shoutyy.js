@@ -141,7 +141,6 @@ function Shout(props) {
   // const [isLiked, setIsLiked] = useState(true);
 
   const csrftoken = Cookies.get("csrftoken");
-
   useEffect(() => {
     getLikes(props);
   }, []);
@@ -151,7 +150,6 @@ function Shout(props) {
     shout_id: props.shouts.post_id,
     // like_id: props.like.id,
   });
-
   //----------------------Delete Like-------------------//
   const deleteLike = (id) => {
     axios({
@@ -191,7 +189,6 @@ function Shout(props) {
   };
 
   let fil = props.like.filter((c) => c.shout_id === props.shouts.post_id);
-
   const like_count = fil.length;
 
   let filtercomment = props.comments.filter(
@@ -209,7 +206,7 @@ function Shout(props) {
     return true;
   };
 
-  console.log("Like--------------->", props);
+  // console.log("Like--------------->", props);
 
   //-----------------------------Show Count Like--------------
   const [open, setOpen] = React.useState(false);
@@ -246,8 +243,8 @@ function Shout(props) {
     <div style={modalStyle} className={classes.paper}>
       <table>
         <tbody>
-          {fil.map((item) => (
-            <tr>{getData(item)}</tr>
+          {fil.map((item, k) => (
+            <tr key={k}>{getData(item)}</tr>
           ))}
         </tbody>
         <tfoot></tfoot>

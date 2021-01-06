@@ -12,7 +12,6 @@ import {
   newfrienddata,
   profiledata,
 } from "../../Services/FriendService";
-// import { Link } from "react-router-dom";
 
 function Dashboard(props) {
   const classes = useStyle();
@@ -30,21 +29,16 @@ function Dashboard(props) {
     textDecoration: "none",
   };
 
-  // console.log(props.friendList);
-
   useEffect(() => {
     friendlistreceived(props);
-    // friendlistdata(props);
     newfrienddata(props);
-    // profiledata(props);
 
-    return () => console.log("*****Dashboard*********", props.profiles);
+    // return () => console.log("*****Dashboard*********", props.profiles);
   }, []);
 
   const userprofilepic = () => {
     for (let item1 of props.profiles) {
       if (item1.username === props.user.username) {
-        
         return item1.user_image.slice(21);
       }
     }

@@ -12,18 +12,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  // feed: {
-  //   flex: 1,
-  //   padding: "30px 200px",
-  //   flexDirection: "column",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   backgroundColor: "#f1f2f5",
-  //   "@media (max-width: 900px)": {
 
-  //     padding: "10px 50px",
-  //   },
-  // },
   paper_grid: {
     padding: theme.spacing(2),
     textAlign: "left",
@@ -38,16 +27,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     backgroundColor: "#f1f2f5",
   },
-  feedBackground:{
+  feedBackground: {
     backgroundColor: "#f1f2f5",
-  }
+  },
 }));
 function MyShouts(props) {
   const classes = useStyles();
   var user_id = props.user.user_id;
-  
+
   useEffect(() => {
-    
     // ==============Get Shouts======================
     getMyPost(props, user_id);
   }, []);
@@ -60,8 +48,6 @@ function MyShouts(props) {
         .includes(props.postSearch.toLowerCase()) ||
       shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
   );
-
- 
 
   return (
     <>
