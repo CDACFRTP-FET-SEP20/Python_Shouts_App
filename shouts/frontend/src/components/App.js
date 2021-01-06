@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import Login from "./login";
 import Register from "./register";
 import MyShouts from "./Feed/MyShouts";
-import Header1 from "./Header/Header1";
+
 import UpdateProfile from "./updateProfile";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import store from "../store/store";
@@ -27,8 +27,7 @@ function App() {
 
   return (
     <Provider store={store}>
-    <div className={classes.app__body}>
-      
+      <div className={classes.app__body}>
         <BrowserRouter basename="/app">
           <Switch>
             <PrivateRoute exact path="/" component={Feed} />
@@ -39,8 +38,7 @@ function App() {
             <Route path="/register" component={Register} />
           </Switch>
         </BrowserRouter>
-      
-    </div>
+      </div>
     </Provider>
   );
 }
@@ -48,5 +46,5 @@ function App() {
 export default App;
 
 const container = document.getElementById("app");
-console.log(container);
-render(<App />, container|| document.createElement('div') );
+
+render(<App />, container || document.createElement("div"));

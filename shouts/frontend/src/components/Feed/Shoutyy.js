@@ -94,8 +94,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Shout(props) {
-  // const[myshout,setMyshouts]=useState(false)
-  console.log("ShoutsNew==", props);
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const username = sessionStorage.getItem("user");
@@ -110,7 +108,7 @@ function Shout(props) {
   // const [isLiked, setIsLiked] = useState(true);
 
   const csrftoken = Cookies.get("csrftoken");
-  console.log(csrftoken);
+
   useEffect(() => {
     getLikes(props);
   }, []);
@@ -120,7 +118,7 @@ function Shout(props) {
     shout_id: props.shouts.post_id,
     // like_id: props.like.id,
   });
-  console.log("Like id", props.like);
+
   //----------------------Delete Like-------------------//
   const deleteLike = (id) => {
     axios({
@@ -138,8 +136,6 @@ function Shout(props) {
   //---------------------------Handle Submit----------------------//
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("formdata", formData);
-    console.log("Likes Array===>", props.like);
 
     fetch("http://localhost:8000/api/shoutlike/", {
       method: "POST",
@@ -156,15 +152,13 @@ function Shout(props) {
   const handleUnlike = (data) => {
     for (let lk of props.like) {
       if (lk.shout_id === data.post_id && lk.user_id === props.user.user_id) {
-        console.log("isLiked false");
-
         deleteLike(lk.id);
       }
     }
   };
 
   let fil = props.like.filter((c) => c.shout_id === props.shouts.post_id);
-  console.log("prop-fil==", fil);
+
   const like_count = fil.length;
 
   let filtercomment = props.comments.filter(
@@ -175,15 +169,12 @@ function Shout(props) {
   const isLiked = (data) => {
     for (let lk of props.like) {
       if (lk.shout_id === data.post_id && lk.user_id === props.user.user_id) {
-        console.log("isLiked false");
         return false;
       }
     }
-    console.log("isLiked true");
+
     return true;
   };
-
-  console.log("Like--------------->", props);
 
   // ===========================Menu================================
   const handleClick = (event) => {
@@ -199,7 +190,6 @@ function Shout(props) {
   };
   // ===========================Delete================================
   const onDeletePost = (postTitle, postId) => {
-    console.log("delete");
     setModalOpen(true);
     setPostTitle(postTitle);
     setPostId(postId);
