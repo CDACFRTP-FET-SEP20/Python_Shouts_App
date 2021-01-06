@@ -16,21 +16,17 @@ function RequestSent(props) {
   const pk = props.user.user_id;
   const authToken = props.user.token;
 
-  console.log("***********", props.searchType);
-
   const sendRequest = (receiver) => {
-    console.log("Sender=====", props.user);
-    console.log("receiver=====", receiver);
-
     const data1 = {
       receiver: receiver,
     };
 
     axios
-      .post(`/api/friendlist/${pk}`, data1,{headers: {
-        Authorization: `Token ${authToken}`,
-      },
-    })
+      .post(`/api/friendlist/${pk}`, data1, {
+        headers: {
+          Authorization: `Token ${authToken}`,
+        },
+      })
       .then((res) => newfrienddata(props))
       .catch((err) => console.log(err));
   };
@@ -39,14 +35,11 @@ function RequestSent(props) {
     item.username.toLowerCase().includes(props.search.toLowerCase())
   );
 
-  console.log("sent searched data", props.requestSent);
   return (
     <div className={classes.root}>
       <Search />
       <Grid>
         {searchedArray.map((data, item) => {
-          console.log(data.user_image);
-          
           return (
             <Grid container spacing={3} key={item}>
               {/* Chnage the name=shubham dynamically using state */}

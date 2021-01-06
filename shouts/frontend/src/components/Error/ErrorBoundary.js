@@ -12,9 +12,8 @@ class ErrorBoundary extends Component {
   }
   render() {
     const hasError = !!this.state.error;
-    console.log("--------Error Message--------", hasError);
     return hasError ? (
-      <h1>{this.state.error.message} This the Error Message</h1>
+      <h1>{this.state.error.message}, This the Error Message</h1>
     ) : (
       this.props.children
     );

@@ -61,11 +61,15 @@ function ShowReport(props) {
   };
 
   return (
-    <div>
-      <Button type="button" onClick={handleOpen} style={{ color: "white" }}>
+    <div style={{ height: "1.3rem" }}>
+      <p
+        type="button"
+        onClick={handleOpen}
+        style={{ color: "white", fontSize: "16px", marginTop: "-2px" }}
+      >
         <ReportIcon />
-        Report
-      </Button>
+       
+      </p>
       <Modal
         open={open}
         onClose={handleClose}

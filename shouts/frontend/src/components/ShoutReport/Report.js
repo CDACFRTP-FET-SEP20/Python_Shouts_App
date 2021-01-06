@@ -17,11 +17,6 @@ function Report(props) {
   console.log(csrftoken);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  // const [formData, setFormData] = useState({
-  //   user_id: "35213582-5d83-4ee0-b71c-6da160198cf9",
-  //   shout_id: "b954d35a-de0d-42b4-a021-7f9c61ec0673",
-  //   report_id: "01b7a315-ae25-4c44-9452-11faeb2707f1",
-  // });
 
   console.log("props of Report", props);
   // console.log("this event.target.innerText", event.target.innerText);
@@ -39,7 +34,7 @@ function Report(props) {
         "X-CSRFToken": csrftoken,
       },
     })
-      // .then((res) => getLike(props))
+      
       .then((response) => getReports(props))
       .catch((error) => console.log(error));
   };

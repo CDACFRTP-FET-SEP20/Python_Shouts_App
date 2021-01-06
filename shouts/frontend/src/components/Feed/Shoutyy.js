@@ -209,7 +209,7 @@ function Shout(props) {
     return true;
   };
 
-  console.log("Like--------------->", props);
+  // console.log("Like--------------->", props);
 
   //-----------------------------Show Count Like--------------
   const [open, setOpen] = React.useState(false);
@@ -246,8 +246,8 @@ function Shout(props) {
     <div style={modalStyle} className={classes.paper}>
       <table>
         <tbody>
-          {fil.map((item) => (
-            <tr>{getData(item)}</tr>
+          {fil.map((item, k) => (
+            <tr key={k}>{getData(item)}</tr>
           ))}
         </tbody>
         <tfoot></tfoot>
@@ -445,7 +445,9 @@ function Shout(props) {
             <IconButton aria-label="comment" className={classes.like_unlike}>
               <ShowComment shouts={props.shouts} />
             </IconButton>
-            <p>{comment_count}</p>
+            <p style={{ marginLeft: "0.2rem", marginRight: "0.2rem" }}>
+              {comment_count}
+            </p>
             <IconButton aria-label="comment" className={classes.like_unlike}>
               <ShowReport shouts={props.shouts} />
             </IconButton>
