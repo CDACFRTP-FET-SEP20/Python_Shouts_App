@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <coverage generated="1609933519513" clover="3.2.0">
   <project timestamp="1609933519514" name="All files">
     <metrics statements="179" coveredstatements="15" conditionals="35" coveredconditionals="0" methods="62" coveredmethods="2" elements="276" coveredelements="17" complexity="0" loc="179" ncloc="179" packages="3" files="4" classes="4"/>
@@ -202,5 +203,27 @@
         <line num="330" count="0" type="stmt"/>
       </file>
     </package>
+=======
+<coverage generated="1609913845057" clover="3.2.0">
+  <project timestamp="1609913845057" name="All files">
+    <metrics statements="14" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0" elements="20" coveredelements="2" complexity="0" loc="14" ncloc="14" packages="1" files="1" classes="1"/>
+    <file name="comment_Form.js" path="D:\1.Integration\6thJanIntegration\Python_Shouts_App\shouts\frontend\src\components\ShowComment\comment_Form.js">
+      <metrics statements="14" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="0"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="19" count="0" type="stmt"/>
+      <line num="20" count="0" type="stmt"/>
+      <line num="21" count="0" type="stmt"/>
+      <line num="22" count="0" type="stmt"/>
+      <line num="23" count="0" type="stmt"/>
+      <line num="24" count="0" type="stmt"/>
+      <line num="25" count="0" type="stmt"/>
+      <line num="37" count="0" type="stmt"/>
+      <line num="40" count="0" type="stmt"/>
+      <line num="41" count="0" type="stmt"/>
+      <line num="44" count="0" type="stmt"/>
+      <line num="79" count="1" type="stmt"/>
+      <line num="80" count="0" type="stmt"/>
+    </file>
+>>>>>>> main
   </project>
 </coverage>

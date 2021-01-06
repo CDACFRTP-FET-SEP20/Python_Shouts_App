@@ -48,7 +48,6 @@ function Feed(props) {
   }, []);
 
 
-
   const filteredArray = [];
   function filteredFeed() {
     for (let shout of props.shouts) {

@@ -1,20 +1,25 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import uuidv1 from "uuid";
-import { addComment } from "../../actions/CommentBox";
 import axios from "axios";
 import Cookies from "js-cookie";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core";
 import { getComments } from "../Services/CommentServices";
 import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  table: {
+    textAlign: "center",
+    marginTop: "20px",
+    width: "80%",
+    margin: "7%",
+  },
+}));
 
 function CommentForm(props) {
   const csrftoken = Cookies.get("csrftoken");
   const [postComment, setPostComment] = useState("");
   const authToken = props.user.token;
-
+  const classes = useStyles();
   const handleSubmit = (event) => {
     event.preventDefault();
     axios({
@@ -38,25 +43,36 @@ function CommentForm(props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="form-group mt-3">
-        <label htmlFor="comment">
-          <strong>Type here:</strong>
-        </label>
-        <textarea
-          type="text"
-          className="form-control"
-          id="comment"
-          value={postComment}
-          onChange={handleChange}
-        />
-        <IconButton
-          type="submit"
-          className="btn btn-success btn-lg mt-2"
-          color="primary"
-        >
-          <SendIcon></SendIcon>
-        </IconButton>
-      </div>
+      <table className={classes.table}>
+        <tbody>
+          <tr>
+            <td>
+              <label htmlFor="comment">
+                <strong>Type here:</strong>
+              </label>
+            </td>
+            <td>
+              <textarea
+                type="text"
+                className="form-control"
+                id="comment"
+                value={postComment}
+                onChange={handleChange}
+              />
+            </td>
+            <td>
+              <IconButton
+                type="submit"
+                className="btn btn-success btn-lg mt-2"
+                color="primary"
+              >
+                <SendIcon></SendIcon>
+              </IconButton>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot></tfoot>
+      </table>
     </form>
   );
 }
