@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-// import CreateShout from "./CreateShout";
-import Shout from "./Shout";
+
 import Shoutyy from "./Shoutyy";
 import CreateShouts from "./CreateShouts";
 import { connect } from "react-redux";
@@ -48,7 +47,6 @@ function Feed(props) {
     getReports(props);
   }, []);
 
-  console.log("*****feed*********", props);
 
   const filteredArray = [];
   function filteredFeed() {
@@ -73,7 +71,7 @@ function Feed(props) {
     }
   }
   filteredFeed();
-  console.log("Filter array==", filteredArray);
+  
 
   const searchedArray = filteredArray.filter(
     (shout) =>
@@ -82,7 +80,6 @@ function Feed(props) {
       shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
   );
 
-  console.log("searchedArray==", searchedArray);
 
   return (
     <>
@@ -119,6 +116,7 @@ function Feed(props) {
 const mapStateToProps = (state) => ({
   shouts: state.shouts,
   user: state.login,
+
   profiles: state.friendList.profiles,
   postSearch: state.postSearch,
   friendList: state.friendList.friendList,
