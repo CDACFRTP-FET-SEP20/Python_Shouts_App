@@ -44,7 +44,7 @@ function Dashboard(props) {
   const userprofilepic = () => {
     for (let item1 of props.profiles) {
       if (item1.username === props.user.username) {
-        console.log(item1.user_image.slice(21));
+        
         return item1.user_image.slice(21);
       }
     }

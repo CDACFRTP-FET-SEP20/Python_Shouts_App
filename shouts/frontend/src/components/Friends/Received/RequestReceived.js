@@ -35,8 +35,7 @@ function RequestReceived(props) {
   };
 
   const rejectRequest = (data) => {
-    console.log("data--------", data);
-    console.log("req", props.user);
+    
     axios
       .delete(`/api/friendlist/${data.id}`, {
         headers: {
@@ -50,11 +49,10 @@ function RequestReceived(props) {
       .catch((error) => console.log(error));
   };
 
-  console.log("profiles==", props.profiles);
-  console.log("****requestReceived*******", props.requestReceived);
+  
 
   const searchedArray = props.requestReceived.filter((item) => {
-    console.log("user--", item.sender);
+    
     if (props.user.username === item.receiver) {
       return item?.sender.toLowerCase().includes(props.search.toLowerCase());
     } else
@@ -64,7 +62,7 @@ function RequestReceived(props) {
   const profilepic = (data) => {
     for (let item1 of props.profiles) {
       if (item1.username === data.sender) {
-        console.log(item1.user_image.slice(21));
+       
         return item1.user_image.slice(21);
       }
     }

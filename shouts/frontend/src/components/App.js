@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import Login from "./login";
 import Register from "./register";
 import MyShouts from "./Feed/MyShouts";
-import Header1 from "./Header/Header1";
+
 import UpdateProfile from "./updateProfile";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import store from "../store/store";
@@ -50,5 +50,7 @@ function App() {
 export default App;
 
 const container = document.getElementById("app");
-console.log(container);
+
+
+
 render(<App />, container || document.createElement("div"));

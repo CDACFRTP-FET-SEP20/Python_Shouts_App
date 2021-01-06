@@ -172,7 +172,6 @@ function getModalStyle() {
   };
 }
 function CreateShouts(props) {
-  console.log("Create", props);
   const classes = useStyles();
   var usernameDis = sessionStorage.getItem("user");
   var i = usernameDis.indexOf(" ");
@@ -190,7 +189,6 @@ function CreateShouts(props) {
   const profilepic = () => {
     for (let item1 of props.profiles) {
       if (item1.username === usernameDis) {
-        console.log("prr==========", item1.user_image.slice(21));
         return item1.user_image.slice(21);
       }
     }
@@ -206,8 +204,6 @@ function CreateShouts(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log("post");
 
     const uploadData = new FormData();
     uploadData.append("title", title);

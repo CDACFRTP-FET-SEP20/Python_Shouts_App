@@ -40,13 +40,11 @@ function FriendList(props) {
       return item.receiver.toLowerCase().includes(props.search.toLowerCase());
   });
 
-  console.log("modified array", searchedArray);
-  console.log("user-main", props.user);
 
   const senderprofilepic = (data) => {
     for (let item1 of props.profiles) {
       if (item1.username === data.sender) {
-        console.log(item1.user_image.slice(21));
+        
         return item1.user_image.slice(21);
       }
     }
@@ -54,7 +52,7 @@ function FriendList(props) {
   const receiverprofilepic = (data) => {
     for (let item1 of props.profiles) {
       if (item1.username === data.receiver) {
-        console.log(item1.user_image.slice(21));
+        
         return item1.user_image.slice(21);
       }
     }
