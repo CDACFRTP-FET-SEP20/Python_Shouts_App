@@ -33,14 +33,8 @@ function login(props) {
     password: "",
   });
 
-  console.log("props-user", props.user);
-
   const handleChange = ({ target }) => {
-    console.log(target);
-
     const { name, value } = target;
-    console.log("name", name);
-    console.log("value", value);
 
     setFormData({ ...formData, [name]: value });
   };
@@ -49,8 +43,6 @@ function login(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log("Login Submit===", formData);
 
     //-----------Validations if correct then log in User-------------//
     if (!formData.email.includes("@")) {
@@ -85,8 +77,6 @@ function login(props) {
     width: 350,
     margin: "50px auto",
   };
-
-  console.log("state data", props.userdata);
 
   const classes = useStyles();
   if (props.user.isAuthenticated) {

@@ -45,9 +45,9 @@ const useStyles = makeStyles((theme) => ({
 function MyShouts(props) {
   const classes = useStyles();
   var user_id = props.user.user_id;
-  console.log("myshouts", props.user.user_id);
+  // console.log("myshouts", props.user.user_id);
   useEffect(() => {
-    console.log("myshouts");
+    // console.log("myshouts");
     // ==============Get Shouts======================
     getMyPost(props, user_id);
   }, []);
@@ -61,7 +61,7 @@ function MyShouts(props) {
       shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
   );
 
-  console.log(searchedArray);
+  // console.log(searchedArray);
 
   return (
     <>

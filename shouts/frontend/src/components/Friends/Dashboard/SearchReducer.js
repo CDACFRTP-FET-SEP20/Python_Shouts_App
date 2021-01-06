@@ -9,7 +9,6 @@ function SearchReducer(state = initialState, action) {
   }
 
   if (action.type === "SearchType") {
-    console.log(action.payload);
     return { ...state, searchType: action.payload };
   }
   return state;

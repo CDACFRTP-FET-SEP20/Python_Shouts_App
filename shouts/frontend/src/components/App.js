@@ -14,6 +14,7 @@ import Feed from "./Feed/Feed";
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./Header/Navbar";
 import Page404 from "./Error/Page404";
+import ErrorBoundary from "./Error/ErrorBoundary";
 
 const useStyles = makeStyles({
   App: {
@@ -27,7 +28,7 @@ function App() {
   const classes = useStyles();
 
   return (
-    <React.StrictMode>
+    <ErrorBoundary>
       <Provider store={store}>
         <div className={classes.app__body}>
           <BrowserRouter basename="/app">
@@ -43,12 +44,11 @@ function App() {
           </BrowserRouter>
         </div>
       </Provider>
-    </React.StrictMode>
+    </ErrorBoundary>
   );
 }
 
 export default App;
 
 const container = document.getElementById("app");
-console.log(container);
 render(<App />, container || document.createElement("div"));

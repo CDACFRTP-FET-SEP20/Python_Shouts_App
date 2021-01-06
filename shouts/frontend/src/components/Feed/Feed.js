@@ -48,7 +48,7 @@ function Feed(props) {
     getReports(props);
   }, []);
 
-  console.log("*****feed*********", props);
+  // console.log("*****feed*********", props);
 
   const filteredArray = [];
   function filteredFeed() {
@@ -73,7 +73,7 @@ function Feed(props) {
     }
   }
   filteredFeed();
-  console.log("Filter array==", filteredArray);
+  // console.log("Filter array==", filteredArray);
 
   const searchedArray = filteredArray.filter(
     (shout) =>
@@ -82,7 +82,7 @@ function Feed(props) {
       shout.date_posted.toLowerCase().includes(props.postSearch.toLowerCase())
   );
 
-  console.log("searchedArray==", searchedArray);
+  // console.log("searchedArray==", searchedArray);
 
   return (
     <>

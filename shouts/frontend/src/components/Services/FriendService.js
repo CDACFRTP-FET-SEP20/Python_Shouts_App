@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const friendlistdata = (props) => {
-  console.log("services=============", props.user);
   const authToken = props.user.token;
   const pk = props.user.user_id;
   axios
@@ -40,7 +39,6 @@ export const friendlistreceived = (props) => {
 export const newfrienddata = (props) => {
   const authToken = props.user.token;
   const pk = props.user.user_id;
-  console.log("service called", pk);
 
   fetch(`/api/requestsent/${pk}`, {
     headers: {
