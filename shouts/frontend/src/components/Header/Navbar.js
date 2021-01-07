@@ -173,6 +173,8 @@ function Navbar(props) {
       type: "AddUser",
       payload: "",
     });
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user")
     setisAuthenticated(false);
     window.location.href = "/app/login";
   };

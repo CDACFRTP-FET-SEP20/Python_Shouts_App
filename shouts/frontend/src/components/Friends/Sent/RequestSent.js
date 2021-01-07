@@ -31,8 +31,10 @@ function RequestSent(props) {
       .catch((err) => console.log(err));
   };
 
-  const searchedArray = props.requestSent.filter((item) =>
-    item.username.toLowerCase().includes(props.search.toLowerCase())
+  const searchedArray = props.requestSent.filter(
+    (item) =>
+      item.username.toLowerCase().includes(props.search.toLowerCase()) &&
+      item.username !== "admin"
   );
 
   return (

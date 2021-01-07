@@ -16,7 +16,8 @@ export const getPosts = (props) => {
         type: "setShouts",
         payload: data,
       })
-    ).catch((error) => console.log("error", error));
+    )
+    .catch((error) => console.log("error", error));
 };
 // ===============================CreatePosts================================
 export const createPost = (props, uploadData) => {
@@ -29,12 +30,30 @@ export const createPost = (props, uploadData) => {
       "X-CSRFToken": csrftoken,
       Authorization: `Token ${authToken}`,
     },
-  }).then((res) =>
-    props.dispatch({
-      type: "createShouts",
-      payload: res,
-    })
-  ).catch((error) => console.log("error", error));
+  })
+    .then((res) =>
+      props.dispatch({
+        type: "createShouts",
+        payload: res,
+      })
+    )
+    .catch((error) => console.log("error", error));
+};
+// ===============================UpdatePosts================================
+export const updatePost = (props, values) => {
+  const authToken = props.user.token;
+
+  axios({
+    method: "patch",
+    url: `/api/shouts/${props.postId}/`,
+    data: values,
+    headers: {
+      "X-CSRFToken": csrftoken,
+      Authorization: `Token ${authToken}`,
+    },
+  })
+    .then((res) => getPosts(props))
+    .catch((error) => console.log(error));
 };
 // ===============================DeletePosts================================
 export const deletePost = (props) => {
@@ -54,7 +73,7 @@ export const deletePost = (props) => {
 // ===============================DeleteMyPosts================================
 export const deleteMyPost = (props) => {
   const authToken = props.user.token;
-  
+
   axios({
     method: "delete",
     url: `/api/shouts/${props.postId}/`,
@@ -68,26 +87,10 @@ export const deleteMyPost = (props) => {
     .catch((error) => console.log(error));
 };
 
-// ===============================UpdatePosts================================
-export const updatePost = (props, values) => {
-  const authToken = props.user.token;
-  
-  axios({
-    method: "patch",
-    url: `/api/shouts/${props.postId}/`,
-    data: values,
-    headers: {
-      "X-CSRFToken": csrftoken,
-      Authorization: `Token ${authToken}`,
-    },
-  })
-    .then((res) => getPosts(props))
-    .catch((error) => console.log(error));
-};
 // ===============================UpdateMyPosts================================
 export const updateMyPost = (props, values) => {
   const authToken = props.user.token;
-  
+
   axios({
     method: "patch",
     url: `/api/shouts/${props.postId}/`,
@@ -115,5 +118,6 @@ export const getMyPost = (props, user_id) => {
         type: "setMyShouts",
         payload: data,
       })
-    ).catch((error) => console.log("error", error));
+    )
+    .catch((error) => console.log("error", error));
 };

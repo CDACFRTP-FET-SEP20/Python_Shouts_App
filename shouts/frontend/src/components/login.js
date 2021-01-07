@@ -32,6 +32,7 @@ function login(props) {
     email: "",
     password: "",
   });
+  const [message, setMessage] = useState("");
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -46,7 +47,8 @@ function login(props) {
 
     //-----------Validations if correct then log in User-------------//
     if (!formData.email.includes("@")) {
-      alert("Please enter valid Email");
+      // alert("Please enter valid Email");
+      setMessage("Please enter valid Email");
     } else if (formData.email != "" && formData.password != "") {
       fetch("/profile/login/", {
         method: "POST",
@@ -62,13 +64,16 @@ function login(props) {
             payload: data,
           });
         })
-        .catch(() => alert("Incorrect Email or Password"));
+        .catch(() => setMessage("Incorrect Credentials"));
     } else if (formData.password === "") {
-      alert("Please enter password");
+      // alert("Please enter password");
+      setMessage("Please enter password");
     } else if (formData.email === "") {
-      alert("Please enter email");
+      // alert("Please enter email");
+      setMessage("Please enter email");
     } else {
-      alert("Please enter email and password");
+      // alert("Please enter email and password");
+      setMessage("Please enter email and password");
     }
   };
   const paperStyle = {
@@ -134,6 +139,11 @@ function login(props) {
               Don't have an account yet?
               <Link to="/register">Sign Up</Link>
             </Typography>
+            <br />
+            <br />
+            <div style={{ textAlign: "center", color: "red" }}>
+              <Typography>{message}</Typography>
+            </div>
           </Paper>
         </Grid>
       </div>

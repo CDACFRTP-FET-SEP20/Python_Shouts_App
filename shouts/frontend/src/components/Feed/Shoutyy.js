@@ -164,7 +164,7 @@ function Shout(props) {
       .catch((error) => console.log(error));
   };
 
-  //---------------------------Handle Submit----------------------//
+  //---------------------------Handle Submit Like----------------------//
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -393,7 +393,7 @@ function Shout(props) {
               </div>
             </CardContent>
           ) : null}
-
+{/* ----------------------------Like Section------------------------------------------ */}
           <CardActions disableSpacing className={classes.likes}>
             {isLiked(props.shouts) ? (
               <>
@@ -438,13 +438,14 @@ function Shout(props) {
                 </Modal>
               </>
             )}
-
+{/* ==================Comment Section====================== */}
             <IconButton aria-label="comment" className={classes.like_unlike}>
               <ShowComment shouts={props.shouts} />
             </IconButton>
             <p style={{ marginLeft: "0.2rem", marginRight: "0.2rem" }}>
               {comment_count}
             </p>
+{/* ===============Report Section================== */}
             <IconButton aria-label="comment" className={classes.like_unlike}>
               <ShowReport shouts={props.shouts} />
             </IconButton>

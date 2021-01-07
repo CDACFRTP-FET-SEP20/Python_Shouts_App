@@ -25,14 +25,7 @@ router = routers.DefaultRouter()
 # )
 
 router.register(r'users', UserViewSet)
-# router.register(r'shouts',PostsViewSetPatchDelete)
 
-# my_post_list=MyPostsViewSet.as_view({
-#     'get':'list',
-#     'post':'create',
-#     'patch':'partial_update',
-#     'delete':'destroy'
-# })
 profileList = ProfileView.as_view({
     'get': 'list',
     'post': 'create',

@@ -136,10 +136,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset=Profile.objects.all().order_by('username')
     serializer_class=UsersSerializer
 
-# class MyPostsViewSet(viewsets.ModelViewSet):
-#     print("mypost")
-#     queryset=Posts.objects.filter(username="21972bf4-f2c5-4658-b08a-6378034f8ee1").order_by('-date_posted')
-#     serializer_class=PostsSerializer
+
 
 @api_view(['GET','PATCH', 'DELETE', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -185,7 +182,7 @@ def PostsViewSetPatchDelete(request,pk):
     if request.method == 'PATCH':
         
         posts = Posts.objects.get(post_id=pk)
-        print("accept_data", request.data)
+        
         serializer = PostsSerializer(instance=posts,data=request.data,partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -197,27 +194,7 @@ def PostsViewSetPatchDelete(request,pk):
         posts = Posts.objects.get(post_id=pk)
         posts.delete()
         return Response('Shout Deleted Successfully')
-# class PostsViewSetPatchDelete(viewsets.ModelViewSet):
-#     queryset=Posts.objects.all().order_by('-date_posted')
-#     serializer_class=PostsSerializer
 
-    
-
-
-    # def post(self,request,*args,**kwargs):
-    #     post_type=request.data['post_type']
-    #     title=request.data['title']
-    #     description=request.data['description']
-    #     date_posted=request.data['date_posted']
-    #     username=request.data['username']['user_id']
-    #     media=request.data['media']
-    #     post=Posts.objects.create(post_type=post_type,
-    #     title=title,description=description,
-    #     date_posted=date_posted,username=username,
-    #     media=media
-    #     )
-        
-        # return HttpResponse({'message':'Post created!'},status=200)
 
 # ==============Likes and Comment Views===========================
 class LikeViewSet(viewsets.ModelViewSet):

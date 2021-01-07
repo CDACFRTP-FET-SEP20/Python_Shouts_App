@@ -53,36 +53,41 @@ export default function register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (formData.email !== "" && formData.password !== "") {
+      //--------------Register Or Create New User-------------//
 
-    //--------------Register Or Create New User-------------//
-
-    if (formData.password === confirmPassword) {
-      fetch("/profile/register/", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((respone) => respone.json())
-        .then((data) => {
-          if (data.email[0] === "profile with this email already exists.") {
-            setMessage(data.email[0]);
-          } else if (
-            data.username[0] === "profile with this username already exists."
-          ) {
-            setMessage(data.username[0]);
-          } else if (
-            data.email[0] === "profile with this email already exists." &&
-            data.username[0] === "profile with this username already exists."
-          ) {
-            setMessage(data.email[0] + data.username[0]);
-          } else {
-            history.push("/login");
-          }
-        });
+      if (formData.password === confirmPassword) {
+        fetch("/profile/register/", {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((respone) => respone.json())
+          .then((data) => {
+            if (data.email[0] === "profile with this email already exists.") {
+              setMessage(data.email[0]);
+            } else if (
+              data.username[0] === "profile with this username already exists."
+            ) {
+              setMessage(data.username[0]);
+            } else if (
+              data.email[0] === "profile with this email already exists." &&
+              data.username[0] === "profile with this username already exists."
+            ) {
+              setMessage(data.email[0] + data.username[0]);
+            } else {
+              history.push("/login");
+            }
+          })
+          .catch((e) => setMessage("Please enter valid data "));
+      } else {
+        // alert("Password and Confirm Password should be same");
+        setMessage("Password and Confirm Password should be same");
+      }
     } else {
-      alert("Password and Confirm Password should be same");
+      setMessage("Please enter valid data");
     }
   };
 
@@ -159,10 +164,9 @@ export default function register() {
               Already have an account?
               <Link to="/login">Sign In</Link>
             </Typography>
-            <div>
-              <span>
-                <h4>{message}</h4>
-              </span>
+
+            <div style={{ textAlign: "center", color: "red" }}>
+              <Typography>{message}</Typography>
             </div>
           </Paper>
         </Grid>
