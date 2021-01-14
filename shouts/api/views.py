@@ -19,21 +19,7 @@ from friends.models import Friends
 from rest_framework.permissions import IsAuthenticated
 from posts.models import Posts,ShoutLike,ShoutComment, ShoutReport
 from django.http import HttpResponse
-# from django.contrib.auth.models import User
 
-
-# class FriendsView(viewsets.ModelViewSet):
-#     filter_obj = Profile.objects.get(username='shubham')
-#     queryset = Friends.objects.filter(
-#         sender=filter_obj, is_friend=True
-#     ).union(
-#         Friends.objects.filter(
-#             receiver=filter_obj, is_friend=True
-#         ))
-#     serializer_class = FriendsSerializer
-
-
-# Friends GET, PATCH, DELETE, POST methods
 
 @api_view(['GET', 'PATCH', 'DELETE', 'POST'])
 @permission_classes([IsAuthenticated])
